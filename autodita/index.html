@@ -66,6 +66,30 @@ section { padding:120px 0; position:relative; }
 .band .big { font-size:clamp(40px,6vw,76px); font-weight:800; letter-spacing:-.03em; line-height:1; }
 .band .big span { color:var(--accent); }
 .band .cap { font-size:12px; letter-spacing:.14em; text-transform:uppercase; opacity:.5; margin-top:14px; }
+/* KAIP DIRBAME — 3 žingsniai */
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line); }
+.step { padding:44px 36px 44px 0; border-right:1px solid var(--line); }
+.step:last-child { border-right:none; padding-right:0; }
+.step .sn { font-size:clamp(3rem,6vw,5rem); font-weight:800; line-height:1; color:var(--accent); opacity:.22; letter-spacing:-.03em; }
+.step h3 { font-size:20px; font-weight:700; margin:18px 0 10px; letter-spacing:-.01em; }
+.step p { font-size:15px; color:rgba(243,241,236,.6); }
+/* KODĖL — trust points */
+.why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; background:var(--line); border:1px solid var(--line); }
+.why-item { background:var(--paper); padding:34px 30px; }
+.why-item .wt { font-size:18px; font-weight:700; margin-bottom:8px; }
+.why-item .wt::before { content:"—"; color:var(--accent); margin-right:10px; }
+.why-item p { font-size:14.5px; color:rgba(243,241,236,.6); }
+/* FAQ */
+.faq { border-top:1px solid var(--line); }
+.faq details { border-bottom:1px solid var(--line); }
+.faq summary { cursor:pointer; padding:26px 0; list-style:none; display:flex; justify-content:space-between; gap:20px; font-size:clamp(17px,2vw,22px); font-weight:600; letter-spacing:-.01em; }
+.faq summary::-webkit-details-marker { display:none; }
+.faq summary::after { content:"+"; color:var(--accent); font-size:26px; transition:rotate .3s; }
+.faq details[open] summary::after { rotate:45deg; }
+.faq .fa { display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease; }
+.faq details[open] .fa { grid-template-rows:1fr; }
+.faq .fa > div { overflow:hidden; }
+.faq .fa p { padding-bottom:26px; max-width:60ch; color:rgba(243,241,236,.62); font-size:16px; }
 /* KONTAKTAI */
 .contact h2 { font-size:clamp(36px,7vw,92px); font-weight:800; letter-spacing:-.035em; line-height:.95; margin-bottom:52px; }
 .contact h2 em { font-style:italic; font-weight:400; color:var(--accent); font-family:Georgia,serif; }
@@ -86,6 +110,9 @@ footer .wrap { display:flex; justify-content:space-between; gap:20px; flex-wrap:
   .band .wrap { grid-template-columns:1fr; }
   .band .cell { border-right:none; border-bottom:1px solid var(--line); padding:36px 0 !important; }
   .band .cell:last-child { border-bottom:none; }
+  .steps { grid-template-columns:1fr; }
+  .step { border-right:none; border-bottom:1px solid var(--line); padding:32px 0; }
+  .step:last-child { border-bottom:none; }
   .callbar { display:block; position:fixed; bottom:0; left:0; right:0; z-index:98; background:var(--accent); color:#111; text-align:center; padding:15px; font-size:17px; font-weight:800; letter-spacing:.02em; }
   .callbar a { color:#111; text-decoration:none; }
   body { padding-bottom:54px; }
@@ -136,6 +163,17 @@ be rūpesčių</h1>
   </div>
 </section>
 
+<section id="kaip">
+  <div class="wrap">
+    <div class="sec-head"><h2 class="rv">Kaip dirbame</h2><span class="lbl">03 / Procesas</span></div>
+    <div class="steps">
+      <div class="step rv"><div class="sn">01</div><h3>Paskambinate</h3><p>Trumpai aptariame, ko reikia, ir suderiname atvykimo laiką — be laukimo savaitėmis.</p></div>
+      <div class="step rv" style="--d:.08s"><div class="sn">02</div><h3>Įvertinimas ir kaina</h3><p>Pasakome tikslią kainą prieš darbus. Jokių staigmenų sąskaitoje.</p></div>
+      <div class="step rv" style="--d:.16s"><div class="sn">03</div><h3>Darbas ir garantija</h3><p>Atliekame sutartu laiku. Darbams suteikiame garantiją.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="band">
   <div class="wrap">
     <div class="cell"><div class="big">4,0<span>★</span></div><div class="cap">Google įvertinimas</div></div>
@@ -144,9 +182,33 @@ be rūpesčių</h1>
   </div>
 </section>
 
+<section id="kodel">
+  <div class="wrap">
+    <div class="sec-head"><h2 class="rv">Kodėl Autodita</h2><span class="lbl">04 / Privalumai</span></div>
+    <div class="why-grid rv">
+      <div class="why-item"><div class="wt">Kaina iš anksto</div><p>Sumą sužinote ir patvirtinate prieš darbus, ne po jų.</p></div>
+      <div class="why-item"><div class="wt">Greitai</div><p>Daugumą darbų atliekame per vieną dieną.</p></div>
+      <div class="why-item"><div class="wt">Garantija</div><p>Atliktiems darbams ir detalėms taikome garantiją.</p></div>
+      <div class="why-item"><div class="wt">Visų markių</div><p>Remontuojame ir prižiūrime visų populiarių markių automobilius.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2 class="rv">Dažni klausimai</h2><span class="lbl">05 / DUK</span></div>
+    <div class="faq rv">
+      <details><summary>Ar reikia registruotis iš anksto?</summary><div class="fa"><div><p>Paskambinkite — dažniausiai priimame per 1–2 dienas, o skubiais atvejais stengiamės padėti tą pačią dieną.</p></div></div></details>
+      <details><summary>Kiek kainuos remontas?</summary><div class="fa"><div><p>Tikslią kainą pasakome po įvertinimo, prieš pradėdami darbus. Sumą patvirtinate iš anksto.</p></div></div></details>
+      <details><summary>Ar dirbate su visų markių automobiliais?</summary><div class="fa"><div><p>Taip — remontuojame ir prižiūrime visų populiarių markių lengvuosius automobilius.</p></div></div></details>
+      <details><summary>Ar suteikiate garantiją?</summary><div class="fa"><div><p>Taip, atliktiems darbams ir sumontuotoms detalėms taikome garantiją. Sąlygas aptariame prieš remontą.</p></div></div></details>
+    </div>
+  </div>
+</section>
+
 <section class="contact" id="kontaktai">
   <div class="wrap">
-    <span class="lbl" style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.5">04 / Kontaktai</span>
+    <span class="lbl" style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.5">06 / Kontaktai</span>
     <h2 class="rv" style="margin-top:18px">Užsukite ar <em>paskambinkite</em></h2>
     <div class="c-grid">
       <div class="c-item"><div class="lbl">Telefonas</div><div class="val phone"><a href="tel:+37062080030">+370 620 80030</a></div></div>
