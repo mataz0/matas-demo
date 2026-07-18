@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PASTEBIMI — skaitmeninės reputacijos studija</title>
+<meta name="description" content="Patikriname, kaip jūsų verslas atrodo internete — domenus, Google profilį, nuorodas — ir sutvarkome taip, kad ieškantys rastų jus, o ne konkurentus.">
+<meta name="theme-color" content="#0B0E14">
+<meta property="og:title" content="PASTEBIMI — kad jūsų verslą pastebėtų">
+<meta property="og:description" content="Nemokamas skaitmeninės reputacijos auditas Lietuvos smulkiam verslui.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230B0E14'/><circle cx='50' cy='50' r='26' fill='none' stroke='%2322D3EE' stroke-width='7'/><circle cx='50' cy='50' r='8' fill='%23E8B04B'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"PASTEBIMI","description":"Skaitmeninės reputacijos auditas ir svetainės Lietuvos smulkiam verslui","areaServed":"Lietuva","telephone":"+37066991481"}
+</script>
+<style>
+:root{
+  --bg:#0B0E14; --surface:#131824; --ink:#EDF1F6; --muted:#8B95A7;
+  --cyan:#22D3EE; --gold:#E8B04B;
+  --line:rgba(237,241,246,.13);
+  --fd:'Instrument Serif',Georgia,serif; --fb:'Inter',system-ui,sans-serif;
+  --pad:clamp(20px,5vw,84px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-weight:300;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:inherit}
+::selection{background:var(--cyan);color:#04141A}
+
+/* ═══ GLOBALUS KADRŲ FONAS ═══ */
+#film{position:fixed;inset:0;z-index:-2;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease}
+#film.ready{opacity:1}
+#dim{position:fixed;inset:0;z-index:-1;background:var(--bg);opacity:.82;transition:none;pointer-events:none}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.4;mix-blend-mode:overlay}
+.grain svg{width:100%;height:100%}
+
+/* žymeklis (desktop) */
+.cur{position:fixed;z-index:9999;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%)}
+.cur.dot{width:6px;height:6px;background:var(--cyan)}
+.cur.ring{width:34px;height:34px;border:1px solid rgba(34,211,238,.5);transition:width .25s,height .25s,border-color .25s}
+body.hovering .cur.ring{width:56px;height:56px;border-color:var(--gold)}
+@media(pointer:coarse){.cur{display:none}}
+
+/* ═══ NAV ═══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:9000;padding:18px var(--pad);display:flex;justify-content:space-between;align-items:center;transition:background .4s,padding .4s,border-color .4s;border-bottom:1px solid transparent}
+nav.stuck{background:rgba(11,14,20,.82);backdrop-filter:blur(16px);border-bottom-color:var(--line);padding-top:12px;padding-bottom:12px}
+.brand{font-family:var(--fb);font-weight:600;font-size:15px;letter-spacing:.34em;display:flex;align-items:center;gap:11px}
+.brand i{width:11px;height:11px;border-radius:50%;border:2px solid var(--cyan);display:inline-block;position:relative}
+.brand i::after{content:"";position:absolute;inset:2.5px;border-radius:50%;background:var(--gold)}
+.navr{display:flex;align-items:center;gap:26px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
+.navr a{text-decoration:none;opacity:.6;transition:opacity .25s}
+.navr a:hover{opacity:1}
+.navcta{border:1px solid var(--cyan);color:var(--cyan);border-radius:100px;padding:10px 22px;opacity:1!important;transition:background .3s,color .3s;position:relative;overflow:hidden}
+.navcta:hover{background:var(--cyan);color:#04141A}
+@media(max-width:860px){.navr .hide{display:none}}
+.prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--gold));width:0;z-index:9001}
+
+/* ═══ HERO ═══ */
+header{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px var(--pad) clamp(40px,7vh,80px);position:relative}
+.eyebrow{font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--cyan);margin-bottom:24px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:"";height:1px;flex:1;background:var(--line);max-width:130px}
+h1{font-family:var(--fd);font-weight:400;font-size:clamp(52px,10.5vw,138px);line-height:.96;letter-spacing:-.015em;max-width:11ch}
+h1 em{font-style:italic;color:var(--gold)}
+.sub{max-width:52ch;margin-top:28px;color:var(--muted);font-size:clamp(16px,1.55vw,19px)}
+.heroctas{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-block;border-radius:100px;padding:16px 34px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:500;position:relative;overflow:hidden;transition:transform .25s}
+.btn.solid{background:var(--cyan);color:#04141A}
+.btn.ghost{border:1px solid var(--line);color:var(--ink)}
+.btn:hover{transform:translateY(-2px)}
+.btn::after{content:"";position:absolute;top:0;left:-130%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transition:left .8s cubic-bezier(.16,1,.3,1)}
+.btn:hover::after{left:140%}
+.scue{position:absolute;bottom:26px;right:var(--pad);display:flex;flex-direction:column;align-items:center;gap:9px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl}
+.scue::after{content:"";width:1px;height:46px;background:linear-gradient(var(--cyan),transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{50%{opacity:.25}}
+/* hero stagger */
+.st{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+body.loaded .st{opacity:1;transform:none}
+body.loaded .st:nth-child(2){transition-delay:.12s}
+body.loaded .st:nth-child(3){transition-delay:.24s}
+body.loaded .st:nth-child(4){transition-delay:.36s}
+
+/* ═══ STATAI ═══ */
+.stats{display:flex;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(11,14,20,.55);backdrop-filter:blur(8px)}
+.stats div{flex:1;min-width:180px;padding:26px 24px;border-right:1px solid var(--line)}
+.stats div:last-child{border-right:0}
+.sn{font-family:var(--fd);font-size:clamp(36px,4.5vw,58px);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.sn b{color:var(--cyan);font-weight:400}
+.sl{font-size:12.5px;letter-spacing:.06em;color:var(--muted);margin-top:8px}
+@media(max-width:760px){.stats div{flex:1 1 50%;border-bottom:1px solid var(--line)}.stats div:nth-last-child(-n+2){border-bottom:0}}
+
+/* marquee */
+.marq{overflow:hidden;border-bottom:1px solid var(--line);padding:16px 0;background:rgba(11,14,20,.55)}
+.marq div{display:flex;gap:52px;width:max-content;animation:mv 40s linear infinite}
+.marq span{font-family:var(--fd);font-size:clamp(15px,1.8vw,21px);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:52px}
+.marq span::after{content:"◆";color:var(--cyan);font-size:.45em}
+@keyframes mv{to{transform:translateX(-50%)}}
+
+/* ═══ SEKCIJOS ═══ */
+section{padding:clamp(70px,11vw,150px) var(--pad);position:relative}
+.wrap{background:rgba(11,14,20,.6);backdrop-filter:blur(6px)}
+.orn{display:flex;align-items:center;gap:14px;margin:0 0 clamp(34px,5vw,60px)}
+.orn::before,.orn::after{content:"";height:1px;background:var(--line);flex:1}
+.orn i{width:5px;height:5px;transform:rotate(45deg);background:var(--cyan);flex:none}
+.shead{display:flex;align-items:baseline;gap:18px;margin-bottom:clamp(34px,5vw,60px)}
+.idx{font-size:12px;color:var(--cyan);font-variant-numeric:tabular-nums;letter-spacing:.1em}
+h2{font-family:var(--fd);font-weight:400;font-size:clamp(34px,5.6vw,72px);line-height:1.02;letter-spacing:-.01em}
+h2 em{font-style:italic;color:var(--gold)}
+
+/* ═══ TOUR (420vh kelionė) ═══ */
+#tour{height:420vh;padding:0;position:relative}
+.tstick{position:sticky;top:0;height:100svh;display:flex;align-items:flex-end;padding:0 var(--pad) 12svh;pointer-events:none}
+.tcard{position:absolute;max-width:400px;background:rgba(11,14,20,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-left:2px solid var(--cyan);border-radius:2px;padding:clamp(24px,3vw,38px);opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);pointer-events:auto}
+.tcard.on{opacity:1;transform:none}
+.tcard .tn{font-size:11px;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase}
+.tcard h3{font-family:var(--fd);font-weight:400;font-size:clamp(28px,3.4vw,44px);margin:12px 0 12px;line-height:1}
+.tcard p{color:var(--muted);font-size:15.5px}
+.tcard .tp{margin-top:16px;font-family:var(--fd);font-size:22px;color:var(--gold)}
+.tprog{position:absolute;left:var(--pad);top:50%;transform:translateY(-50%);width:2px;height:180px;background:var(--line);border-radius:2px}
+.tprog i{display:block;width:100%;background:linear-gradient(var(--cyan),var(--gold));height:0%;border-radius:2px;transition:height .2s linear}
+@media(max-width:760px){.tcard{max-width:calc(100vw - 40px)}.tprog{display:none}}
+
+/* ═══ SKENERIS (spotlight pora) ═══ */
+.scan{position:relative;border-radius:2px;overflow:hidden;cursor:none;box-shadow:0 0 0 1px rgba(34,211,238,.28),0 30px 80px -30px rgba(0,0,0,.7)}
+.scan img{width:100%;display:block}
+.scan .xr{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  -webkit-mask-image:radial-gradient(circle 200px at var(--mx,50%) var(--my,50%),#000 0 55%,transparent 78%);
+  mask-image:radial-gradient(circle 200px at var(--mx,50%) var(--my,50%),#000 0 55%,transparent 78%)}
+.scan .ring{position:absolute;width:400px;height:400px;left:var(--mx,50%);top:var(--my,50%);transform:translate(-50%,-50%);border:1px solid rgba(34,211,238,.55);border-radius:50%;pointer-events:none;opacity:0;transition:opacity .4s}
+.scan:hover .ring,.scan.demoing .ring{opacity:1}
+.scan.demoing .ring{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 22px rgba(34,211,238,.08)}}
+.scanhint{margin-top:16px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.scanhint::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--cyan);flex:none}
+
+/* ═══ RADINIAI ═══ */
+.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:clamp(16px,2vw,26px)}
+.find{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:clamp(24px,3vw,36px);position:relative;overflow:hidden;transition:transform .35s,border-color .35s}
+.find:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.4)}
+.find .fn{font-family:var(--fd);font-size:15px;color:var(--cyan);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.find h3{font-family:var(--fd);font-weight:400;font-size:clamp(21px,2.2vw,27px);margin:12px 0 10px;line-height:1.2}
+.find p{color:var(--muted);font-size:15px}
+.find .tag{position:absolute;top:20px;right:20px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(232,176,75,.35);border-radius:100px;padding:4px 10px}
+
+/* ═══ PASLAUGOS hairline ═══ */
+.rows{border-top:1px solid var(--line)}
+.row{border-bottom:1px solid var(--line);padding:30px 0;display:grid;grid-template-columns:60px 1.1fr 1.4fr auto;gap:22px;align-items:baseline;transition:padding-left .4s,background .4s;text-decoration:none}
+.row:hover{padding-left:16px;background:rgba(34,211,238,.045)}
+@media(max-width:820px){.row{grid-template-columns:40px 1fr auto}.row p{grid-column:2/4}}
+.rn{font-size:12.5px;color:var(--cyan);font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.rt{font-family:var(--fd);font-weight:400;font-size:clamp(24px,3vw,38px);letter-spacing:-.01em}
+.row p{color:var(--muted);font-size:15.5px}
+.rp{font-family:var(--fd);font-size:clamp(19px,2vw,26px);color:var(--gold);white-space:nowrap}
+
+/* ═══ PORTFOLIO ═══ */
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.work{border:1px solid var(--line);border-radius:2px;padding:24px 26px;text-decoration:none;display:flex;justify-content:space-between;align-items:center;gap:14px;transition:border-color .3s,background .3s,transform .3s;background:var(--surface)}
+.work:hover{border-color:rgba(34,211,238,.45);transform:translateY(-3px)}
+.work .wn{font-family:var(--fd);font-size:21px}
+.work .wt{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.work .arr{color:var(--cyan);font-size:20px;transition:transform .3s}
+.work:hover .arr{transform:translate(4px,-4px)}
+
+/* ═══ FORMA ═══ */
+.book{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:clamp(28px,4vw,56px);display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px)}
+@media(max-width:820px){.book{grid-template-columns:1fr}}
+.f{display:flex;flex-direction:column;gap:15px}
+label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+input,textarea{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:2px;background:var(--bg);font-family:var(--fb);font-size:16px;color:var(--ink);transition:border-color .25s}
+input:focus,textarea:focus{outline:0;border-color:var(--cyan)}
+.err{border-color:#E05252!important}
+.emsg{color:#E05252;font-size:12.5px;display:none}
+.emsg.on{display:block}
+button.sub{background:var(--cyan);color:#04141A;border:0;border-radius:100px;padding:16px 34px;font-family:var(--fb);font-size:14px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s;align-self:start;font-weight:600;position:relative;overflow:hidden}
+button.sub:hover{transform:translateY(-2px)}
+.ok{display:none;text-align:center;padding:40px 20px}
+.ok.on{display:block}
+.okmark{width:58px;height:58px;border-radius:50%;background:var(--cyan);color:#04141A;display:grid;place-items:center;margin:0 auto 18px;font-size:26px}
+.contact{display:flex;flex-direction:column;gap:12px;font-size:16px}
+.contact a{color:var(--cyan);text-decoration:none}
+.contact a:hover{text-decoration:underline}
+.contact .big{font-family:var(--fd);font-size:clamp(26px,3vw,36px);color:var(--ink)}
+.steps{border-top:1px solid var(--line);margin-top:8px}
+.steps div{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--muted)}
+.steps b{color:var(--cyan);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* DUK */
+details{border-bottom:1px solid var(--line)}
+summary{font-family:var(--fd);font-size:clamp(19px,2.2vw,26px);padding:22px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--cyan);font-size:26px;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);padding:0 0 22px;max-width:65ch;font-size:15.5px}
+
+/* ═══ FOOTER ═══ */
+footer{padding:clamp(50px,8vw,90px) var(--pad) clamp(90px,10vw,110px);border-top:1px solid var(--line);background:rgba(11,14,20,.75)}
+.fbig{font-family:var(--fd);font-size:clamp(52px,13vw,170px);line-height:.85;letter-spacing:.02em;opacity:.1;user-select:none}
+.frow{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;margin-top:26px;font-size:13px;color:var(--muted)}
+.frow a{color:var(--cyan);text-decoration:none}
+
+/* callbar mobile */
+.callbar{display:none}
+@media(max-width:760px){
+  body{padding-bottom:66px}
+  .callbar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:9500;background:#0E1219;color:var(--ink);padding:11px 16px;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 -8px 30px rgba(0,0,0,.5);border-top:1px solid rgba(34,211,238,.35)}
+  .callbar .cbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;display:block;margin-bottom:2px}
+  .callbar .cbn{font-family:var(--fd);font-size:19px;color:var(--ink);text-decoration:none}
+  .callbar .cbb{background:var(--cyan);color:#04141A;border-radius:100px;padding:10px 18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;font-weight:600;white-space:nowrap}
+  h1{font-size:clamp(46px,13vw,72px);line-height:1}
+  header{padding-top:104px}
+  .scue{display:none}
+}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rv,.st{opacity:1!important;transform:none!important;transition:none}
+  #film{display:none}
+  #dim{opacity:.94!important}
+  .marq div{animation:none}
+  html{scroll-behavior:auto}
+  .tcard{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<canvas id="film"></canvas>
+<div id="dim"></div>
+<div class="grain"><svg xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)" opacity="0.5"/></svg></div>
+<div class="cur dot"></div><div class="cur ring"></div>
+<div class="prog" id="prog"></div>
+
+<nav id="nav">
+  <div class="brand"><i></i>PASTEBIMI</div>
+  <div class="navr">
+    <a href="#paslaugos" class="hide">Paslaugos</a>
+    <a href="#radiniai" class="hide">Radiniai</a>
+    <a href="#darbai" class="hide">Darbai</a>
+    <a href="#auditas" class="navcta">Nemokamas auditas</a>
+  </div>
+</nav>
+
+<header>
+  <div class="eyebrow st">Skaitmeninės reputacijos studija</div>
+  <h1 class="st">Vieni verslai šviečia.<br><em>Kiti — nematomi.</em></h1>
+  <p class="sub st">Patikriname, kaip jūsų verslas atrodo internete — domenus, Google profilį, nuorodas, portalų priklausomybę — ir sutvarkome taip, kad ieškantys rastų jus, o ne konkurentus.</p>
+  <div class="heroctas st">
+    <a class="btn solid" href="#auditas">Užsakyti nemokamą auditą</a>
+    <a class="btn ghost" href="#radiniai">Ką radome kituose</a>
+  </div>
+  <div class="scue">slinkite</div>
+</header>
+
+<div class="stats rv">
+  <div><div class="sn"><b data-count="70">0</b>+</div><div class="sl">patikrintų Kauno įmonių</div></div>
+  <div><div class="sn"><b data-count="58">0</b>%</div><div class="sl">jų Google duomenys klaidingi</div></div>
+  <div><div class="sn"><b data-count="3">0</b></div><div class="sl">domenai, kuriuos dabar valdo kazino</div></div>
+  <div><div class="sn">0 €</div><div class="sl">kainuoja sužinoti, kaip atrodote jūs</div></div>
+</div>
+<div class="marq"><div><span>Auditas</span><span>Google profilis</span><span>Domenas</span><span>Svetainė</span><span>Atsiliepimai</span><span>Priežiūra</span><span>Auditas</span><span>Google profilis</span><span>Domenas</span><span>Svetainė</span><span>Atsiliepimai</span><span>Priežiūra</span></div></div>
+
+<section id="tour">
+  <div class="tstick">
+    <div class="tprog"><i id="tpi"></i></div>
+    <div class="tcard" data-at="0.10" style="left:var(--pad);bottom:12svh">
+      <div class="tn">01 · Pirmas žingsnis</div>
+      <h3>Auditas</h3>
+      <p>Patikriname domeną, Google profilį, nuorodas, nuotraukas, portalų priklausomybę ir tai, ką klientas realiai randa jus guglindamas. Su įrodymais, ne nuomonėmis.</p>
+      <div class="tp">Nemokamai</div>
+    </div>
+    <div class="tcard" data-at="0.42" style="right:var(--pad);bottom:12svh">
+      <div class="tn">02 · Per savaitę</div>
+      <h3>Sutvarkymas</h3>
+      <p>Perimame Google profilį, sutvarkome domeną, sukuriame greitą svetainę su rezervacija — kad paieška vestų pas jus, o ne į portalą su konkurentais.</p>
+      <div class="tp">nuo 490 €</div>
+    </div>
+    <div class="tcard" data-at="0.74" style="left:var(--pad);bottom:12svh">
+      <div class="tn">03 · Nuolat</div>
+      <h3>Priežiūra</h3>
+      <p>Kas savaitę stebime domenus, atsiliepimus ir nuorodas. Apie problemą sužinote iš mūsų — anksčiau, nei ją pastebi jūsų klientai.</p>
+      <div class="tp">nuo 29 €/mėn</div>
+    </div>
+  </div>
+</section>
+
+<section id="skeneris" class="wrap">
+  <div class="orn rv"><i></i></div>
+  <div class="shead"><span class="idx">01</span><h2>Mūsų skeneris mato tai, <em>ko nematote jūs</em></h2></div>
+  <div class="scan rv" id="scan">
+    <img src="img/gatve.jpg" alt="Naktinė verslų gatvė — viena vitrina šviečia" loading="lazy">
+    <img src="img/xray.jpg" alt="Ta pati gatvė audito skeneriu" class="xr" loading="lazy">
+    <div class="ring"></div>
+  </div>
+  <p class="scanhint rv">Pelės žymeklis — skeneris. Užveskite ant tamsių vitrinų.</p>
+</section>
+
+<section id="radiniai">
+  <div class="orn rv"><i></i></div>
+  <div class="shead"><span class="idx">02</span><h2>Ką radome per <em>4 dienas</em> Kaune</h2></div>
+  <div class="finds">
+    <div class="find rv"><span class="tag">Domenas</span><div class="fn">Radinys 01</div><h3>Autoserviso domene — kazino</h3><p>Įmonės nebeprailgintą .lt domeną perėmė lošimų tinklas. Klientai, guglinantys serviso vardą, randa „Jet Casino". Įmonė to nežinojo, kol neparodėme.</p></div>
+    <div class="find rv"><span class="tag">Google</span><div class="fn">Radinys 02</div><h3>Nuoroda siunčia pas konkurentus</h3><p>Grožio salono Google profilyje mygtukas „Svetainė" veda į rezervacijų portalą, kuris skelbia, kad salonas rezervacijų nebepriima — ir iškart pasiūlo tris konkurentus.</p></div>
+    <div class="find rv"><span class="tag">Profilis</span><div class="fn">Radinys 03</div><h3>Profilyje — svetimos nuotraukos</h3><p>Neperimtame Google profilyje bet kas gali kelti nuotraukas. Radome salonų profilius su kitų salonų interjerais ir net miesto funikulieriumi.</p></div>
+    <div class="find rv"><span class="tag">Duomenys</span><div class="fn">Radinys 04</div><h3>58 % duomenų — klaidingi</h3><p>Iš 48 patikrintų įmonių daugiau nei pusės Google duomenys melavo: rodė „nėra svetainės", nors ji veikia, arba atvirkščiai — nuorodą į niekur.</p></div>
+  </div>
+</section>
+
+<section id="paslaugos" class="wrap">
+  <div class="orn rv"><i></i></div>
+  <div class="shead"><span class="idx">03</span><h2>Kaip <em>dirbame</em></h2></div>
+  <div class="rows">
+    <a class="row rv" href="#auditas"><span class="rn">01</span><span class="rt">Auditas</span><p>Pilna jūsų interneto būklės ataskaita su įrodymais — per 48 val.</p><span class="rp">0 €</span></a>
+    <a class="row rv" href="#auditas"><span class="rn">02</span><span class="rt">Sutvarkymas</span><p>Google profilis, domenas, greita svetainė su rezervacija.</p><span class="rp">nuo 490 €</span></a>
+    <a class="row rv" href="#auditas"><span class="rn">03</span><span class="rt">Priežiūra</span><p>Nuolatinis stebėjimas ir atnaujinimai. Pranešame anksčiau nei klientai.</p><span class="rp">nuo 29 €/mėn</span></a>
+  </div>
+</section>
+
+<section id="darbai">
+  <div class="orn rv"><i></i></div>
+  <div class="shead"><span class="idx">04</span><h2>Pavyzdinės svetainės, <em>sukurtos per 24 val.</em></h2></div>
+  <div class="works">
+    <a class="work rv" href="https://mataz0.github.io/matas-demo/rokra/" target="_blank" rel="noopener"><span><span class="wn">Rokra</span><div class="wt">Autoservisas · flagship</div></span><span class="arr">↗</span></a>
+    <a class="work rv" href="https://mataz0.github.io/matas-demo/domini/" target="_blank" rel="noopener"><span><span class="wn">Domini</span><div class="wt">Grožio salonas</div></span><span class="arr">↗</span></a>
+    <a class="work rv" href="https://mataz0.github.io/matas-demo/monro/" target="_blank" rel="noopener"><span><span class="wn">Monro</span><div class="wt">Grožio namai</div></span><span class="arr">↗</span></a>
+    <a class="work rv" href="https://mataz0.github.io/matas-demo/cocos/" target="_blank" rel="noopener"><span><span class="wn">Cocos</span><div class="wt">Grožio klubas</div></span><span class="arr">↗</span></a>
+    <a class="work rv" href="https://mataz0.github.io/matas-demo/teksaka/" target="_blank" rel="noopener"><span><span class="wn">Teksaka</span><div class="wt">Autoservisas</div></span><span class="arr">↗</span></a>
+    <a class="work rv" href="https://mataz0.github.io/matas-demo/vaziuoklistas/" target="_blank" rel="noopener"><span><span class="wn">Važiuoklistas</span><div class="wt">Važiuoklės servisas</div></span><span class="arr">↗</span></a>
+  </div>
+</section>
+
+<section id="auditas" class="wrap">
+  <div class="orn rv"><i></i></div>
+  <div class="shead"><span class="idx">05</span><h2>Nemokamas <em>auditas</em></h2></div>
+  <div class="book rv">
+    <div>
+      <form class="f" id="form" novalidate>
+        <div><label for="v">Vardas</label><input id="v" autocomplete="name"><div class="emsg" id="e-v">Įrašykite vardą</div></div>
+        <div><label for="im">Įmonė arba veikla</label><input id="im" placeholder="pvz. grožio salonas Kaune"><div class="emsg" id="e-im">Įrašykite įmonę</div></div>
+        <div><label for="t">Telefonas</label><input id="t" inputmode="tel" autocomplete="tel" placeholder="+370"><div class="emsg" id="e-t">Įrašykite telefoną</div></div>
+        <button class="sub" type="submit">Noriu audito — 0 €</button>
+      </form>
+      <div class="ok" id="ok"><div class="okmark">✓</div><div style="font-family:var(--fd);font-size:24px">Užklausa gauta</div><p style="color:var(--muted);margin-top:10px">Susisieksime per 24 val. ir per 48 val. atsiųsime pilną auditą.</p></div>
+    </div>
+    <div>
+      <div class="contact">
+        <span class="big">+370 669 91481</span>
+        <a href="mailto:matasbuika1@gmail.com">matasbuika1@gmail.com</a>
+      </div>
+      <div class="steps" style="margin-top:24px">
+        <div><b>01</b><span>Atsiųskite įmonės pavadinimą — daugiau nieko nereikia.</span></div>
+        <div><b>02</b><span>Per 48 val. gausite auditą su ekrano įrašais ir įrodymais.</span></div>
+        <div><b>03</b><span>Jei problemų nerasime — taip ir pasakysime. Auditas vis tiek nemokamas.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:clamp(44px,6vw,70px)">
+    <div class="orn rv"><i></i></div>
+    <details class="rv"><summary>Kodėl auditas nemokamas?</summary><p>Nes jis mums kainuoja mažai, o jums parodo viską. Jei radiniai rimti — tikėtina, kad norėsite juos sutvarkyti su mumis. Jei ne — išsinešate ataskaitą ir tvarkotės patys.</p></details>
+    <details class="rv"><summary>Kuo skiriatės nuo įprastos svetainių agentūros?</summary><p>Mes neateiname „parduoti svetainės". Pirma parodome konkrečią, įrodytą problemą — perimtą domeną, klaidingą nuorodą, svetimas nuotraukas jūsų profilyje — ir tik tada siūlome sprendimą.</p></details>
+    <details class="rv"><summary>Kiek užtrunka svetainė?</summary><p>Pirmą veikiančią versiją pamatysite per 24–48 valandas. Tikslinimas su jūsų tekstais ir nuotraukomis — iki savaitės.</p></details>
+    <details class="rv"><summary>Ar dirbate visoje Lietuvoje?</summary><p>Taip. Auditas ir svetainės daromos nuotoliniu būdu, susitikimas galimas Kaune.</p></details>
+  </div>
+</section>
+
+<div class="callbar">
+  <div><span class="cbl">Skambinkite</span><a class="cbn" href="tel:+37066991481">+370 669 91481</a></div>
+  <a class="cbb" href="#auditas">Auditas 0 €</a>
+</div>
+
+<footer>
+  <div class="fbig">PASTEBIMI</div>
+  <div class="frow">
+    <span>© 2026 Pastebimi · Kaunas</span>
+    <span><a href="tel:+37066991481">+370 669 91481</a> · <a href="mailto:matasbuika1@gmail.com">matasbuika1@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── KADRŲ CANVAS (validuotas Rokra pipeline) ── */
+  var N=121, imgs=new Array(N).fill(null), ready=false, cnv=document.getElementById('film'), ctx=cnv.getContext('2d',{alpha:false});
+  var cur=0, target=0, lastKey=-1;
+  function src(i){ return 'frames/f_'+String(i+1).padStart(3,'0')+'.jpg'; }
+  function decodeBatch(list, tries){
+    if(!list.length) return Promise.resolve();
+    var chunk=list.slice(0,12), rest=list.slice(12);
+    return Promise.all(chunk.map(function(i){
+      return new Promise(function(res){
+        var im=new Image();
+        im.onload=function(){ imgs[i]=im; res(); };
+        im.onerror=function(){ if(tries>0){ setTimeout(function(){ var r=new Image(); r.onload=function(){imgs[i]=r;res();}; r.onerror=function(){res();}; r.src=src(i); },400);} else res(); };
+        im.src=src(i);
+      });
+    })).then(function(){ return decodeBatch(rest, tries); });
+  }
+  function size(){
+    var dpr=Math.min(devicePixelRatio||1,1.5);
+    cnv.width=innerWidth*dpr; cnv.height=innerHeight*dpr;
+  }
+  function nearest(i){
+    if(imgs[i]) return imgs[i];
+    for(var d=1;d<N;d++){ if(imgs[i-d]) return imgs[i-d]; if(imgs[i+d]) return imgs[i+d]; }
+    return null;
+  }
+  var portrait=false;
+  function draw(){
+    var im=nearest(Math.round(cur)); if(!im) return;
+    var cw=cnv.width, ch=cnv.height, iw=im.width, ih=im.height;
+    portrait = innerHeight>innerWidth*1.15;
+    ctx.save();
+    if(portrait){ ctx.translate(cw/2,ch/2); ctx.rotate(Math.PI/2); var t=cw; cw=ch; ch=t; ctx.translate(-cw/2,-ch/2); }
+    var s=Math.max(cw/iw, ch/ih), dw=iw*s, dh=ih*s;
+    ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh);
+    ctx.restore();
+  }
+  if(!reduced){
+    size(); addEventListener('resize',size,{passive:true});
+    decodeBatch(Array.from({length:16},function(_,i){return i;}),3).then(function(){
+      ready=true; cnv.classList.add('ready'); draw();
+      decodeBatch(Array.from({length:N-16},function(_,i){return i+16;}),3);
+    });
+  }
+
+  /* ── SCROLL: progresas, ping-pong kadrai, dim, tour ── */
+  var dim=document.getElementById('dim'), nav=document.getElementById('nav'), prog=document.getElementById('prog');
+  var tour=document.getElementById('tour'), tpi=document.getElementById('tpi');
+  var cards=[].slice.call(document.querySelectorAll('.tcard'));
+  var dimBase=.82, dimTour=.30, dimCur=dimBase;
+  function onScroll(){
+    var y=scrollY||0, h=document.documentElement.scrollHeight-innerHeight;
+    nav.classList.toggle('stuck', y>40);
+    prog.style.width=(h>0? y/h*100:0)+'%';
+    var p=h>0? y/h:0;
+    // ping-pong: 0→1→0 per visą puslapį
+    var pp=p<.5? p*2 : (1-p)*2;
+    target=pp*(N-1);
+    // tour progresas
+    var r=tour.getBoundingClientRect();
+    var tp=Math.min(1,Math.max(0, -r.top/(r.height-innerHeight)));
+    tpi.style.height=(tp*100)+'%';
+    cards.forEach(function(c){
+      var at=parseFloat(c.dataset.at);
+      c.classList.toggle('on', tp>at && tp<at+.26);
+    });
+    var inTour=r.top<innerHeight*.5 && r.bottom>innerHeight*.5;
+    dimCur=inTour? dimTour : dimBase;
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  function tick(){
+    cur += (target-cur)*.09;
+    var k=Math.round(cur);
+    var d=parseFloat(dim.style.opacity||dimBase);
+    dim.style.opacity=(d+(dimCur-d)*.06).toFixed(3);
+    if(ready && k!==lastKey){ lastKey=k; draw(); }
+    requestAnimationFrame(tick);
+  }
+  if(!reduced) requestAnimationFrame(tick); else dim.style.opacity=.94;
+
+  /* ── hero įėjimas ── */
+  addEventListener('load',function(){ document.body.classList.add('loaded'); });
+  setTimeout(function(){ document.body.classList.add('loaded'); },900);
+
+  /* ── reveal + failsafe ── */
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  function showAll(){ els.forEach(function(e){e.classList.add('in');}); }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:.12});
+    els.forEach(function(e){ io.observe(e); });
+    setTimeout(showAll,2500);
+  } else showAll();
+
+  /* ── count-up ── */
+  var counted=false;
+  function countUp(){
+    if(counted) return; counted=true;
+    [].slice.call(document.querySelectorAll('[data-count]')).forEach(function(el){
+      var to=parseInt(el.dataset.count), t0=null;
+      function step(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/1400); el.textContent=Math.round(to*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    });
+  }
+  var st=document.querySelector('.stats');
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(en,o){ if(en[0].isIntersecting){countUp(); o.disconnect();} },{threshold:.3}).observe(st); }
+  setTimeout(countUp,4000);
+
+  /* ── skenerio spotlight + auto-demo ── */
+  var scan=document.getElementById('scan');
+  var demoing=false, demoT=null, userTouched=false;
+  function setXY(xp,yp){ scan.style.setProperty('--mx',xp+'%'); scan.style.setProperty('--my',yp+'%'); }
+  scan.addEventListener('pointermove',function(e){
+    userTouched=true; scan.classList.remove('demoing'); demoing=false;
+    var r=scan.getBoundingClientRect();
+    setXY(((e.clientX-r.left)/r.width*100).toFixed(1), ((e.clientY-r.top)/r.height*100).toFixed(1));
+  });
+  function autoDemo(){
+    if(userTouched||demoing) return; demoing=true; scan.classList.add('demoing');
+    var t0=null;
+    function loop(ts){
+      if(userTouched){ scan.classList.remove('demoing'); demoing=false; return; }
+      if(!t0)t0=ts; var p=((ts-t0)/3400)%1;
+      setXY(18+64*(.5-.5*Math.cos(p*2*Math.PI)), 40+18*Math.sin(p*4*Math.PI));
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(en){ if(en[0].isIntersecting) setTimeout(autoDemo,700); },{threshold:.55}).observe(scan); }
+
+  /* ── žymeklis + magnetiniai ── */
+  var dot=document.querySelector('.cur.dot'), ring=document.querySelector('.cur.ring');
+  var mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('pointermove',function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+  (function rl(){ rx+=(mx-rx)*.16; ry+=(my-ry)*.16; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(rl); })();
+  [].slice.call(document.querySelectorAll('a,button,summary')).forEach(function(el){
+    el.addEventListener('pointerenter',function(){ document.body.classList.add('hovering'); });
+    el.addEventListener('pointerleave',function(){ document.body.classList.remove('hovering'); });
+  });
+
+  /* ── forma ── */
+  var f=document.getElementById('form'), ok=document.getElementById('ok');
+  function bad(id,on){ var el=document.getElementById(id), m=document.getElementById('e-'+id); el.classList.toggle('err',on); m.classList.toggle('on',on); return !on; }
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var a=bad('v', document.getElementById('v').value.trim().length<2);
+    var b=bad('im', document.getElementById('im').value.trim().length<3);
+    var t=document.getElementById('t').value.replace(/[^0-9+]/g,'');
+    var c=bad('t', t.length<8);
+    if(a&&b&&c){ f.style.display='none'; ok.classList.add('on'); }
+  });
+})();
+</script>
+</body>
+</html>
