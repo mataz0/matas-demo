@@ -166,6 +166,11 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 </div>
 
 <main>
+<div id="sampleBar" style="display:none;background:linear-gradient(90deg,rgba(16,185,129,.18),rgba(59,130,246,.16));border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:16px;display:none;align-items:center;gap:14px;flex-wrap:wrap">
+  <span style="font-size:14px;flex:1;min-width:200px"><b>New here?</b> <span style="color:var(--mut)">Load realistic sample data to explore — you can wipe it anytime.</span></span>
+  <button class="addb" id="sampleB" style="flex:none">Load sample data</button>
+  <button class="ghostb" id="wipeB" style="flex:none">Start fresh</button>
+</div>
 <!-- DASHBOARD -->
 <section class="view on" id="v-dash">
   <div class="grid g3">
@@ -674,6 +679,27 @@ $('logoB').addEventListener('click',function(){
   window.scrollTo({top:0,behavior:'smooth'});
   document.querySelector('[data-v=dash]').click();
 });
+function sampleData(){
+  var y=new Date().getFullYear(), m=String(new Date().getMonth()+1).padStart(2,'0');
+  function d(day){ return y+'-'+m+'-'+String(day).padStart(2,'0'); }
+  S.tx=[{d:d(1),t:'Salary',a:2650,c:'Income'},{d:d(3),t:'Rent',a:-720,c:'Home'},{d:d(4),t:'MAXIMA groceries',a:-84.3,c:'Food'},{d:d(6),t:'Bolt rides',a:-19.4,c:'Transport'},{d:d(8),t:'Netflix',a:-12.99,c:'Subscriptions'},{d:d(9),t:'Spotify',a:-9.99,c:'Subscriptions'},{d:d(11),t:'Restaurant',a:-56,c:'Fun'},{d:d(13),t:'LIDL groceries',a:-61.2,c:'Food'},{d:d(15),t:'Gym',a:-35,c:'Health'}];
+  S.hold=[{n:'VWCE',ty:'ETF',q:118,b:97.4,p:112.8},{n:'AAPL',ty:'Stock',q:14,b:168,p:214},{n:'BTC',ty:'Crypto',q:.041,b:58200,p:96400},{n:'Cash buffer',ty:'Cash',q:1,b:2500,p:2500}];
+  S.divs=[{n:'VWCE',a:41.2,d:d(2)},{n:'AAPL',a:3.4,d:d(10)}];
+  S.debts=[{n:'Car loan',b:5400,r:6.9,p:230},{n:'Credit card',b:900,r:18,p:90}];
+  S.goals=[{n:'Emergency fund',t:6000,s:4350},{n:'Trip to Japan',t:3000,s:1240}];
+  S.snaps=[{d:y+'-03-01',v:14100},{d:y+'-04-01',v:14800},{d:y+'-05-01',v:15350},{d:y+'-06-01',v:16420},{d:y+'-07-01',v:17510}];
+  save(); render(); toast('Sample data loaded — explore!');
+  document.getElementById('sampleBar').style.display='none';
+}
+function maybeSample(){
+  var empty=!S.tx.length&&!S.hold.length&&!S.goals.length&&!S.debts.length;
+  var bar=document.getElementById('sampleBar');
+  bar.style.display=empty?'flex':'none';
+}
+$('sampleB').addEventListener('click',sampleData);
+$('wipeB').addEventListener('click',function(){ document.getElementById('sampleBar').style.display='none'; toast('Fresh start — add your first entry'); });
+$('logoB').addEventListener('click',maybeSample);
+maybeSample();
 render();
 })();
 </script>
