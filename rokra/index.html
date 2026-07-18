@@ -376,14 +376,16 @@ async function decodeInto(slot) {
     catch (e) { await new Promise(r => setTimeout(r, 80)); }
   }
 }
-(async () => {
+function __startFrames(){ (async () => {
   const FIRST = Math.min(16, FRAMES.length);
   await Promise.all(Array.from({length: FIRST}, (_, i) => decodeInto(i)));  // starto porcija
   ready = true; sizeCanvas(); drawProgress(0, true); cv.classList.add('ready');
   for (let i = FIRST; i < FRAMES.length; i += 10) {                          // likę fone, porcijomis po 10
     await Promise.all(Array.from({length: Math.min(10, FRAMES.length - i)}, (_, k) => decodeInto(i + k)));
   }
-})();
+})(); }
+/* Safari: kadrai TIK po load — kitaip blokuoja load įvykį */
+if(document.readyState==="complete"){setTimeout(__startFrames,200);}else{addEventListener("load",()=>setTimeout(__startFrames,200));}
 
 // Hero įėjimas + parallax
 addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => document.body.classList.add('loaded')));
