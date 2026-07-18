@@ -1,0 +1,10 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Patikrinta TOP 10 Kaune 2026">
+<circle cx="100" cy="100" r="96" fill="#0E3B26"/>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#D4AF37" stroke-width="3"/>
+<circle cx="100" cy="100" r="74" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".6"/>
+<path id="tp" d="M 100,100 m -84,0 a 84,84 0 1,1 168,0 a 84,84 0 1,1 -168,0" fill="none"/>
+<text font-family="Inter,Arial" font-size="14.5" font-weight="600" letter-spacing="3.2" fill="#F3EBD8"><textPath href="#tp">PATIKRINTA.LT · KAUNAS · 2026 · PATIKRINTA.LT ·</textPath></text>
+<text x="100" y="86" text-anchor="middle" font-family="Georgia,serif" font-size="34" fill="#F3EBD8">TOP</text>
+<text x="100" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="44" fill="#D4AF37">10</text>
+<path d="M 78 142 l 10 10 l 22 -22" stroke="#D4AF37" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
