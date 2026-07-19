@@ -5,6 +5,12 @@
 <title>Money OS — the private finance planner. Pay once, own it forever.</title>
 <meta name="description" content="Budget, goals, investments, debt payoff and your FIRE date — in one beautiful private app. No subscription. Your data never leaves your device.">
 <meta name="theme-color" content="#070B14">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Money OS — the private finance planner. €24.99 once, yours forever.">
+<meta property="og:description" content="Budget, goals, investments, debt payoff and your FIRE date — one beautiful private app. No subscription, no server, your data never leaves your device.">
+<meta property="og:url" content="https://mataz0.github.io/matas-demo/moneyos/">
+<meta property="og:image" content="https://mataz0.github.io/matas-demo/moneyos/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2310B981'/><text y='.72em' x='50' font-size='58' text-anchor='middle'>€</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -163,6 +169,14 @@ footer a{color:var(--green);text-decoration:none}
 .chf input{flex:1;border:1px solid var(--line);border-radius:100px;background:var(--bg);color:var(--ink);padding:11px 16px;font-size:14px;font-family:var(--fb)}
 .chf input:focus{outline:0;border-color:var(--green)}
 .chf button{border:0;border-radius:50%;width:42px;height:42px;background:var(--green);color:#04150E;font-size:16px;cursor:pointer}
+.cbtn .dot{position:absolute;top:1px;right:1px;width:13px;height:13px;border-radius:50%;background:#E7C36A;border:2.5px solid var(--bg);display:none}
+.cbtn.new .dot{display:block;animation:cpulse 1.6s infinite}
+@keyframes cpulse{50%{transform:scale(1.3)}}
+.cteas{position:fixed;right:86px;bottom:28px;z-index:958;background:var(--card);border:1px solid var(--line);border-radius:15px 15px 4px 15px;padding:11px 15px;font-size:13px;line-height:1.45;max-width:236px;box-shadow:0 20px 50px -16px rgba(0,0,0,.7);display:none;cursor:pointer;color:var(--ink)}
+.cteas.on{display:block;animation:up .45s ease both}
+.cteas b{color:var(--green)}
+@media(max-width:760px){.cteas{bottom:86px;right:84px}}
+@media(prefers-reduced-motion:reduce){.cbtn.new .dot{animation:none}}
 </style>
 </head>
 <body>
@@ -252,7 +266,7 @@ footer a{color:var(--green);text-decoration:none}
       <a class="btn p" id="buyB" href="mailto:matasbuika1@gmail.com?subject=Order%3A%20Money%20OS%20(%E2%82%AC24.99)&body=Hi%2C%20I%27d%20like%20to%20buy%20Money%20OS.%0A%0AName%3A%20%0AEmail%20for%20delivery%3A%20%0A%0AI%20agree%20to%20immediate%20delivery%20of%20digital%20content.%0A%0APlease%20send%20payment%20details.">Buy now — €24.99</a>
       <a class="btn s" href="app/" target="_blank" rel="noopener">Try before you buy</a>
     </div>
-    <p class="anchor" style="margin-top:16px">Checkout opens as an email order while card payments are being set up — you'll get payment details within hours.</p>
+    <p class="anchor" id="buyNote" style="margin-top:16px">Checkout opens as an email order while card payments are being set up — you'll get payment details within hours.</p>
     <p style="margin-top:10px;font-size:11.5px;color:var(--soft);max-width:62ch;margin-left:auto;margin-right:auto">By ordering you agree to immediate delivery of digital content and acknowledge that the EU 14-day right of withdrawal does not apply once delivery begins — covered instead by our voluntary 30-day guarantee.</p>
   </div>
   <div style="margin-top:clamp(40px,6vw,64px)">
@@ -317,7 +331,8 @@ footer a{color:var(--green);text-decoration:none}
   });
 })();
 </script>
-<button class="cbtn" id="cOpen" aria-label="Chat">💬</button>
+<button class="cbtn" id="cOpen" aria-label="Chat"><span class="dot"></span>💬</button>
+<div class="cteas" id="cTeas">👋 <b>Questions?</b> I can explain everything — and walk you through setup step by step.</div>
 <div class="chat" id="chat">
   <div class="chd"><i>€</i><div><b>Money OS assistant</b><span>online · instant answers</span></div><button class="chx" id="cClose">✕</button></div>
   <div class="chb" id="chb"></div>
@@ -326,40 +341,74 @@ footer a{color:var(--green);text-decoration:none}
 </div>
 <script>
 (function(){
+  var PAYHIP_URL=""; /* set to https://payhip.com/b/XXXX when card checkout is live */
+  var buyB=document.getElementById('buyB'), buyNote=document.getElementById('buyNote');
+  if(PAYHIP_URL){
+    buyB.href=PAYHIP_URL;
+    buyNote.textContent="Secure card checkout · instant delivery to your email · EU VAT handled automatically.";
+  }
+  var BUY_A = PAYHIP_URL
+    ? "Tap <b>Buy now</b> — secure card checkout with instant delivery to your email, 30-day money-back guarantee. Prefer to look around first? The live demo is free."
+    : "Tap <b>Buy now</b> in the Get Money OS section — it opens a short email order (card checkout is being finalized). You get payment details within hours and the app right after payment. Want to try first? The live demo is free.";
   var KB=[
-   [/price|cost|how much|pay|kaina/i,"Money OS is <b>€24.99 once</b> — no subscription, ever. Compare: YNAB is $109 EVERY year. Comes with a 30-day money-back guarantee.",["How do I buy?","What's inside?"]],
-   [/buy|purchase|order|checkout|get it/i,"Tap <b>Buy now</b> in the Get Money OS section — it opens an email order (card checkout is being finalized). You'll get payment details within hours and the app right after payment. Want to try first? The live demo is free.",["Open live demo","Is it private?"]],
-   [/privat|secure|safe|data|bank|gdpr/i,"Radically private: the app has <b>no server</b> — your data lives only in your browser. Proof: open the app, press F12 → Network — zero requests. No account, no bank login, works offline.",["How do backups work?","What's inside?"]],
-   [/inside|feature|module|what.*(do|can)|included/i,"Six modules in one file: 💶 Budget with CSV import · 🎯 Savings goals with confetti · 📈 Investments & dividends · 🧾 Debt snowball with your debt-free date · 🔥 FIRE calculator · 📊 Insights that talk to you.",["How do I set it up?","Price?"]],
-   [/set.{0,8}up|start|begin|fill|first|how.*use|guide|walk|onboard/i,"Easy 4-step setup (≈10 min):<br>1️⃣ <b>Budget tab</b> → ＋Add your income & this month's expenses (or Import CSV)<br>2️⃣ <b>Budget → Edit limits</b> → set category budgets<br>3️⃣ <b>Invest tab</b> → add holdings (ticker, qty, price)<br>4️⃣ <b>Plan tab</b> → create your first goal.<br>Then tap <b>Save snapshot</b> on Overview monthly. Want details on any step?",["CSV import help","Goals help","FIRE help"]],
-   [/csv|import|statement|bank export/i,"In the app: top bar → <b>Import CSV</b>. Paste rows as <i>date, description, amount</i> (negative = expense), e.g.<br><i>2026-07-01, MAXIMA, -32.50</i><br>The assistant auto-sorts categories (Bolt→Transport, Netflix→Subscriptions…). You can edit any entry after.",["Set up guide","What's inside?"]],
-   [/goal|saving|target|confetti/i,"Plan tab → <b>＋New goal</b> → name + target (+ what you've saved). Add money anytime with ＋Add money — the ring fills up, and when you hit 100%… confetti 🎉",["Set up guide","FIRE help"]],
-   [/fire|retire|freedom|independence/i,"FIRE tab → enter 4 numbers: current invested, monthly investing, expected return %, monthly spending → you get your <b>freedom date</b> and number (25× yearly spending, the classic 4% rule). Educational, not financial advice.",["Try live demo","Price?"]],
-   [/debt|loan|snowball|credit/i,"Debts tab → add each debt (balance, APR, monthly payment). The app computes your <b>debt-free date</b> with the snowball method and shows total interest — watching the date move closer is very motivating.",["Set up guide"]],
-   [/backup|restore|move|another device|transfer/i,"Top bar → <b>Backup</b> downloads a .json file with everything. On any other device: open the app → <b>Restore</b> → pick the file. Do it weekly — it's your safety net.",["Is it private?"]],
-   [/refund|guarantee|money.?back/i,"30-day money-back guarantee, no questions asked. Email matasbuika1@gmail.com and you'll get a full refund.",["Price?","How do I buy?"]],
-   [/device|phone|mac|windows|android|iphone|browser/i,"Works everywhere a browser works: Mac, Windows, iPhone, Android, Linux. One file, no installation. On mobile it feels like a native app with a bottom tab bar.",["What's inside?"]],
-   [/demo|try|test/i,"Yes — full live demo, no signup: tap <b>Try the live demo</b> (or the button below). Hit “Load sample data” inside to see it filled in.",["Open live demo"]],
-   [/human|support|contact|email|help/i,"A human is available too: <b>matasbuika1@gmail.com</b> — replies within hours. I can answer most product questions instantly though!",["Set up guide","Price?"]],
+   [/^(hi|hello|hey|labas|yo)\b/i,"Hello! 👋 Ask me anything about Money OS — pricing, privacy, what's inside, setup, comparisons with YNAB or spreadsheets. I also give a full setup walkthrough.",["What's inside?","Set up guide","Price?"]],
+   [/set.{0,8}up|start|begin|fill|first step|how.*use|guide|walk|onboard/i,"Easy 4-step setup (≈10 min):<br>1️⃣ <b>Budget tab</b> → ＋Add your income & this month's expenses (or Import CSV)<br>2️⃣ <b>Budget → Edit limits</b> → set category budgets<br>3️⃣ <b>Invest tab</b> → add holdings (name, qty, price)<br>4️⃣ <b>Plan tab</b> → create your first goal.<br>Then tap <b>Save snapshot</b> on Overview monthly. Inside the app there's an assistant like me that opens each screen for you and tracks your progress ✅",["CSV import help","Open live demo","Goals help"]],
+   [/csv|import|statement|bank export/i,"In the app: top bar → <b>Import CSV</b>. Paste rows as <i>date, description, amount</i> (negative = expense), e.g.<br><i>2026-07-01, MAXIMA, -32.50</i><br>Categories sort themselves (Bolt→Transport, Netflix→Subscriptions…) and you can edit any entry after.",["Set up guide","What's inside?"]],
+   [/goal|saving|target|confetti/i,"Plan tab → <b>＋New goal</b> → name + target (+ what you've saved already). Add money anytime — the progress ring fills up, and when you hit 100%… confetti 🎉",["Set up guide","FIRE help"]],
+   [/fire|retire|freedom|independence/i,"FIRE tab → enter 4 numbers: current invested, monthly investing, expected return %, monthly spending → you get your <b>freedom date</b> and freedom number (25× yearly spending, the classic 4% rule). Educational, not financial advice.",["Try live demo","Price?"]],
+   [/debt|loan|snowball|credit card/i,"Debts tab → add each debt (balance, APR, monthly payment). The app computes your <b>debt-free date</b> with the snowball method and the interest you'll save — watching that date move closer is very motivating.",["Set up guide"]],
+   [/backup|restore|transfer|move|(sync|share).{0,22}(device|phone|computer|laptop)|clear.{0,10}(browser|history|cache)|lose|lost data/i,"Top bar → <b>Backup</b> downloads a single .json file with everything. On any device: open the app → <b>Restore</b> → pick the file. Do it weekly — since there's no cloud by design, your backup file is your safety net (clearing browser data without one would erase the app's memory).",["Is it private?","Set up guide"]],
+   [/ynab|monarch|copilot|mint|quicken|compar|versus|vs\b|alternative|better than/i,"Honest comparison: YNAB is <b>$109/yr</b>, Monarch $99–199/yr, Copilot $95/yr — great apps, but you rent them forever and your data sits on their servers. Money OS is <b>€24.99 once</b>, covers budget + goals + investments + debts + FIRE, and keeps every number on your device. What it deliberately doesn't do: auto-sync with your bank (that's the privacy trade — CSV import fills the gap in seconds).",["Price?","Is it private?","What's inside?"]],
+   [/excel|sheet|spreadsheet|notion|template/i,"Compared to a spreadsheet: no formulas to build or break, beautiful charts out of the box, auto-categorizing CSV import, confetti on goals — and it still works fully offline like a file. It IS a file, just one that feels like a polished app.",["What's inside?","Try live demo"]],
+   [/subscription|one.?time|lifetime|forever|recurring/i,"One-time <b>€24.99</b>, lifetime use, free updates for version 1. We think budgeting software shouldn't be a recurring line in your budget — that's the whole philosophy.",["Price?","How do I buy?"]],
+   [/update|new version|improve|roadmap|future/i,"Version 1 updates are free — you get them by email. And because the app is a self-contained file, the version you own keeps working forever even if updates stopped tomorrow.",["How do I receive it?","Price?"]],
+   [/family|couple|partner|wife|husband|share|two people/i,"Yes — your purchase is for your household. Put the file on both devices; each keeps its own data, or share one Backup file to stay in sync manually. No per-seat pricing.",["How do backups work?","Price?"]],
+   [/currency|eur|usd|gbp|dollar|pound/i,"Built-in € / $ / £ switcher in the top bar — changes the symbol everywhere instantly.",["What's inside?"]],
+   [/(sync|connect|link).{0,18}bank|bank.{0,14}(sync|connect|link|login|account)|plaid|open banking/i,"By design there is <b>no bank connection</b> — that's the privacy feature, not a gap. You never hand over bank credentials. Instead, paste your bank's CSV export and it auto-sorts in seconds.",["CSV import help","Is it private?"]],
+   [/discount|coupon|cheaper|deal|promo/i,"The launch price <b>€24.99</b> (down from €49) IS the deal — and honestly, one skipped takeaway pizza vs. $109/yr for YNAB. 30-day guarantee means zero risk to try.",["How do I buy?"]],
+   [/vat|invoice|receipt|business|company purchase/i,"You'll receive a purchase receipt by email. Need something specific for accounting? Email <b>matasbuika1@gmail.com</b> and we'll sort it out.",["How do I buy?"]],
+   [/refund|guarantee|money.?back/i,"30-day money-back guarantee, no questions asked. Email matasbuika1@gmail.com and you get a full refund.",["Price?","How do I buy?"]],
+   [/privat|secure|safe|encrypt|my data|gdpr|track/i,"Radically private: the app has <b>no server</b> — your data lives only in your browser. Proof: open the app, press F12 → Network — zero requests. No account, no tracking, no bank login, works offline. GDPR-wise there's nothing to worry about because no data ever reaches us.",["How do backups work?","What's inside?"]],
+   [/device|phone|mac|windows|android|iphone|ipad|tablet|linux|browser|install|app store/i,"Works everywhere a browser works: Mac, Windows, iPhone, iPad, Android, Linux. One file, no installation, no app store. On mobile it feels native, with a bottom tab bar. Use it on all your devices — sync by sharing one Backup file.",["What's inside?","How do I receive it?"]],
+   [/demo|try|test|sample/i,"Full live demo, no signup: tap <b>Try the live demo</b> (or the button below). Inside, hit <b>Load sample data</b> to see it fully filled in.",["Open live demo"]],
+   [/inside|feature|module|what.*(do|can|get)|included/i,"Six modules in one file: 💶 Budget with auto-sorting CSV import · 🎯 Savings goals with confetti · 📈 Investments & dividends · 🧾 Debt snowball with your debt-free date · 🔥 FIRE calculator · 📊 Insights that talk to you. Plus a built-in assistant that walks you through everything.",["How do I set it up?","Price?"]],
+   [/price|cost|how much|kaina/i,"Money OS is <b>€24.99 once</b> — no subscription, ever. Compare: YNAB is $109 EVERY year. Comes with a 30-day money-back guarantee.",["How do I buy?","What's inside?"]],
+   [/buy|purchase|order|checkout|get it|payment method|card|paypal/i,BUY_A,["Open live demo","Is it private?"]],
+   [/receive|delivery|download|after (i )?pay|how.*get it/i,"Instantly by email: a single file that opens in any browser on any device. No installation, no account. Keep it anywhere — it's yours.",["How do I buy?","Which devices?"]],
+   [/who|company|behind|legit|trust|scam|real/i,"Money OS is built by an independent European developer — reachable directly at <b>matasbuika1@gmail.com</b>, replies within hours. The product is fully inspectable: open the live demo, press F12, see for yourself that nothing leaves your device. Plus a 30-day money-back guarantee.",["Try live demo","Refund policy?"]],
+   [/offline|internet|connection|wifi/i,"100% offline after you have the file. Planes, cabins, privacy purists — it just works. No connection is ever required or used.",["Is it private?"]],
+   [/human|support|contact|email|help me/i,"A human is available too: <b>matasbuika1@gmail.com</b> — replies within hours. I can answer most product questions instantly though!",["Set up guide","Price?"]],
+   [/language|english|lietuvi/i,"The app is in English — simple, everyday English (about 200 words total in the interface). Numbers are universal 😉",["What's inside?"]]
   ];
   var chat=document.getElementById('chat'), chb=document.getElementById('chb'), chips=document.getElementById('chips'), cin=document.getElementById('cin');
+  var cbtn=document.getElementById('cOpen'), teas=document.getElementById('cTeas');
   function add(t,me){ var d=document.createElement('div'); d.className='msg '+(me?'me':'bot'); d.innerHTML=t; chb.appendChild(d); chb.scrollTop=chb.scrollHeight; }
   function setChips(arr){ chips.innerHTML=(arr||[]).map(function(c){return '<button class="chip">'+c+'</button>';}).join('');
     [].slice.call(chips.children).forEach(function(b){ b.onclick=function(){ ask(b.textContent); }; }); }
   function answer(q){
-    if(/open live demo/i.test(q)){ window.open('app/','_blank'); add("Opening the live demo in a new tab — tap <b>Load sample data</b> inside to explore ✨"); setChips(["Set up guide","How do I buy?"]); return; }
+    if(/open live demo/i.test(q)){ window.open('app/','_blank'); add("Opening the live demo in a new tab — tap <b>Load sample data</b> inside to explore, and say hi to the in-app assistant ✨"); setChips(["Set up guide","How do I buy?"]); return; }
     for(var i=0;i<KB.length;i++){ if(KB[i][0].test(q)){ add(KB[i][1]); setChips(KB[i][2]); return; } }
-    add("Good question! I know everything about Money OS — pricing, privacy, setup, every module. Try one of these, or email <b>matasbuika1@gmail.com</b> for anything else:");
+    add("Good question! I'm trained on everything about Money OS — pricing, privacy, setup, comparisons, every module. Try one of these, or email <b>matasbuika1@gmail.com</b> for anything else:");
     setChips(["What's inside?","Set up guide","Is it private?","Price?"]);
   }
   function ask(q){ add(q,true); setTimeout(function(){answer(q);},450); }
-  document.getElementById('cOpen').onclick=function(){
-    chat.classList.toggle('on');
-    if(chat.classList.contains('on')&&!chb.children.length){
-      add("Hi! 👋 I'm the Money OS assistant — I can answer any question and walk you through setting everything up. What would you like to know?");
+  function openChat(){
+    teas.classList.remove('on'); cbtn.classList.remove('new');
+    try{localStorage.setItem('mosChatSeen','1');}catch(e){}
+    chat.classList.add('on');
+    if(!chb.children.length){
+      add("Hi! 👋 I'm the Money OS assistant — trained on everything: pricing, privacy, every module, full setup walkthroughs, even honest comparisons with YNAB. What would you like to know?");
       setChips(["What's inside?","Set up guide","Is it private?","Price?"]);
     }
-  };
+  }
+  cbtn.onclick=function(){ if(chat.classList.contains('on')){ chat.classList.remove('on'); } else openChat(); };
+  teas.onclick=openChat;
+  var seen=false; try{seen=!!localStorage.getItem('mosChatSeen');}catch(e){}
+  if(!seen){
+    cbtn.classList.add('new');
+    setTimeout(function(){ if(!chat.classList.contains('on')) teas.classList.add('on'); },5000);
+    setTimeout(function(){ teas.classList.remove('on'); },26000);
+  }
   document.getElementById('cClose').onclick=function(){ chat.classList.remove('on'); };
   document.getElementById('csend').onclick=function(){ if(cin.value.trim()){ ask(cin.value.trim()); cin.value=''; } };
   cin.addEventListener('keydown',function(e){ if(e.key==='Enter'&&cin.value.trim()){ ask(cin.value.trim()); cin.value=''; } });

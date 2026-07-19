@@ -127,7 +127,37 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 .gbtn:hover{border-color:var(--green)}
 .conf{position:fixed;top:-12px;width:9px;height:14px;z-index:300;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(600deg);opacity:.9}}
-@media(prefers-reduced-motion:reduce){.view.on .card,.view.on .rowi,#donut,.chart path.animln{animation:none!important}.conf{display:none}}
+@media(prefers-reduced-motion:reduce){.view.on .card,.view.on .rowi,#donut,.chart path.animln{animation:none!important}.conf{display:none}.cbtn .dot{animation:none!important}}
+/* assistant */
+.cbtn{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:90;width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#10B981,#3B82F6);color:#fff;font-size:22px;box-shadow:0 14px 34px -10px rgba(16,185,129,.6);transition:transform .25s}
+.cbtn:hover{transform:translateY(-3px)}
+.cbtn .dot{position:absolute;top:1px;right:1px;width:13px;height:13px;border-radius:50%;background:#F59E0B;border:2.5px solid var(--bg);display:none}
+.cbtn.new .dot{display:block;animation:apulse 1.6s infinite}
+@keyframes apulse{50%{transform:scale(1.3)}}
+@media(min-width:900px){.cbtn{bottom:18px}}
+.chatp{position:fixed;right:16px;bottom:calc(148px + env(safe-area-inset-bottom));z-index:95;width:min(362px,calc(100vw - 32px));max-height:min(560px,72vh);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7);display:none;flex-direction:column;overflow:hidden}
+.chatp.on{display:flex}
+@media(min-width:900px){.chatp{bottom:82px}}
+.achd{padding:13px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:rgba(16,185,129,.08)}
+.achd i{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#10B981,#3B82F6);display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;flex:none}
+.achd b{font-size:14px}
+.achd span{display:block;font-size:11px;color:var(--green)}
+.achx{margin-left:auto;border:0;background:none;color:var(--mut);font-size:16px;cursor:pointer}
+.achb{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
+.amsg{max-width:90%;padding:10px 13px;border-radius:14px;font-size:13.5px;line-height:1.5;animation:fade .3s ease}
+.amsg.bot{background:rgba(255,255,255,.06);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
+.amsg.me{background:var(--green);color:#fff;border-bottom-right-radius:5px;align-self:flex-end;font-weight:500}
+.gstep{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:12.8px}
+.gstep .gk{flex:none}
+.gstep button{margin-left:auto;border:1px solid rgba(16,185,129,.45);background:none;color:var(--green);border-radius:100px;padding:4px 11px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.achips{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 10px}
+.achip{border:1px solid var(--line);background:none;color:var(--mut);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
+.achip:hover{border-color:var(--green);color:var(--ink)}
+.achip.act{color:var(--green);border-color:rgba(16,185,129,.45);font-weight:700}
+.achf{display:flex;gap:8px;padding:11px 13px;border-top:1px solid var(--line)}
+.achf input{flex:1;border:1.5px solid var(--line);border-radius:100px;background:var(--bg);color:var(--ink);padding:10px 15px;font-size:14px}
+.achf input:focus{outline:0;border-color:var(--green)}
+.achf button{border:0;border-radius:50%;width:40px;height:40px;background:var(--green);color:#fff;font-size:15px;cursor:pointer}
 .logo{cursor:pointer;user-select:none}
 .logo.spin i{animation:lspin .7s cubic-bezier(.16,1,.3,1)}
 @keyframes lspin{to{transform:rotate(360deg)}}
@@ -276,6 +306,13 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 <!-- MODAL -->
 <div class="mask" id="mask"><div class="modal" id="modal"></div></div>
 <div class="toast" id="toast"></div>
+<button class="cbtn" id="aOpen" aria-label="Open assistant"><span class="dot"></span>💬</button>
+<div class="chatp" id="aPanel" role="dialog" aria-label="Money OS assistant">
+  <div class="achd"><i>€</i><div><b>Assistant</b><span>helps you fill everything in</span></div><button class="achx" id="aClose" aria-label="Close">✕</button></div>
+  <div class="achb" id="aBody"></div>
+  <div class="achips" id="aChips"></div>
+  <div class="achf"><input id="aIn" placeholder="Ask anything, or type &quot;guide&quot;…" autocomplete="off"><button id="aSend" aria-label="Send">➤</button></div>
+</div>
 
 <script>
 (function(){
@@ -699,6 +736,96 @@ function maybeSample(){
 $('sampleB').addEventListener('click',sampleData);
 $('wipeB').addEventListener('click',function(){ document.getElementById('sampleBar').style.display='none'; toast('Fresh start — add your first entry'); });
 $('logoB').addEventListener('click',maybeSample);
+
+/* ───────── assistant ───────── */
+var aP=$('aPanel'), aB=$('aBody'), aC=$('aChips'), aI=$('aIn'), aBtn=$('aOpen');
+function aGo(v){ document.querySelector('[data-v='+v+']').click(); }
+var ACT={
+  tx:['Add transaction',function(){aGo('bud');$('txAdd').click();}],
+  csv:['Import CSV',function(){$('csvB').click();}],
+  limits:['Edit limits',function(){aGo('bud');$('budEdit').click();}],
+  goal:['New goal',function(){aGo('plan');$('gAdd').click();}],
+  hold:['Add holding',function(){aGo('inv');$('hAdd').click();}],
+  divd:['Add dividend',function(){aGo('inv');$('divAdd').click();}],
+  debt:['Add debt',function(){aGo('debt');$('dAdd').click();}],
+  fire:['Open FIRE',function(){aGo('fire');}],
+  snap:['Save snapshot',function(){aGo('dash');$('snapB').click();}],
+  backup:['Backup now',function(){$('expB').click();}],
+  restore:['Restore backup',function(){$('impB').click();}],
+  sample:['Load sample data',function(){sampleData();}]
+};
+$('budEdit').addEventListener('click',function(){ try{localStorage.setItem('mosLim','1');}catch(e){} });
+function aAdd(t,me){ var d=document.createElement('div'); d.className='amsg '+(me?'me':'bot'); d.innerHTML=t; aB.appendChild(d); aB.scrollTop=aB.scrollHeight; return d; }
+function aChips(arr){ aC.innerHTML=''; (arr||[]).forEach(function(c){
+    var b=document.createElement('button');
+    if(typeof c==='string'){ b.className='achip'; b.textContent=c; b.onclick=function(){ aAsk(c); }; }
+    else { b.className='achip act'; b.textContent='▸ '+ACT[c.a][0]; b.onclick=function(){ aRun(c.a); }; }
+    aC.appendChild(b); }); }
+function aRun(a){ aP.classList.remove('on'); ACT[a][1](); }
+function aSteps(){ var lim=false; try{lim=!!localStorage.getItem('mosLim');}catch(e){}
+  return [
+  {ok:S.tx.length>0, t:'Add income & expenses', a:'tx'},
+  {ok:lim, t:'Review category limits', a:'limits'},
+  {ok:S.goals.length>0, t:'Create a savings goal', a:'goal'},
+  {ok:S.hold.length>0, t:'Add investments <i style="color:var(--soft)">(optional)</i>', a:'hold'},
+  {ok:S.debts.length>0, t:'Add debts <i style="color:var(--soft)">(skip if none 🎉)</i>', a:'debt'},
+  {ok:S.snaps.length>0, t:'Save your first snapshot', a:'snap'}
+];}
+function aGuide(){
+  var st=aSteps(), done=st.filter(function(s){return s.ok;}).length;
+  var h='<b>Setup guide — '+done+'/'+st.length+' done</b>';
+  st.forEach(function(s){ h+='<div class="gstep"><span class="gk">'+(s.ok?'✅':'⬜️')+'</span><span>'+s.t+'</span>'+(s.ok?'':'<button data-a="'+s.a+'">Do it</button>')+'</div>'; });
+  h+= done===st.length ? '<div style="margin-top:8px">🎉 <b>All set!</b> Habit that makes it work: <b>snapshot monthly</b>, <b>backup weekly</b>. Ask me anything anytime.</div>'
+    : '<div style="margin-top:8px;color:var(--mut)">Tap <b>Do it</b> — I’ll open the right screen with the right form for you.</div>';
+  var d=aAdd(h);
+  [].slice.call(d.querySelectorAll('button[data-a]')).forEach(function(b){ b.onclick=function(){ aRun(b.dataset.a); }; });
+  aChips(['CSV format','How do limits work?','What is a snapshot?']);
+}
+var AKB=[
+ [/guide|set.{0,4}up|start|begin|first|onboard|where do i/i, aGuide],
+ [/csv|import|statement|bank/i, "Top bar → <b>Import CSV</b>. Paste rows as <i>date, description, amount</i> (negative = expense):<br><i>2026-07-01, MAXIMA, -32.50<br>2026-07-01, Salary, 2600</i><br>Categories are auto-detected (Bolt→Transport, Netflix→Subscriptions…) and you can edit anything after.", [{a:'csv'},'Setup guide']],
+ [/add money|deposit|top.?up/i, "Open the <b>Plan</b> tab and tap <b>＋Add money</b> on a goal — the ring fills up. Hit 100% and you get confetti 🎉", [{a:'goal'}]],
+ [/goal|saving|target|confetti/i, "Goals live in the <b>Plan</b> tab: name + target amount (+ what you already saved). Add money anytime — the progress ring fills, and reaching 100% brings confetti.", [{a:'goal'},'What is a snapshot?']],
+ [/limit|budget.{0,4}(cap|set|edit)|categor/i, "Budget tab → <b>Edit limits</b> — a monthly cap per category. Bars turn red when you overspend. Start rough (Food, Home, Transport…) and tune after your first month.", [{a:'limits'}]],
+ [/transaction|expense|income|spend|salary|add.{0,8}(entry|record)/i, "Budget tab → <b>＋Add</b>: pick Expense or Income, amount, category, date. Faster for many rows: <b>Import CSV</b> from your bank.", [{a:'tx'},{a:'csv'}]],
+ [/dividend/i, "Invest tab → <b>＋Add dividend</b> (holding, amount, date). The yearly total shows your growing passive income.", [{a:'divd'}]],
+ [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: name, quantity, buy price, current price. You get value, invested, P/L and the allocation donut on Overview. Update prices whenever you like — it takes seconds.", [{a:'hold'},{a:'divd'}]],
+ [/debt|loan|snowball|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You instantly see your <b>debt-free date</b> (snowball: smallest first) and total interest.", [{a:'debt'}]],
+ [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending). Educational, not financial advice.", [{a:'fire'}]],
+ [/snapshot|net worth|history|curve|wealth/i, "A snapshot saves today’s net worth as a point on your wealth curve (Overview). Save one <b>monthly</b> — after 3–4 months the chart becomes the most motivating thing in the app.", [{a:'snap'}]],
+ [/backup|export|restore|transfer|move|another device|sync|copy/i, "Top bar → <b>Backup</b> downloads one .json file with everything. On another device: open the app → <b>Restore</b> → pick that file. Do it weekly — there is no cloud, the file IS your safety net.", [{a:'backup'},{a:'restore'}]],
+ [/currency|eur|usd|gbp|dollar|pound|€|\$|£/i, "Top bar, left dropdown: € / $ / £. It changes the symbol everywhere instantly — your numbers stay the same.", ['Setup guide']],
+ [/delete|remove|edit|wrong|mistake|fix/i, "Every row has ✕ on the right — tap it to delete, then re-add corrected. Nothing is ever locked.", ['Setup guide']],
+ [/month|previous|last|navigate|july|june/i, "Budget tab, top: <b>‹ month ›</b> arrows move between months — entries stay in the month of their date.", [{a:'tx'}]],
+ [/sample|example|demo data|play/i, "Tap the logo (top-left) when the app is empty and you’ll see <b>Load sample data</b> — a full realistic setup to explore. Your own entries later replace it.", [{a:'sample'}]],
+ [/fresh|wipe|clear|reset|delete all/i, "To fully reset: Backup first (top bar), then clear this site’s data in your browser settings — or simply delete rows you don’t need. There is no hidden copy anywhere; you control everything.", [{a:'backup'}]],
+ [/privat|secure|safe|data|cloud|server|gdpr/i, "Everything lives in <b>your browser only</b> — no server, no account, no tracking. Proof: F12 → Network — zero requests. That’s also why Backup matters: your file is the only copy.", [{a:'backup'}]],
+ [/buy|price|cost|purchase|pay|license/i, "Money OS is <b>€24.99 once</b> — no subscription. If you’re in the free demo now, everything you see is exactly what you get, forever.", ['Setup guide']],
+ [/human|contact|support|email|bug|problem/i, "A human is one email away: <b>matasbuika1@gmail.com</b> — replies within hours. For most questions I’m faster, though 😉", ['Setup guide']]
+];
+function aAnswer(q){
+  for(var i=0;i<AKB.length;i++){ if(AKB[i][0].test(q)){
+    if(typeof AKB[i][1]==='function'){ AKB[i][1](); } else { aAdd(AKB[i][1]); aChips(AKB[i][2]); }
+    return; } }
+  aAdd("I know every corner of this app — adding entries, CSV import, goals, debts, FIRE, backups. Try one of these:");
+  aChips(['Setup guide','CSV format','How do backups work?','Is my data private?']);
+}
+function aAsk(q){ aAdd(q,true); setTimeout(function(){ aAnswer(q); },400); }
+aBtn.addEventListener('click',function(){
+  aP.classList.toggle('on'); aBtn.classList.remove('new');
+  try{localStorage.setItem('mosAsst','1');}catch(e){}
+  if(aP.classList.contains('on')&&!aB.children.length){
+    var empty=!S.tx.length&&!S.hold.length&&!S.goals.length&&!S.debts.length;
+    aAdd("Hi! 👋 I’m your Money OS assistant. I answer questions <b>and open the right screens for you</b> — just tap a suggestion."+(empty?"<br><br>Looks like you’re starting fresh — want me to walk you through setup?":""));
+    if(empty){ aChips(['Setup guide',{a:'sample'},'Is my data private?']); }
+    else aChips(['Setup guide','CSV format','How do backups work?']);
+  }
+});
+try{ if(localStorage.getItem('mosAsst')) aBtn.classList.remove('new'); else aBtn.classList.add('new'); }catch(e){}
+$('aClose').addEventListener('click',function(){ aP.classList.remove('on'); });
+$('aSend').addEventListener('click',function(){ if(aI.value.trim()){ aAsk(aI.value.trim()); aI.value=''; } });
+aI.addEventListener('keydown',function(e){ if(e.key==='Enter'&&aI.value.trim()){ aAsk(aI.value.trim()); aI.value=''; } });
+
 maybeSample();
 render();
 })();
