@@ -1,134 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Money OS — the private finance planner. One price, yours forever.</title>
-<meta name="description" content="Budget, goals, investments, debt payoff and FIRE in one beautiful app. 100% private — your data never leaves your device. No subscription.">
-<meta name="theme-color" content="#0B1220">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Money OS — the private finance planner. Pay once, own it forever.</title>
+<meta name="description" content="Budget, goals, investments, debt payoff and your FIRE date — in one beautiful private app. No subscription. Your data never leaves your device.">
+<meta name="theme-color" content="#070B14">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2310B981'/><text y='.72em' x='50' font-size='58' text-anchor='middle'>€</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0B1220;--card:#121B30;--ink:#EEF3FB;--mut:#93A5C4;--line:rgba(255,255,255,.09);--green:#10B981;--blue:#3B82F6;--fb:'Inter',system-ui,sans-serif;--pad:clamp(20px,5vw,80px)}
+:root{--bg:#070B14;--card:#0E1626;--glass:rgba(18,27,48,.55);--ink:#F0F4FB;--mut:#8FA1C0;--soft:#5A6D92;--line:rgba(255,255,255,.09);
+--green:#10B981;--blue:#3B82F6;--gold:#E7C36A;--fd:'Instrument Serif',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--pad:clamp(20px,5vw,84px)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16.5px;line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
-.glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(55% 40% at 50% 0%,rgba(59,130,246,.16),transparent 65%),radial-gradient(40% 30% at 85% 70%,rgba(16,185,129,.10),transparent 65%)}
-nav{position:fixed;top:0;left:0;right:0;z-index:90;padding:15px var(--pad);display:flex;justify-content:space-between;align-items:center;background:rgba(11,18,32,.85);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+a{color:inherit}
+::selection{background:var(--green);color:#04150E}
+.aur{position:fixed;inset:-20%;z-index:-2;filter:blur(70px);opacity:.55}
+.aur i{position:absolute;border-radius:50%}
+.aur i:nth-child(1){width:44vw;height:44vw;left:8%;top:-6%;background:radial-gradient(circle,rgba(59,130,246,.5),transparent 65%);animation:a1 26s ease-in-out infinite alternate}
+.aur i:nth-child(2){width:38vw;height:38vw;right:2%;top:22%;background:radial-gradient(circle,rgba(16,185,129,.42),transparent 65%);animation:a2 31s ease-in-out infinite alternate}
+.aur i:nth-child(3){width:30vw;height:30vw;left:38%;bottom:-8%;background:radial-gradient(circle,rgba(231,195,106,.22),transparent 65%);animation:a1 37s ease-in-out infinite alternate-reverse}
+@keyframes a1{to{transform:translate(9vw,7vh) scale(1.15)}}
+@keyframes a2{to{transform:translate(-8vw,9vh) scale(.9)}}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.32;mix-blend-mode:overlay}
+.grain svg{width:100%;height:100%}
+.prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue),var(--gold));width:0;z-index:9001}
+nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:15px var(--pad);display:flex;justify-content:space-between;align-items:center;transition:.4s;border-bottom:1px solid transparent}
+nav.stuck{background:rgba(7,11,20,.8);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;cursor:pointer;user-select:none}
-.logo i{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#10B981,#3B82F6);display:grid;place-items:center;font-style:normal;font-weight:800}
+.logo i{width:29px;height:29px;border-radius:9px;background:linear-gradient(135deg,#10B981,#3B82F6);display:grid;place-items:center;font-style:normal;font-weight:800;box-shadow:0 6px 18px -6px rgba(16,185,129,.7)}
 .logo.spin i{animation:lspin .7s cubic-bezier(.16,1,.3,1)}
 @keyframes lspin{to{transform:rotate(360deg)}}
-.ncta{background:var(--green);color:#04150E;border-radius:11px;padding:10px 20px;font-weight:700;font-size:14px;text-decoration:none}
-header{min-height:100svh;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(26px,4vw,70px);align-items:center;padding:110px var(--pad) 60px}
-@media(max-width:900px){header{grid-template-columns:1fr;min-height:auto;padding-top:100px}}
-.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:100px;padding:7px 15px;font-size:12.5px;font-weight:600;color:var(--mut)}
+.ncta{background:var(--ink);color:#0A1220;border-radius:100px;padding:11px 22px;font-weight:700;font-size:13.5px;text-decoration:none;transition:.25s}
+.ncta:hover{transform:translateY(-2px)}
+header{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px var(--pad) 40px;position:relative}
+.pill{display:inline-flex;gap:9px;align-items:center;border:1px solid var(--line);background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:100px;padding:8px 17px;font-size:12.5px;font-weight:600;color:var(--mut)}
 .pill b{color:var(--green)}
-h1{font-weight:800;font-size:clamp(40px,6.4vw,72px);line-height:1.04;letter-spacing:-.035em;margin-top:20px}
-h1 span{background:linear-gradient(90deg,#10B981,#3B82F6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--mut);margin-top:20px;max-width:50ch;font-size:clamp(16px,1.5vw,18.5px)}
-.ctas{display:flex;gap:13px;margin-top:30px;flex-wrap:wrap;align-items:center}
-.btn{display:inline-block;border-radius:13px;padding:16px 30px;font-size:15px;font-weight:700;text-decoration:none;transition:.25s;position:relative;overflow:hidden}
-.btn.p{background:var(--green);color:#04150E;box-shadow:0 14px 30px -12px rgba(16,185,129,.55)}
-.btn.s{border:1px solid var(--line);color:var(--ink)}
+h1{font-family:var(--fd);font-weight:400;font-size:clamp(46px,7.6vw,96px);line-height:1.02;letter-spacing:-.015em;margin-top:26px;max-width:16ch}
+h1 em{font-style:italic;background:linear-gradient(100deg,#10B981,#3B82F6 55%,#E7C36A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);margin-top:22px;max-width:54ch;font-size:clamp(16px,1.5vw,19px)}
+.ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-block;border-radius:100px;padding:17px 34px;font-size:15px;font-weight:700;text-decoration:none;transition:.25s;position:relative;overflow:hidden}
+.btn.p{background:linear-gradient(135deg,#10B981,#0EA5A0);color:#04150E;box-shadow:0 0 0 1px rgba(16,185,129,.4),0 18px 44px -14px rgba(16,185,129,.55)}
+.btn.s{border:1px solid var(--line);color:var(--ink);background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .btn:hover{transform:translateY(-2px)}
-.btn::after{content:"";position:absolute;top:0;left:-130%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transition:left .8s}
+.btn::after{content:"";position:absolute;top:0;left:-130%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transition:left .8s}
 .btn:hover::after{left:140%}
-.price{margin-top:16px;font-size:13.5px;color:var(--mut)}
-.price b{color:var(--ink);font-size:17px}
-.price s{opacity:.6}
-.shot{border-radius:18px;border:1px solid var(--line);box-shadow:0 40px 90px -30px rgba(0,0,0,.7);overflow:hidden;transform:perspective(1200px) rotateY(-8deg) rotateX(2deg);transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.shot:hover{transform:perspective(1200px) rotateY(-3deg)}
-.shot img{width:100%;display:block}
-section{padding:clamp(60px,9vw,110px) var(--pad);max-width:1080px;margin:0 auto}
-h2{font-weight:800;font-size:clamp(28px,4.4vw,48px);letter-spacing:-.03em;line-height:1.08}
-.sd{color:var(--mut);margin-top:12px;max-width:60ch}
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:38px}
-.ft{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s,border-color .25s}
-.ft:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18)}
-.ft .ic{font-size:24px;margin-bottom:12px}
+.anchor{margin-top:18px;font-size:13.5px;color:var(--mut)}
+.anchor b{color:var(--ink)}
+.stage{position:relative;width:min(880px,94vw);height:clamp(300px,42vw,430px);margin-top:clamp(30px,5vw,54px);perspective:1200px}
+.ph{position:absolute;border-radius:26px;border:1px solid var(--line);background:#0A0F1C;padding:7px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);will-change:transform}
+.ph img{width:100%;border-radius:20px;display:block}
+.ph.c{width:clamp(170px,24vw,240px);left:50%;top:0;transform:translateX(-50%);z-index:3;animation:floC 7s ease-in-out infinite}
+.ph.l{width:clamp(140px,19vw,195px);left:8%;top:14%;z-index:2;animation:flo 8.5s ease-in-out infinite 1.2s}
+.ph.r{width:clamp(140px,19vw,195px);right:8%;top:10%;z-index:2;animation:flo 9s ease-in-out infinite .6s}
+@keyframes flo{50%{transform:translateY(-14px)}}
+@keyframes floC{50%{transform:translateX(-50%) translateY(-16px)}}
+.fadeb{position:absolute;left:0;right:0;bottom:0;height:36%;background:linear-gradient(transparent,var(--bg));z-index:4;pointer-events:none}
+.scue{margin-top:6px;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scue::after{content:"";width:1px;height:40px;background:linear-gradient(var(--green),transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{50%{opacity:.25}}
+.marq{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;background:rgba(7,11,20,.5)}
+.marq div{display:flex;gap:48px;width:max-content;animation:mv 38s linear infinite}
+.marq span{font-family:var(--fd);font-size:clamp(15px,1.8vw,21px);letter-spacing:.2em;text-transform:uppercase;color:var(--mut);white-space:nowrap;display:flex;align-items:center;gap:48px}
+.marq span::after{content:"◆";color:var(--green);font-size:.45em}
+@keyframes mv{to{transform:translateX(-50%)}}
+.stats{display:flex;flex-wrap:wrap;max-width:1080px;margin:0 auto;padding:clamp(30px,5vw,50px) var(--pad) 0;gap:0}
+.stats div{flex:1;min-width:170px;padding:18px 22px;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:0}
+.sn{font-family:var(--fd);font-size:clamp(30px,4vw,48px);line-height:1;font-variant-numeric:tabular-nums}
+.sn b{font-weight:400;color:var(--green)}
+.sl{font-size:12.5px;color:var(--mut);margin-top:6px}
+@media(max-width:700px){.stats div{flex:1 1 45%;border-left:0;border-top:1px solid var(--line)}}
+section{padding:clamp(66px,10vw,130px) var(--pad);max-width:1120px;margin:0 auto}
+.orn{display:flex;align-items:center;gap:14px;margin:0 0 clamp(30px,5vw,50px)}
+.orn::before,.orn::after{content:"";height:1px;background:var(--line);flex:1}
+.orn i{width:5px;height:5px;transform:rotate(45deg);background:var(--gold);flex:none}
+.tag{font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:14px}
+h2{font-family:var(--fd);font-weight:400;font-size:clamp(32px,5vw,58px);letter-spacing:-.01em;line-height:1.05}
+h2 em{font-style:italic;color:var(--gold)}
+.sd{color:var(--mut);margin-top:14px;max-width:60ch;font-size:16.5px}
+.center{text-align:center}
+.center .sd{margin-left:auto;margin-right:auto}
+.steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:40px}
+.st3{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:28px;transition:transform .3s,border-color .3s}
+.st3:hover{transform:translateY(-5px);border-color:rgba(16,185,129,.4)}
+.st3 .n{font-family:var(--fd);font-size:15px;color:var(--gold);letter-spacing:.1em}
+.st3 h3{font-size:17.5px;font-weight:700;margin-top:10px}
+.st3 p{color:var(--mut);font-size:14.5px;margin-top:8px}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:40px}
+.ft{background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:28px;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
+.ft::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(16,185,129,.55),transparent);opacity:0;transition:opacity .4s}
+.ft:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.18);box-shadow:0 24px 50px -28px rgba(0,0,0,.7)}
+.ft:hover::before{opacity:1}
+.ft .ic{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.06);display:grid;place-items:center;font-size:21px;margin-bottom:14px}
 .ft h3{font-size:17px;font-weight:700}
 .ft p{color:var(--mut);font-size:14.5px;margin-top:7px}
-.buy{background:linear-gradient(160deg,#0E1B38,#0D2430);border:1px solid var(--line);border-radius:22px;padding:clamp(30px,5vw,60px);text-align:center}
-.big{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-.03em}
-.big s{font-size:.5em;color:var(--mut);font-weight:600;vertical-align:middle;margin-right:10px}
-details{border-bottom:1px solid var(--line)}
-summary{font-size:16.5px;font-weight:600;padding:19px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:var(--green);font-size:22px;transition:transform .3s}
-details[open] summary::after{transform:rotate(45deg)}
-details p{color:var(--mut);padding:0 0 19px;font-size:15px;max-width:70ch}
-footer{padding:40px var(--pad) 70px;text-align:center;font-size:13px;color:var(--mut);border-top:1px solid var(--line)}
-.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}.logo.spin i{animation:none}}
-/* aiškumo sekcijos */
-.steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px}
-.st3{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;position:relative}
-.st3 .n{position:absolute;top:-14px;left:22px;background:linear-gradient(135deg,#10B981,#3B82F6);color:#04150E;font-weight:800;font-size:14px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center}
-.st3 h3{font-size:16.5px;font-weight:700;margin-top:6px}
-.st3 p{color:var(--mut);font-size:14.5px;margin-top:7px}
-.walk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(14px,2vw,24px);margin-top:38px}
+.mani{border-left:2px solid var(--gold);padding:6px 0 6px clamp(20px,3vw,38px);max-width:56ch;margin:0 auto}
+.mani p{font-family:var(--fd);font-style:italic;font-size:clamp(21px,2.8vw,30px);line-height:1.45}
+.mani span{display:block;margin-top:16px;font-family:var(--fb);font-style:normal;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
+.walk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(14px,2vw,26px);margin-top:40px}
 .wk{text-align:center}
-.phone{border-radius:26px;border:1px solid var(--line);background:#0A0F1C;padding:8px;box-shadow:0 24px 60px -24px rgba(0,0,0,.7);transition:transform .3s}
-.wk:hover .phone{transform:translateY(-6px)}
+.phone{border-radius:26px;border:1px solid var(--line);background:#0A0F1C;padding:8px;box-shadow:0 26px 60px -24px rgba(0,0,0,.75);transition:transform .35s}
+.wk:hover .phone{transform:translateY(-8px) scale(1.02)}
 .phone img{width:100%;border-radius:19px;display:block}
-.wk h3{font-size:15.5px;font-weight:700;margin-top:14px}
+.wk h3{font-family:var(--fd);font-size:19px;font-weight:400;margin-top:15px}
 .wk p{color:var(--mut);font-size:13.5px;margin-top:4px}
-.cmp{width:100%;border-collapse:collapse;margin-top:34px;font-size:14.5px}
-.cmp th{padding:12px 14px;text-align:left;color:var(--mut);font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+.cmp{width:100%;border-collapse:collapse;margin-top:40px;font-size:14.5px;background:var(--glass);border-radius:18px;overflow:hidden}
+.cmp th{padding:14px 16px;text-align:left;color:var(--mut);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line)}
 .cmp th.me{color:var(--green)}
-.cmp td{padding:13px 14px;border-bottom:1px solid var(--line)}
-.cmp td.me{color:var(--ink);font-weight:600;background:rgba(16,185,129,.06)}
+.cmp td{padding:14px 16px;border-bottom:1px solid var(--line)}
+.cmp tr:last-child td{border-bottom:0}
+.cmp td.me{color:var(--ink);font-weight:600;background:rgba(16,185,129,.07)}
 .cmp .y{color:var(--green);font-weight:700}
-.cmp .x{color:var(--mut)}
-@media(max-width:640px){.cmp{font-size:13px}.cmp th,.cmp td{padding:10px 8px}}
+.cmp .x{color:var(--soft)}
+@media(max-width:640px){.cmp{font-size:12.5px}.cmp th,.cmp td{padding:11px 8px}}
+.buy{position:relative;background:linear-gradient(160deg,rgba(16,185,129,.12),rgba(59,130,246,.10) 55%,rgba(231,195,106,.08)),var(--card);border:1px solid rgba(16,185,129,.3);border-radius:26px;padding:clamp(32px,5vw,64px);text-align:center;overflow:hidden}
+.big{font-family:var(--fd);font-size:clamp(52px,7.5vw,84px);letter-spacing:-.02em;line-height:1}
+.big s{font-size:.42em;color:var(--soft);font-weight:400;vertical-align:middle;margin-right:12px}
+.gbadge{display:inline-flex;align-items:center;gap:9px;margin-top:16px;border:1px solid rgba(231,195,106,.4);color:var(--gold);border-radius:100px;padding:7px 16px;font-size:12.5px;font-weight:600}
+details{border-bottom:1px solid var(--line)}
+summary{font-family:var(--fd);font-size:clamp(18px,2.2vw,24px);font-weight:400;padding:20px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--green);font-size:23px;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--mut);padding:0 0 20px;font-size:15px;max-width:72ch}
+footer{padding:44px var(--pad) 90px;text-align:center;font-size:13px;color:var(--soft);border-top:1px solid var(--line)}
+footer a{color:var(--green);text-decoration:none}
+.callbar{display:none}
+@media(max-width:760px){
+  body{padding-bottom:64px}
+  .callbar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:950;background:rgba(10,15,28,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:10px 16px;gap:12px;align-items:center;justify-content:space-between;border-top:1px solid rgba(16,185,129,.35)}
+  .callbar .p{font-family:var(--fd);font-size:21px}
+  .callbar .p s{font-size:.6em;color:var(--soft)}
+  .callbar .cbb{background:var(--green);color:#04150E;border-radius:100px;padding:12px 22px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}.aur i,.ph,.marq div,.scue::after{animation:none!important}.logo.spin i{animation:none}}
 </style>
 </head>
 <body>
-<div class="glow"></div>
-<nav><div class="logo" id="logoB"><i>€</i>Money OS</div><a class="ncta" href="#buy">Get it — €24.99</a></nav>
+<div class="aur"><i></i><i></i><i></i></div>
+<div class="grain"><svg xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)" opacity="0.5"/></svg></div>
+<div class="prog" id="prog"></div>
+<nav id="nav"><div class="logo" id="logoB"><i>€</i>Money OS</div><a class="ncta" href="#buy">Get it — €24.99</a></nav>
 <header>
-  <div>
-    <span class="pill"><b>🔒</b> 100% private — data never leaves your device</span>
-    <h1>Your money,<br>finally <span>under control.</span></h1>
-    <p class="sub">Budget, savings goals, investments, debt payoff and your FIRE date — in one beautiful app. No subscription. No bank logins. No tracking. Pay once, yours forever.</p>
-    <div class="ctas">
-      <a class="btn p" href="#buy">Get Money OS — €24.99</a>
-      <a class="btn s" href="app/" target="_blank" rel="noopener">Try the live demo →</a>
-    </div>
-    <p class="price">YNAB charges <b>$109 every year</b>. Monarch — $99/yr. Money OS is <b>€24.99 once</b> — it pays for itself in 3 months.</p>
+  <span class="pill rv in"><b>🔒</b> 100% private · zero network requests · works offline</span>
+  <h1 class="rv in">Wealth begins with <em>clarity.</em></h1>
+  <p class="sub rv in">Budget, savings goals, investments, debt payoff and your financial freedom date — in one beautiful app that answers to no server, no bank and no subscription. Pay once. Own it forever.</p>
+  <div class="ctas rv in">
+    <a class="btn p" href="#buy">Get Money OS — €24.99</a>
+    <a class="btn s" href="app/" target="_blank" rel="noopener">Try the live demo →</a>
   </div>
-  <div class="shot rv in"><img src="img/dash.png" alt="Money OS dashboard" width="1280" height="860"></div>
+  <p class="anchor rv in">YNAB charges <b>$109 every year</b>. Monarch — $99/yr. This is <b>€24.99, once</b>.</p>
+  <div class="stage" id="stage">
+    <div class="ph l" data-d="18"><img src="img/tab_overview.jpg" alt="Overview screen"></div>
+    <div class="ph c" data-d="10"><img src="img/tab_plan.jpg" alt="Plan screen"></div>
+    <div class="ph r" data-d="24"><img src="img/tab_fire.jpg" alt="FIRE screen"></div>
+    <div class="fadeb"></div>
+  </div>
+  <div class="scue">scroll</div>
 </header>
-<section id="how">
-  <h2 class="rv">From download to “finally in control”<br>in three steps</h2>
-  <p class="sd rv">No installation, no account, no bank connection. It's simpler than any app you've tried.</p>
-  <div class="steps3">
-    <div class="st3 rv"><span class="n">1</span><h3>Get your file by email</h3><p>Right after purchase you receive one small file. It IS the app — keep it forever, it works on Mac, Windows, iPhone and Android.</p></div>
-    <div class="st3 rv"><span class="n">2</span><h3>Open it in your browser</h3><p>Double-click and you're in. Add your numbers by hand or paste your bank statement — the app sorts it into categories for you.</p></div>
-    <div class="st3 rv"><span class="n">3</span><h3>Watch it work for you</h3><p>Insights tell you where money leaks, goals fill up with confetti, and your debt-free and freedom dates appear. Check in 10 minutes a week.</p></div>
+<div class="marq"><div><span>Budget</span><span>Savings goals</span><span>Investments</span><span>Debt payoff</span><span>FIRE date</span><span>100% private</span><span>Budget</span><span>Savings goals</span><span>Investments</span><span>Debt payoff</span><span>FIRE date</span><span>100% private</span></div></div>
+<div class="stats">
+  <div class="rv"><div class="sn"><b data-count="431">0</b>€</div><div class="sl">you keep vs 5 yrs of YNAB</div></div>
+  <div class="rv"><div class="sn"><b data-count="0">0</b></div><div class="sl">bytes of your data sent anywhere</div></div>
+  <div class="rv"><div class="sn"><b data-count="6">0</b></div><div class="sl">money modules in one file</div></div>
+  <div class="rv"><div class="sn"><b data-count="1">0</b></div><div class="sl">payment. Ever.</div></div>
+</div>
+<section id="how" class="center">
+  <span class="tag rv">How it works</span>
+  <h2 class="rv">From download to <em>in control</em><br>in three steps</h2>
+  <div class="steps3" style="text-align:left">
+    <div class="st3 rv"><div class="n">— 01</div><h3>Get your file by email</h3><p>Right after purchase you receive one elegant file. It IS the app — yours forever, on Mac, Windows, iPhone and Android.</p></div>
+    <div class="st3 rv"><div class="n">— 02</div><h3>Open it in your browser</h3><p>Double-click and you're in. Add numbers by hand, or paste your bank statement — it sorts itself into categories.</p></div>
+    <div class="st3 rv"><div class="n">— 03</div><h3>Watch clarity arrive</h3><p>Insights show where money leaks, goals fill with confetti, and your debt-free and freedom dates appear. Ten minutes a week.</p></div>
   </div>
 </section>
 <section>
-  <h2 class="rv">Everything the €15/month apps do.<br>Without the €15/month.</h2>
+  <div class="orn rv"><i></i></div>
+  <h2 class="rv center">Everything the €15/month apps do.<br><em>Without the €15/month.</em></h2>
   <div class="feats">
-    <div class="ft rv"><div class="ic">🎯</div><h3>Savings goals</h3><p>Progress rings, deposits, and confetti when you hit the target. Saving becomes a game you want to win.</p></div>
+    <div class="ft rv"><div class="ic">🎯</div><h3>Savings goals</h3><p>Progress rings, deposits — and confetti when you hit the target. Saving becomes a game you want to win.</p></div>
     <div class="ft rv"><div class="ic">💶</div><h3>Smart budget</h3><p>Category limits, month-by-month view, and a CSV import that auto-sorts your bank statement in seconds.</p></div>
-    <div class="ft rv"><div class="ic">📈</div><h3>Investments & dividends</h3><p>Holdings with live P/L math, allocation chart and a dividend log that shows your yearly passive income.</p></div>
-    <div class="ft rv"><div class="ic">🧾</div><h3>Debt snowball</h3><p>See your exact debt-free date and how much interest you'll pay — watching that date move closer is addictive.</p></div>
-    <div class="ft rv"><div class="ic">🔥</div><h3>FIRE calculator</h3><p>Enter four numbers, get your financial freedom date with a growth chart. The most motivating chart you'll ever see.</p></div>
+    <div class="ft rv"><div class="ic">📈</div><h3>Investments & dividends</h3><p>Holdings with live P/L math, allocation chart and a dividend log showing your yearly passive income.</p></div>
+    <div class="ft rv"><div class="ic">🧾</div><h3>Debt snowball</h3><p>Your exact debt-free date and the interest you'll save — watching that date move closer is addictive.</p></div>
+    <div class="ft rv"><div class="ic">🔥</div><h3>FIRE calculator</h3><p>Four numbers in, your financial freedom date out — with the most motivating chart you'll ever see.</p></div>
     <div class="ft rv"><div class="ic">🔒</div><h3>Radically private</h3><p>Works offline. All data stays in your browser. We couldn't see your numbers even if we wanted to.</p></div>
   </div>
 </section>
+<section class="center">
+  <div class="mani rv" style="text-align:left">
+    <p>Free apps sold your attention. Subscription apps rent you your own numbers, year after year. We think a finance tool should be like a good watch — bought once, private, and quietly excellent for decades.</p>
+    <span>— why Money OS exists</span>
+  </div>
+</section>
 <section id="tour">
-  <h2 class="rv">A look inside</h2>
-  <p class="sd rv">Real screens, real math — this is exactly what you get.</p>
+  <div class="orn rv"><i></i></div>
+  <h2 class="rv center">A look <em>inside</em></h2>
+  <p class="sd rv center">Real screens, real math — this is exactly what you get.</p>
   <div class="walk">
-    <div class="wk rv"><div class="phone"><img src="img/tab_overview.jpg" alt="Overview screen" loading="lazy"></div><h3>Overview</h3><p>Net worth, wealth curve and insights that talk to you</p></div>
-    <div class="wk rv"><div class="phone"><img src="img/tab_plan.jpg" alt="Plan screen" loading="lazy"></div><h3>Plan</h3><p>Goals with progress rings — and confetti when you win</p></div>
-    <div class="wk rv"><div class="phone"><img src="img/tab_debt.jpg" alt="Debts screen" loading="lazy"></div><h3>Debts</h3><p>Your exact debt-free date and interest you'll save</p></div>
-    <div class="wk rv"><div class="phone"><img src="img/tab_fire.jpg" alt="FIRE screen" loading="lazy"></div><h3>FIRE</h3><p>The date you could stop working. Yes, really.</p></div>
+    <div class="wk rv"><div class="phone"><img src="img/tab_overview.jpg" alt="Overview" loading="lazy"></div><h3>Overview</h3><p>Net worth, wealth curve and insights that talk to you</p></div>
+    <div class="wk rv"><div class="phone"><img src="img/tab_plan.jpg" alt="Plan" loading="lazy"></div><h3>Plan</h3><p>Goals with progress rings — and confetti when you win</p></div>
+    <div class="wk rv"><div class="phone"><img src="img/tab_debt.jpg" alt="Debts" loading="lazy"></div><h3>Debts</h3><p>Your exact debt-free date and interest you'll save</p></div>
+    <div class="wk rv"><div class="phone"><img src="img/tab_fire.jpg" alt="FIRE" loading="lazy"></div><h3>FIRE</h3><p>The date you could stop working. Yes, really.</p></div>
   </div>
   <table class="cmp rv">
     <tr><th></th><th class="me">Money OS</th><th>Subscription apps</th><th>Spreadsheets</th></tr>
@@ -141,34 +218,74 @@ footer{padding:40px var(--pad) 70px;text-align:center;font-size:13px;color:var(-
 </section>
 <section id="buy">
   <div class="buy rv">
+    <span class="tag">Lifetime access</span>
     <h2>Get Money OS</h2>
-    <div class="big" style="margin-top:14px"><s>€49</s>€24.99</div>
-    <p class="sd" style="margin:10px auto 0">One-time payment · instant delivery by email · free updates for version 1 · <b style="color:var(--green)">30-day money-back guarantee</b></p>
-    <div class="ctas" style="justify-content:center;margin-top:26px">
-      <a class="btn p" id="buyB" href="mailto:matasbuika1@gmail.com?subject=Order%3A%20Money%20OS%20(%E2%82%AC24.99)&body=Hi%2C%20I%27d%20like%20to%20buy%20Money%20OS.%0A%0AName%3A%20%0AEmail%20for%20delivery%3A%20%0A%0APlease%20send%20payment%20details.">Buy now — €24.99</a>
+    <div class="big" style="margin-top:16px"><s>€49</s>€24.99</div>
+    <div class="gbadge">✓ 30-day money-back guarantee — no questions asked</div>
+    <p class="sd" style="margin:14px auto 0">One-time payment · instant delivery by email · free updates for version 1</p>
+    <div class="ctas" style="justify-content:center;margin-top:28px">
+      <a class="btn p" id="buyB" href="mailto:matasbuika1@gmail.com?subject=Order%3A%20Money%20OS%20(%E2%82%AC24.99)&body=Hi%2C%20I%27d%20like%20to%20buy%20Money%20OS.%0A%0AName%3A%20%0AEmail%20for%20delivery%3A%20%0A%0AI%20agree%20to%20immediate%20delivery%20of%20digital%20content.%0A%0APlease%20send%20payment%20details.">Buy now — €24.99</a>
       <a class="btn s" href="app/" target="_blank" rel="noopener">Try before you buy</a>
     </div>
-    <p class="price" style="margin-top:18px">Checkout opens as an email order while card payments are being set up — you'll get payment details within hours.</p>
-    <p style="margin-top:10px;font-size:11.5px;color:var(--mut);max-width:60ch;margin-left:auto;margin-right:auto">By ordering you agree to immediate delivery of digital content and acknowledge that the EU 14-day right of withdrawal does not apply once delivery begins — covered instead by our voluntary 30-day guarantee.</p>
+    <p class="anchor" style="margin-top:16px">Checkout opens as an email order while card payments are being set up — you'll get payment details within hours.</p>
+    <p style="margin-top:10px;font-size:11.5px;color:var(--soft);max-width:62ch;margin-left:auto;margin-right:auto">By ordering you agree to immediate delivery of digital content and acknowledge that the EU 14-day right of withdrawal does not apply once delivery begins — covered instead by our voluntary 30-day guarantee.</p>
   </div>
-  <div style="margin-top:clamp(40px,6vw,60px)">
+  <div style="margin-top:clamp(40px,6vw,64px)">
+    <div class="orn rv"><i></i></div>
     <details class="rv"><summary>How do I receive it?</summary><p>Instantly by email: a single file that opens in any browser on any device — Mac, Windows, iPhone, Android. No installation, no account.</p></details>
-    <details class="rv"><summary>Is my financial data safe?</summary><p>Safer than any app with a server: your data is stored only in your own browser and never transmitted anywhere. Use the built-in Backup button to keep a copy.</p></details>
-    <details class="rv"><summary>Why one-time instead of subscription?</summary><p>Because budgeting software shouldn't be a recurring expense in your budget. Pay once, use forever.</p></details>
-    <details class="rv"><summary>What if I don't like it?</summary><p>30-day money-back guarantee, no questions asked — the same standard the best lifetime-deal products use.</p></details>
     <details class="rv"><summary>Can you prove it's private?</summary><p>Yes — technically. Open the app, press F12 → Network tab: zero requests while you use it. Your numbers physically cannot leave your device, because the app has no server to send them to. And if we ever disappear, your file keeps working forever.</p></details>
+    <details class="rv"><summary>Is my financial data safe?</summary><p>Safer than any app with a server: your data lives only in your own browser. Use the built-in Backup button to keep a copy anywhere you like.</p></details>
+    <details class="rv"><summary>Why one-time instead of subscription?</summary><p>Because budgeting software shouldn't be a recurring line in your budget. Pay once, use forever.</p></details>
+    <details class="rv"><summary>What if I don't like it?</summary><p>30-day money-back guarantee, no questions asked — the same standard the best lifetime-deal products use.</p></details>
   </div>
 </section>
+<div class="callbar"><span class="p"><s>€49</s> €24.99</span><a class="cbb" href="#buy">Get Money OS</a></div>
 <footer>Money OS · matasbuika1@gmail.com<br><span style="font-size:11px;opacity:.75;display:block;max-width:72ch;margin:8px auto 0">This tool is for informational and educational purposes only and does not constitute financial, investment, tax, or legal advice. No fiduciary relationship is created by its use. Consult a qualified professional before making financial decisions.</span></footer>
 <script>
 (function(){
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav=document.getElementById('nav'), prog=document.getElementById('prog');
+  addEventListener('scroll',function(){
+    var y=scrollY||0, h=document.documentElement.scrollHeight-innerHeight;
+    nav.classList.toggle('stuck',y>40);
+    prog.style.width=(h>0?y/h*100:0)+'%';
+  },{passive:true});
   var els=[].slice.call(document.querySelectorAll('.rv'));
   function all(){els.forEach(function(e){e.classList.add('in');});}
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
     els.forEach(function(e){io.observe(e);});
     setTimeout(all,2500);
   } else all();
+  var stage=document.getElementById('stage');
+  if(stage&&!reduced&&matchMedia('(pointer:fine)').matches){
+    var phs=[].slice.call(stage.querySelectorAll('.ph'));
+    stage.addEventListener('pointermove',function(e){
+      var r=stage.getBoundingClientRect();
+      var dx=(e.clientX-r.left)/r.width-.5, dy=(e.clientY-r.top)/r.height-.5;
+      phs.forEach(function(p){
+        var d=parseFloat(p.dataset.d)||12;
+        var base=p.classList.contains('c')?'translateX(-50%) ':'';
+        p.style.animation='none';
+        p.style.transform=base+'translate('+(dx*d)+'px,'+(dy*d)+'px) rotateY('+(dx*6)+'deg) rotateX('+(-dy*5)+'deg)';
+      });
+    });
+    stage.addEventListener('pointerleave',function(){
+      phs.forEach(function(p){ p.style.transform=''; p.style.animation=''; });
+    });
+  }
+  var counted=false;
+  function cUp(){
+    if(counted)return; counted=true;
+    [].slice.call(document.querySelectorAll('[data-count]')).forEach(function(el){
+      var to=parseInt(el.dataset.count), t0=null;
+      function st(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/1300);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(st);}
+      requestAnimationFrame(st);
+    });
+  }
+  var sEl=document.querySelector('.stats');
+  if('IntersectionObserver' in window){new IntersectionObserver(function(en,o){if(en[0].isIntersecting){cUp();o.disconnect();}},{threshold:.3}).observe(sEl);}
+  setTimeout(cUp,4000);
   document.getElementById('logoB').addEventListener('click',function(){
     this.classList.remove('spin'); void this.offsetWidth; this.classList.add('spin');
     window.scrollTo({top:0,behavior:'smooth'});
