@@ -139,6 +139,30 @@ footer a{color:var(--green);text-decoration:none}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}.aur i,.ph,.marq div,.scue::after{animation:none!important}.logo.spin i{animation:none}}
+/* CHAT */
+.cbtn{position:fixed;right:18px;bottom:18px;z-index:960;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#10B981,#3B82F6);color:#04150E;font-size:24px;box-shadow:0 14px 34px -10px rgba(16,185,129,.6);transition:transform .25s}
+.cbtn:hover{transform:translateY(-3px) scale(1.05)}
+@media(max-width:760px){.cbtn{bottom:76px}}
+.chat{position:fixed;right:18px;bottom:86px;z-index:970;width:min(360px,calc(100vw - 36px));max-height:min(540px,70vh);background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);display:none;flex-direction:column;overflow:hidden}
+.chat.on{display:flex}
+@media(max-width:760px){.chat{bottom:144px}}
+.chd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:rgba(16,185,129,.08)}
+.chd i{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#10B981,#3B82F6);display:grid;place-items:center;font-style:normal;font-weight:800;color:#04150E}
+.chd b{font-size:14.5px}
+.chd span{display:block;font-size:11px;color:var(--green)}
+.chx{margin-left:auto;border:0;background:none;color:var(--mut);font-size:17px;cursor:pointer}
+.chb{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:86%;padding:10px 14px;border-radius:15px;font-size:13.8px;line-height:1.5;animation:up .35s ease both}
+.msg.bot{background:rgba(255,255,255,.06);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
+.msg.me{background:var(--green);color:#04150E;border-bottom-right-radius:5px;align-self:flex-end;font-weight:500}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+.chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 10px}
+.chip{border:1px solid var(--line);background:none;color:var(--mut);border-radius:100px;padding:6px 13px;font-size:12px;cursor:pointer;transition:.2s;font-family:var(--fb)}
+.chip:hover{border-color:var(--green);color:var(--ink)}
+.chf{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line)}
+.chf input{flex:1;border:1px solid var(--line);border-radius:100px;background:var(--bg);color:var(--ink);padding:11px 16px;font-size:14px;font-family:var(--fb)}
+.chf input:focus{outline:0;border-color:var(--green)}
+.chf button{border:0;border-radius:50%;width:42px;height:42px;background:var(--green);color:#04150E;font-size:16px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -154,6 +178,7 @@ footer a{color:var(--green);text-decoration:none}
     <a class="btn p" href="#buy">Get Money OS — €24.99</a>
     <a class="btn s" href="app/" target="_blank" rel="noopener">Try the live demo →</a>
   </div>
+  <p class="rv in" style="margin-top:14px;font-size:13px;color:var(--mut)">💬 Have questions? Our assistant (bottom right) answers instantly and walks you through setup.</p>
   <p class="anchor rv in">YNAB charges <b>$109 every year</b>. Monarch — $99/yr. This is <b>€24.99, once</b>.</p>
   <div class="stage" id="stage">
     <div class="ph l" data-d="18"><img src="img/tab_overview.jpg" alt="Overview screen"></div>
@@ -290,6 +315,54 @@ footer a{color:var(--green);text-decoration:none}
     this.classList.remove('spin'); void this.offsetWidth; this.classList.add('spin');
     window.scrollTo({top:0,behavior:'smooth'});
   });
+})();
+</script>
+<button class="cbtn" id="cOpen" aria-label="Chat">💬</button>
+<div class="chat" id="chat">
+  <div class="chd"><i>€</i><div><b>Money OS assistant</b><span>online · instant answers</span></div><button class="chx" id="cClose">✕</button></div>
+  <div class="chb" id="chb"></div>
+  <div class="chips" id="chips"></div>
+  <div class="chf"><input id="cin" placeholder="Ask anything…" autocomplete="off"><button id="csend">➤</button></div>
+</div>
+<script>
+(function(){
+  var KB=[
+   [/price|cost|how much|pay|kaina/i,"Money OS is <b>€24.99 once</b> — no subscription, ever. Compare: YNAB is $109 EVERY year. Comes with a 30-day money-back guarantee.",["How do I buy?","What's inside?"]],
+   [/buy|purchase|order|checkout|get it/i,"Tap <b>Buy now</b> in the Get Money OS section — it opens an email order (card checkout is being finalized). You'll get payment details within hours and the app right after payment. Want to try first? The live demo is free.",["Open live demo","Is it private?"]],
+   [/privat|secure|safe|data|bank|gdpr/i,"Radically private: the app has <b>no server</b> — your data lives only in your browser. Proof: open the app, press F12 → Network — zero requests. No account, no bank login, works offline.",["How do backups work?","What's inside?"]],
+   [/inside|feature|module|what.*(do|can)|included/i,"Six modules in one file: 💶 Budget with CSV import · 🎯 Savings goals with confetti · 📈 Investments & dividends · 🧾 Debt snowball with your debt-free date · 🔥 FIRE calculator · 📊 Insights that talk to you.",["How do I set it up?","Price?"]],
+   [/set ?up|start|begin|fill|first|how.*use|guide|walk/i,"Easy 4-step setup (≈10 min):<br>1️⃣ <b>Budget tab</b> → ＋Add your income & this month's expenses (or Import CSV)<br>2️⃣ <b>Budget → Edit limits</b> → set category budgets<br>3️⃣ <b>Invest tab</b> → add holdings (ticker, qty, price)<br>4️⃣ <b>Plan tab</b> → create your first goal.<br>Then tap <b>Save snapshot</b> on Overview monthly. Want details on any step?",["CSV import help","Goals help","FIRE help"]],
+   [/csv|import|statement|bank export/i,"In the app: top bar → <b>Import CSV</b>. Paste rows as <i>date, description, amount</i> (negative = expense), e.g.<br><i>2026-07-01, MAXIMA, -32.50</i><br>The assistant auto-sorts categories (Bolt→Transport, Netflix→Subscriptions…). You can edit any entry after.",["Set up guide","What's inside?"]],
+   [/goal|saving|target|confetti/i,"Plan tab → <b>＋New goal</b> → name + target (+ what you've saved). Add money anytime with ＋Add money — the ring fills up, and when you hit 100%… confetti 🎉",["Set up guide","FIRE help"]],
+   [/fire|retire|freedom|independence/i,"FIRE tab → enter 4 numbers: current invested, monthly investing, expected return %, monthly spending → you get your <b>freedom date</b> and number (25× yearly spending, the classic 4% rule). Educational, not financial advice.",["Try live demo","Price?"]],
+   [/debt|loan|snowball|credit/i,"Debts tab → add each debt (balance, APR, monthly payment). The app computes your <b>debt-free date</b> with the snowball method and shows total interest — watching the date move closer is very motivating.",["Set up guide"]],
+   [/backup|restore|move|another device|transfer/i,"Top bar → <b>Backup</b> downloads a .json file with everything. On any other device: open the app → <b>Restore</b> → pick the file. Do it weekly — it's your safety net.",["Is it private?"]],
+   [/refund|guarantee|money.?back/i,"30-day money-back guarantee, no questions asked. Email matasbuika1@gmail.com and you'll get a full refund.",["Price?","How do I buy?"]],
+   [/device|phone|mac|windows|android|iphone|browser/i,"Works everywhere a browser works: Mac, Windows, iPhone, Android, Linux. One file, no installation. On mobile it feels like a native app with a bottom tab bar.",["What's inside?"]],
+   [/demo|try|test/i,"Yes — full live demo, no signup: tap <b>Try the live demo</b> (or the button below). Hit “Load sample data” inside to see it filled in.",["Open live demo"]],
+   [/human|support|contact|email|help/i,"A human is available too: <b>matasbuika1@gmail.com</b> — replies within hours. I can answer most product questions instantly though!",["Set up guide","Price?"]],
+  ];
+  var chat=document.getElementById('chat'), chb=document.getElementById('chb'), chips=document.getElementById('chips'), cin=document.getElementById('cin');
+  function add(t,me){ var d=document.createElement('div'); d.className='msg '+(me?'me':'bot'); d.innerHTML=t; chb.appendChild(d); chb.scrollTop=chb.scrollHeight; }
+  function setChips(arr){ chips.innerHTML=(arr||[]).map(function(c){return '<button class="chip">'+c+'</button>';}).join('');
+    [].slice.call(chips.children).forEach(function(b){ b.onclick=function(){ ask(b.textContent); }; }); }
+  function answer(q){
+    if(/open live demo/i.test(q)){ window.open('app/','_blank'); add("Opening the live demo in a new tab — tap <b>Load sample data</b> inside to explore ✨"); setChips(["Set up guide","How do I buy?"]); return; }
+    for(var i=0;i<KB.length;i++){ if(KB[i][0].test(q)){ add(KB[i][1]); setChips(KB[i][2]); return; } }
+    add("Good question! I know everything about Money OS — pricing, privacy, setup, every module. Try one of these, or email <b>matasbuika1@gmail.com</b> for anything else:");
+    setChips(["What's inside?","Set up guide","Is it private?","Price?"]);
+  }
+  function ask(q){ add(q,true); setTimeout(function(){answer(q);},450); }
+  document.getElementById('cOpen').onclick=function(){
+    chat.classList.toggle('on');
+    if(chat.classList.contains('on')&&!chb.children.length){
+      add("Hi! 👋 I'm the Money OS assistant — I can answer any question and walk you through setting everything up. What would you like to know?");
+      setChips(["What's inside?","Set up guide","Is it private?","Price?"]);
+    }
+  };
+  document.getElementById('cClose').onclick=function(){ chat.classList.remove('on'); };
+  document.getElementById('csend').onclick=function(){ if(cin.value.trim()){ ask(cin.value.trim()); cin.value=''; } };
+  cin.addEventListener('keydown',function(e){ if(e.key==='Enter'&&cin.value.trim()){ ask(cin.value.trim()); cin.value=''; } });
 })();
 </script>
 </body>
