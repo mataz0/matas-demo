@@ -103,6 +103,13 @@ h2 em{font-style:italic;color:var(--gold)}
 .ft .ic{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.06);display:grid;place-items:center;font-size:21px;margin-bottom:14px}
 .ft h3{font-size:17px;font-weight:700}
 .ft p{color:var(--mut);font-size:14.5px;margin-top:7px}
+.outs{margin-top:clamp(28px,5vw,44px);border-top:1px solid var(--line)}
+.out{display:grid;grid-template-columns:auto 1fr;gap:6px clamp(16px,3vw,34px);padding:clamp(20px,3.5vw,30px) 0;border-bottom:1px solid var(--line);align-items:baseline;transition:background .3s}
+.out:hover{background:rgba(255,255,255,.02)}
+.out .n{font-family:var(--fd);color:var(--gold);font-size:15px;letter-spacing:.1em}
+.out h3{font-family:var(--fd);font-weight:400;font-size:clamp(21px,3.2vw,32px);line-height:1.15}
+.out h3 em{font-style:italic;color:var(--green)}
+.out p{color:var(--mut);font-size:15px;margin-top:7px;max-width:64ch}
 .mani{border-left:2px solid var(--gold);padding:6px 0 6px clamp(20px,3vw,38px);max-width:56ch;margin:0 auto}
 .mani p{font-family:var(--fd);font-style:italic;font-size:clamp(21px,2.8vw,30px);line-height:1.45}
 .mani span{display:block;margin-top:16px;font-family:var(--fb);font-style:normal;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
@@ -151,7 +158,12 @@ footer a{color:var(--green);text-decoration:none}
 @media(max-width:760px){.cbtn{bottom:76px}}
 .chat{position:fixed;right:18px;bottom:86px;z-index:970;width:min(360px,calc(100vw - 36px));max-height:min(540px,70vh);background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);display:none;flex-direction:column;overflow:hidden}
 .chat.on{display:flex}
-@media(max-width:760px){.chat{bottom:144px}}
+@media(max-width:760px){
+  .chat{left:12px;right:12px;width:auto;bottom:calc(12px + env(safe-area-inset-bottom));max-height:76vh;max-height:calc(100dvh - 110px);z-index:980}
+  .chf input{font-size:16px}
+  .chb{padding:13px}
+  .msg{font-size:14.2px}
+}
 .chd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:rgba(16,185,129,.08)}
 .chd i{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#10B981,#3B82F6);display:grid;place-items:center;font-style:normal;font-weight:800;color:#04150E}
 .chd b{font-size:14.5px}
@@ -175,7 +187,7 @@ footer a{color:var(--green);text-decoration:none}
 .cteas{position:fixed;right:86px;bottom:28px;z-index:958;background:var(--card);border:1px solid var(--line);border-radius:15px 15px 4px 15px;padding:11px 15px;font-size:13px;line-height:1.45;max-width:236px;box-shadow:0 20px 50px -16px rgba(0,0,0,.7);display:none;cursor:pointer;color:var(--ink)}
 .cteas.on{display:block;animation:up .45s ease both}
 .cteas b{color:var(--green)}
-@media(max-width:760px){.cteas{bottom:86px;right:84px}}
+@media(max-width:760px){.cteas{bottom:86px;right:84px}.chf input{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.cbtn.new .dot{animation:none}}
 </style>
 </head>
@@ -218,14 +230,27 @@ footer a{color:var(--green);text-decoration:none}
     <div class="st3 rv"><div class="n">— 03</div><h3>Watch clarity arrive</h3><p>Insights show where money leaks, goals fill with confetti, and your debt-free and freedom dates appear. Ten minutes a week.</p></div>
   </div>
 </section>
+<section id="why">
+  <div class="orn rv"><i></i></div>
+  <span class="tag rv">What changes for you</span>
+  <h2 class="rv">This is where saving money<br>gets <em>easier.</em></h2>
+  <p class="sd rv">Not through willpower — through seeing clearly. Here's what actually happens in the first weeks:</p>
+  <div class="outs">
+    <div class="out rv"><div class="n">01</div><div><h3>The leaks become visible — <em>and easy to cut</em></h3><p>Forgotten subscriptions, delivery creep, tiny daily charges: once they sit in one list with a per-year price tag, the useless ones practically cancel themselves. That alone often covers the app's price in month one.</p></div></div>
+    <div class="out rv"><div class="n">02</div><div><h3>Saving starts to feel like <em>winning a game</em></h3><p>Progress rings fill, confetti fires, your wealth curve climbs. Small visible wins do what discipline never could — they make you want to add the next €50.</p></div></div>
+    <div class="out rv"><div class="n">03</div><div><h3>Debt gets a countdown <em>instead of a cloud</em></h3><p>An exact debt-free date — and the interest you'll save — turns vague dread into a plan you can watch shrink every month.</p></div></div>
+    <div class="out rv"><div class="n">04</div><div><h3>You'll know your <em>freedom number</em></h3><p>The FIRE tab shows the date you could stop working for money. Even if it's far away, knowing it changes how you spend on an ordinary Tuesday.</p></div></div>
+    <div class="out rv"><div class="n">05</div><div><h3>Money stress <em>goes quiet</em></h3><p>Ten minutes a week, and every question — can I afford this? am I on track? — has an answer on one screen. Clarity is the real product.</p></div></div>
+  </div>
+</section>
 <section>
   <div class="orn rv"><i></i></div>
   <h2 class="rv center">Everything the €15/month apps do.<br><em>Without the €15/month.</em></h2>
   <div class="feats">
-    <div class="ft rv"><div class="ic">🎯</div><h3>Savings goals</h3><p>Progress rings, deposits — and confetti when you hit the target. Saving becomes a game you want to win.</p></div>
-    <div class="ft rv"><div class="ic">💶</div><h3>Smart budget</h3><p>Category limits, month-by-month view, and a CSV import that auto-sorts your bank statement in seconds.</p></div>
+    <div class="ft rv"><div class="ic">🎯</div><h3>Savings goals</h3><p>Set a target date and it computes your monthly number — “save €138/mo to make it by June”. On-track badges, milestone cheers, confetti at 100%.</p></div>
+    <div class="ft rv"><div class="ic">💶</div><h3>Smart budget</h3><p>Category limits with pace ticks, a “safe to spend per day” number, and a CSV import that auto-sorts your bank statement in seconds.</p></div>
     <div class="ft rv"><div class="ic">📈</div><h3>Investments & dividends</h3><p>Holdings with live P/L math, allocation chart and a dividend log showing your yearly passive income.</p></div>
-    <div class="ft rv"><div class="ic">🧾</div><h3>Debt snowball</h3><p>Your exact debt-free date and the interest you'll save — watching that date move closer is addictive.</p></div>
+    <div class="ft rv"><div class="ic">🧾</div><h3>Debt payoff, two ways</h3><p>Snowball or avalanche — with your exact debt-free date and a what-if slider: drag it and watch €50 extra shave months off.</p></div>
     <div class="ft rv"><div class="ic">🔥</div><h3>FIRE calculator</h3><p>Four numbers in, your financial freedom date out — with the most motivating chart you'll ever see.</p></div>
     <div class="ft rv"><div class="ic">🔒</div><h3>Radically private</h3><p>Works offline. All data stays in your browser. We couldn't see your numbers even if we wanted to.</p></div>
   </div>
@@ -351,12 +376,16 @@ footer a{color:var(--green);text-decoration:none}
     ? "Tap <b>Buy now</b> — secure card checkout with instant delivery to your email, 30-day money-back guarantee. Prefer to look around first? The live demo is free."
     : "Tap <b>Buy now</b> in the Get Money OS section — it opens a short email order (card checkout is being finalized). You get payment details within hours and the app right after payment. Want to try first? The live demo is free.";
   var KB=[
-   [/^(hi|hello|hey|labas|yo)\b/i,"Hello! 👋 Ask me anything about Money OS — pricing, privacy, what's inside, setup, comparisons with YNAB or spreadsheets. I also give a full setup walkthrough.",["What's inside?","Set up guide","Price?"]],
+   [/^(hi|hello|hey|labas|yo)\b/i,"Hello! 👋 Ask me anything about Money OS — how it helps, pricing, privacy, what's inside, setup, comparisons with YNAB or spreadsheets.",["How will it help me?","What's inside?","Price?"]],
+   [/benefit|worth it|(why|how).{0,26}(useful|help|need|buy|bother)|point of|what.{0,8}for me|convince|why (this|should)/i,"Fair question. Three things usually change:<br>1️⃣ <b>Leaks become visible</b> — every subscription and small charge in one list, with a per-year price tag. Cancelling one or two often covers the app's price in the first month.<br>2️⃣ <b>Saving starts to feel like winning</b> — progress rings and confetti turn “I should save” into a game you actually want to play.<br>3️⃣ <b>Anxiety turns into a plan</b> — an exact debt-free date and a freedom date replace vague worry. All for ~10 minutes a week.",["Will it help me save?","Set up guide","Price?"]],
+   [/save money|help me save|how much.{0,14}save|will i save|spend less|cut spending/i,"Honestly: the app doesn't save money — <b>seeing clearly does</b>. What people consistently find in week one: forgotten subscriptions, delivery creep, small daily charges that quietly add up. The Insights card shows your top spending category and what your subscriptions cost <b>per year</b> — that number alone tends to pay for the app many times over. And that's before the $109/yr you're not paying YNAB.",["How will it help me?","What's inside?"]],
+   [/bad with money|can.?t stick|never stick|discipline|motivat|give up|lazy|tried before|failed|always quit/i,"That's exactly who this is built for. Willpower fails; <b>feedback loops don't</b>. Progress rings fill, confetti fires when you hit a goal, your debt-free date visibly moves closer, your wealth curve climbs. Small wins you can <i>see</i> beat discipline every time — and it only asks ~10 minutes a week.",["How will it help me?","Set up guide"]],
+   [/no time|busy|how long|how much time|take to set|effort|too complicated|overwhelm/i,"Setup is ~10 minutes (CSV import does the heavy lifting — and the in-app assistant opens every screen for you), then <b>~10 minutes a week</b>: add expenses, glance at Insights, save a snapshot monthly. A weekly ritual, not a second job.",["Set up guide","How will it help me?"]],
    [/set.{0,8}up|start|begin|fill|first step|how.*use|guide|walk|onboard/i,"Easy 4-step setup (≈10 min):<br>1️⃣ <b>Budget tab</b> → ＋Add your income & this month's expenses (or Import CSV)<br>2️⃣ <b>Budget → Edit limits</b> → set category budgets<br>3️⃣ <b>Invest tab</b> → add holdings (name, qty, price)<br>4️⃣ <b>Plan tab</b> → create your first goal.<br>Then tap <b>Save snapshot</b> on Overview monthly. Inside the app there's an assistant like me that opens each screen for you and tracks your progress ✅",["CSV import help","Open live demo","Goals help"]],
    [/csv|import|statement|bank export/i,"In the app: top bar → <b>Import CSV</b>. Paste rows as <i>date, description, amount</i> (negative = expense), e.g.<br><i>2026-07-01, MAXIMA, -32.50</i><br>Categories sort themselves (Bolt→Transport, Netflix→Subscriptions…) and you can edit any entry after.",["Set up guide","What's inside?"]],
-   [/goal|saving|target|confetti/i,"Plan tab → <b>＋New goal</b> → name + target (+ what you've saved already). Add money anytime — the progress ring fills up, and when you hit 100%… confetti 🎉",["Set up guide","FIRE help"]],
+   [/goal|saving|target|confetti/i,"Plan tab → <b>＋New goal</b>: pick an icon, set a target — and if you add a <b>target date</b>, it computes your monthly number (“save €138/mo to make it by June”). Add a monthly plan instead and it projects your finish date. On-track badges, milestone cheers at 25/50/75%, confetti at 100% 🎉",["Set up guide","FIRE help"]],
    [/fire|retire|freedom|independence/i,"FIRE tab → enter 4 numbers: current invested, monthly investing, expected return %, monthly spending → you get your <b>freedom date</b> and freedom number (25× yearly spending, the classic 4% rule). Educational, not financial advice.",["Try live demo","Price?"]],
-   [/debt|loan|snowball|credit card/i,"Debts tab → add each debt (balance, APR, monthly payment). The app computes your <b>debt-free date</b> with the snowball method and the interest you'll save — watching that date move closer is very motivating.",["Set up guide"]],
+   [/debt|loan|snowball|avalanche|credit card/i,"Debts tab → add each debt (balance, APR, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), and a <b>what-if slider</b> — drag it to watch €50 extra per month move your date months closer. People log in just to play with it.",["Set up guide"]],
    [/backup|restore|transfer|move|(sync|share).{0,22}(device|phone|computer|laptop)|clear.{0,10}(browser|history|cache)|lose|lost data/i,"Top bar → <b>Backup</b> downloads a single .json file with everything. On any device: open the app → <b>Restore</b> → pick the file. Do it weekly — since there's no cloud by design, your backup file is your safety net (clearing browser data without one would erase the app's memory).",["Is it private?","Set up guide"]],
    [/ynab|monarch|copilot|mint|quicken|compar|versus|vs\b|alternative|better than/i,"Honest comparison: YNAB is <b>$109/yr</b>, Monarch $99–199/yr, Copilot $95/yr — great apps, but you rent them forever and your data sits on their servers. Money OS is <b>€24.99 once</b>, covers budget + goals + investments + debts + FIRE, and keeps every number on your device. What it deliberately doesn't do: auto-sync with your bank (that's the privacy trade — CSV import fills the gap in seconds).",["Price?","Is it private?","What's inside?"]],
    [/excel|sheet|spreadsheet|notion|template/i,"Compared to a spreadsheet: no formulas to build or break, beautiful charts out of the box, auto-categorizing CSV import, confetti on goals — and it still works fully offline like a file. It IS a file, just one that feels like a polished app.",["What's inside?","Try live demo"]],
@@ -388,8 +417,8 @@ footer a{color:var(--green);text-decoration:none}
   function answer(q){
     if(/open live demo/i.test(q)){ window.open('app/','_blank'); add("Opening the live demo in a new tab — tap <b>Load sample data</b> inside to explore, and say hi to the in-app assistant ✨"); setChips(["Set up guide","How do I buy?"]); return; }
     for(var i=0;i<KB.length;i++){ if(KB[i][0].test(q)){ add(KB[i][1]); setChips(KB[i][2]); return; } }
-    add("Good question! I'm trained on everything about Money OS — pricing, privacy, setup, comparisons, every module. Try one of these, or email <b>matasbuika1@gmail.com</b> for anything else:");
-    setChips(["What's inside?","Set up guide","Is it private?","Price?"]);
+    add("Good question! I'm trained on everything about Money OS — how it helps, pricing, privacy, setup, comparisons, every module. Try one of these, or email <b>matasbuika1@gmail.com</b> for anything else:");
+    setChips(["How will it help me?","What's inside?","Is it private?","Price?"]);
   }
   function ask(q){ add(q,true); setTimeout(function(){answer(q);},450); }
   function openChat(){
@@ -397,8 +426,8 @@ footer a{color:var(--green);text-decoration:none}
     try{localStorage.setItem('mosChatSeen','1');}catch(e){}
     chat.classList.add('on');
     if(!chb.children.length){
-      add("Hi! 👋 I'm the Money OS assistant — trained on everything: pricing, privacy, every module, full setup walkthroughs, even honest comparisons with YNAB. What would you like to know?");
-      setChips(["What's inside?","Set up guide","Is it private?","Price?"]);
+      add("Hi! 👋 I'm the Money OS assistant — trained on everything: how it helps you save, pricing, privacy, every module, full setup walkthroughs, even honest comparisons with YNAB. What would you like to know?");
+      setChips(["How will it help me?","What's inside?","Is it private?","Price?"]);
     }
   }
   cbtn.onclick=function(){ if(chat.classList.contains('on')){ chat.classList.remove('on'); } else openChat(); };

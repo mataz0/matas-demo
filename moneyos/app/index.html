@@ -81,7 +81,7 @@ main{max-width:1080px;margin:0 auto;padding:clamp(16px,3.5vw,32px)}
 .modal h3{font-size:17px;font-weight:800;margin-bottom:14px}
 .fld{margin-bottom:12px}
 .fld label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-bottom:5px}
-.fld input,.fld select,.fld textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:11px 13px;font-size:15px;background:var(--bg);color:var(--ink)}
+.fld input,.fld select,.fld textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:11px 13px;font-size:16px;background:var(--bg);color:var(--ink)}
 .fld input:focus,.fld select:focus,.fld textarea:focus{outline:0;border-color:var(--green)}
 .mrow{display:flex;gap:10px}
 .mrow .fld{flex:1}
@@ -128,6 +128,28 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 .conf{position:fixed;top:-12px;width:9px;height:14px;z-index:300;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(600deg);opacity:.9}}
 @media(prefers-reduced-motion:reduce){.view.on .card,.view.on .rowi,#donut,.chart path.animln{animation:none!important}.conf{display:none}.cbtn .dot{animation:none!important}}
+/* goals v2 */
+.epick{display:flex;flex-wrap:wrap;gap:6px}
+.epick button{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;width:40px;height:40px;font-size:19px;cursor:pointer}
+.epick button.on{border-color:var(--green);background:var(--green2)}
+.gmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.gtag{font-size:11px;font-weight:700;border-radius:100px;padding:3px 9px;background:rgba(255,255,255,.06);color:var(--mut)}
+.gtag.need{background:var(--blue2);color:var(--blue)}
+.gtag.done{background:var(--green2);color:var(--green)}
+.gtag.late{background:var(--amber2);color:var(--amber)}
+.qadd{display:flex;gap:8px;margin:2px 0 12px}
+.qadd button{flex:1;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:9px 0;font-size:13.5px;font-weight:700;cursor:pointer}
+.qadd button:hover{border-color:var(--green);color:var(--green)}
+/* budget pace */
+.bar{position:relative}
+.bar .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:rgba(255,255,255,.4);border-radius:2px}
+.bar i.warn{background:var(--amber)}
+/* debts v2 */
+.seg.mini{max-width:280px;margin:0}
+.ordn{font-size:10.5px;font-weight:800;color:var(--blue);background:var(--blue2);border-radius:100px;padding:2px 8px;margin-right:6px}
+.whatif input[type=range]{width:100%;accent-color:var(--green);margin:10px 0 4px}
+.whatif .wres{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+.whatif .wres b{font-variant-numeric:tabular-nums}
 /* assistant */
 .cbtn{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:90;width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#10B981,#3B82F6);color:#fff;font-size:22px;box-shadow:0 14px 34px -10px rgba(16,185,129,.6);transition:transform .25s}
 .cbtn:hover{transform:translateY(-3px)}
@@ -138,6 +160,10 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 .chatp{position:fixed;right:16px;bottom:calc(148px + env(safe-area-inset-bottom));z-index:95;width:min(362px,calc(100vw - 32px));max-height:min(560px,72vh);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7);display:none;flex-direction:column;overflow:hidden}
 .chatp.on{display:flex}
 @media(min-width:900px){.chatp{bottom:82px}}
+@media(max-width:899px){
+  .chatp{left:12px;right:12px;width:auto;bottom:calc(74px + env(safe-area-inset-bottom));max-height:74vh;max-height:calc(100dvh - 150px)}
+  .achf input{font-size:16px}
+}
 .achd{padding:13px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:rgba(16,185,129,.08)}
 .achd i{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#10B981,#3B82F6);display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;flex:none}
 .achd b{font-size:14px}
@@ -158,6 +184,7 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 .achf input{flex:1;border:1.5px solid var(--line);border-radius:100px;background:var(--bg);color:var(--ink);padding:10px 15px;font-size:14px}
 .achf input:focus{outline:0;border-color:var(--green)}
 .achf button{border:0;border-radius:50%;width:40px;height:40px;background:var(--green);color:#fff;font-size:15px;cursor:pointer}
+@media(max-width:899px){.achf input{font-size:16px}}
 .logo{cursor:pointer;user-select:none}
 .logo.spin i{animation:lspin .7s cubic-bezier(.16,1,.3,1)}
 @keyframes lspin{to{transform:rotate(360deg)}}
@@ -241,7 +268,7 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
   </div>
   <div class="grid g3">
     <div class="card"><div class="klabel">Income</div><div class="kval pos" id="b-in">—</div></div>
-    <div class="card"><div class="klabel">Spending</div><div class="kval" id="b-out">—</div></div>
+    <div class="card"><div class="klabel">Spending</div><div class="kval" id="b-out">—</div><div class="ksub" id="b-outs"></div></div>
     <div class="card"><div class="klabel">Left to spend</div><div class="kval" id="b-left">—</div><div class="ksub" id="b-lefts"></div></div>
   </div>
   <div class="sect"><h2>Category budgets</h2><button class="ghostb" id="budEdit">Edit limits</button></div>
@@ -271,8 +298,15 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
     <div class="card"><div class="klabel">Debt-free date</div><div class="kval" id="q-date">—</div><div class="ksub">snowball method</div></div>
     <div class="card"><div class="klabel">Monthly payment</div><div class="kval" id="q-pay">—</div><div class="ksub" id="q-pays">across all debts</div></div>
   </div>
-  <div class="sect"><h2>Debts (smallest first)</h2><button class="addb" id="dAdd">＋ Add debt</button></div>
+  <div class="sect"><h2 id="dTitle">Debts</h2><button class="addb" id="dAdd">＋ Add debt</button></div>
+  <div class="seg mini" style="margin-bottom:12px"><button class="on" id="dmSnow">Snowball · smallest first</button><button id="dmAval">Avalanche · highest APR</button></div>
   <div class="rows" id="dList"></div>
+  <div class="card whatif" id="whatif" style="margin-top:14px;display:none">
+    <div class="klabel">What if you paid a little extra?</div>
+    <input type="range" id="wSlide" min="0" max="300" step="10" value="0">
+    <div style="font-size:13.5px;color:var(--mut)">Extra <b id="wAmt" style="color:var(--ink)">€0</b> per month</div>
+    <div class="wres" id="wRes"></div>
+  </div>
   <p class="note" id="q-note"></p>
 </section>
 
@@ -293,7 +327,7 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
     <div id="fOut" style="display:none;margin-top:18px">
       <div class="grid g2">
         <div class="card" style="background:var(--green2);border-color:#BFE8D6"><div class="klabel">Freedom date</div><div class="kval" id="f-date">—</div><div class="ksub" id="f-years"></div></div>
-        <div class="card"><div class="klabel">Freedom number</div><div class="kval" id="f-num">—</div><div class="ksub">25 × yearly spending</div></div>
+        <div class="card"><div class="klabel">Freedom number</div><div class="kval" id="f-num">—</div><div class="ksub" id="f-prog">25 × yearly spending</div></div>
       </div>
       <div class="card" style="margin-top:14px"><svg id="fChart" class="chart" viewBox="0 0 600 190" preserveAspectRatio="none"></svg><div class="note">Projected portfolio growth vs your freedom number.</div></div>
     </div>
@@ -341,6 +375,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
     document.querySelectorAll('.view').forEach(function(x){x.classList.remove('on');});
     t.classList.add('on'); $('v-'+t.dataset.v).classList.add('on');
+    try{localStorage.setItem('mosTab',t.dataset.v);}catch(e){}
     render();
   });
 });
@@ -445,11 +480,25 @@ $('dAdd').addEventListener('click',function(){
   };
 });
 window.delD=function(i){ S.debts.splice(i,1); save(); render(); };
-function snowball(){
-  var ds=S.debts.map(function(d){return {b:d.b,r:d.r/1200,p:d.p};}).sort(function(a,b){return a.b-b.b;});
+$('dmSnow').addEventListener('click',function(){ S.dmode='snow'; save(); render(); });
+$('dmAval').addEventListener('click',function(){ S.dmode='aval'; save(); render(); });
+function whatIf(){
+  var x=parseInt($('wSlide').value)||0;
+  $('wAmt').textContent=fmt(x);
+  var base=snowball(0), alt=snowball(x);
+  if(!base||!alt){ $('wRes').innerHTML=''; return; }
+  var msaved=base.months-alt.months, isaved=base.interest-alt.interest;
+  $('wRes').innerHTML= x===0 ? '<span style="color:var(--soft);font-size:13px">Drag the slider — watch your debt-free date jump closer.</span>'
+   : '<span style="font-size:13.5px">Debt-free <b class="pos">'+alt.date+'</b>'+(msaved>0?' — <b class="pos">'+msaved+' mo sooner</b>':'')+'</span>'
+   +(isaved>1?'<span style="font-size:13.5px">Interest saved: <b class="pos">'+fmt(isaved)+'</b></span>':'');
+}
+$('wSlide').addEventListener('input',whatIf);
+function debtSort(arr){ return arr.slice().sort(S.dmode==='aval'?function(a,b){return b.r-a.r;}:function(a,b){return a.b-b.b;}); }
+function snowball(extra){
+  var ds=debtSort(S.debts).map(function(d){return {b:d.b,r:d.r/1200,p:d.p};});
   if(!ds.length) return null;
-  var pay=ds.reduce(function(s,d){return s+d.p;},0); if(pay<=0) return null;
-  var m=0, freed=0, interest=0;
+  var pay=ds.reduce(function(s,d){return s+d.p;},0)+(extra||0); if(pay<=0) return null;
+  var m=0, freed=extra||0, interest=0;
   while(m<600){
     m++;
     var budget=pay;
@@ -492,35 +541,70 @@ $('expB').addEventListener('click',function(){
 $('impB').addEventListener('click',function(){
   var inp=document.createElement('input'); inp.type='file'; inp.accept='.json';
   inp.onchange=function(){ var f=inp.files[0]; if(!f) return; var r=new FileReader();
-    r.onload=function(){ try{ var s=JSON.parse(r.result); if(!s.tx) throw 0; S=s; save(); render(); toast('Restored ✓'); }catch(e){ toast('Invalid backup file'); } };
+    r.onload=function(){ try{ var s=JSON.parse(r.result); if(!s.tx) throw 0; S=s; save(); render(); fireRestore(); toast('Restored ✓'); }catch(e){ toast('Invalid backup file'); } };
     r.readAsText(f); };
   inp.click();
 });
 $('cur').addEventListener('change',function(){ S.cur=this.value; save(); render(); });
 
 /* month nav */
-/* goals */
-$('gAdd').addEventListener('click',function(){
-  openModal('<h3>New goal</h3><div class="fld"><label>Goal</label><input id="m-n" placeholder="Emergency fund"></div>'
-   +'<div class="mrow"><div class="fld"><label>Target</label><input id="m-t" type="number" placeholder="5000"></div>'
-   +'<div class="fld"><label>Already saved</label><input id="m-s" type="number" value="0"></div></div>'
-   +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Create</button></div>');
+/* goals v2 */
+var GEMO=['🎯','🛟','✈️','🏠','🚗','💍','🎓','👶','💻','🎁'];
+function goalModal(i){
+  var g=i!=null?S.goals[i]:null, sel=(g&&g.e)||'🎯';
+  openModal('<h3>'+(g?'Edit goal':'New goal')+'</h3>'
+   +'<div class="fld"><label>Goal</label><input id="m-n" placeholder="Emergency fund" value="'+(g?esc(g.n):'')+'"></div>'
+   +'<div class="fld"><label>Icon</label><div class="epick" id="m-e">'+GEMO.map(function(e){return '<button type="button" data-e="'+e+'" class="'+(e===sel?'on':'')+'">'+e+'</button>';}).join('')+'</div></div>'
+   +'<div class="mrow"><div class="fld"><label>Target</label><input id="m-t" type="number" placeholder="5000" value="'+(g?g.t:'')+'"></div>'
+   +'<div class="fld"><label>Already saved</label><input id="m-s" type="number" value="'+(g?g.s:0)+'"></div></div>'
+   +'<div class="mrow"><div class="fld"><label>Target date · optional</label><input id="m-dt" type="month" value="'+(g&&g.dt?g.dt:'')+'"></div>'
+   +'<div class="fld"><label>Plan €/month · optional</label><input id="m-pm" type="number" placeholder="150" value="'+(g&&g.pm?g.pm:'')+'"></div></div>'
+   +'<div class="note" style="margin:-4px 0 12px">Set a <b>date</b> → I’ll tell you how much per month. Set a <b>monthly plan</b> → I’ll project your finish date. Set both → I’ll tell you if you’re on track.</div>'
+   +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">'+(g?'Save':'Create')+'</button></div>');
+  [].slice.call($('m-e').children).forEach(function(b){ b.onclick=function(){ [].slice.call($('m-e').children).forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); sel=b.dataset.e; }; });
   $('m-ok').onclick=function(){
     var t=parseFloat($('m-t').value); if(!t||!$('m-n').value.trim()) return toast('Name and target required');
-    S.goals.push({n:$('m-n').value.trim(), t:t, s:parseFloat($('m-s').value)||0});
-    save(); closeModal(); render(); toast('Goal created');
+    var o={n:$('m-n').value.trim(), t:t, s:parseFloat($('m-s').value)||0, e:sel, dt:$('m-dt').value||null, pm:parseFloat($('m-pm').value)||null, c0:(g&&g.c0)||new Date().toISOString().slice(0,10)};
+    if(g) S.goals[i]=o; else S.goals.push(o);
+    save(); closeModal(); render(); toast(g?'Goal updated':'Goal created — let’s fill that ring');
   };
-});
+}
+$('gAdd').addEventListener('click',function(){ goalModal(); });
+window.gEdit=function(i){ goalModal(i); };
+function goalMeta(g){
+  var left=Math.max(0,g.t-g.s), m={left:left, pct:g.t?Math.min(1,g.s/g.t):0};
+  if(g.dt&&left>0){
+    var now=new Date(), tgt=new Date(g.dt+'-01');
+    var months=(tgt.getFullYear()-now.getFullYear())*12+(tgt.getMonth()-now.getMonth());
+    m.mLeft=months; m.need=months>0?left/months:null;
+    if(g.pm&&m.need!=null) m.onTrack=g.pm>=m.need*.98;
+  } else if(g.pm&&left>0){
+    var mo=Math.ceil(left/g.pm), pd=new Date(); pd.setMonth(pd.getMonth()+mo);
+    m.projDate=MON[pd.getMonth()]+' '+pd.getFullYear();
+  }
+  return m;
+}
 window.gDep=function(i){
-  var g=S.goals[i];
-  openModal('<h3>Add to '+esc(g.n)+'</h3><div class="fld"><label>Amount</label><input id="m-a" type="number"></div>'
+  var g=S.goals[i], mm=goalMeta(g);
+  var sug=mm.need?Math.ceil(mm.need/5)*5:50;
+  openModal('<h3>'+(g.e||'🎯')+' Add to '+esc(g.n)+'</h3>'
+   +(mm.need?'<div class="note" style="margin-bottom:10px">Plan says <b style="color:var(--ink)">'+fmt(mm.need)+'/mo</b> to make it by '+gDate(g.dt)+'.</div>':'')
+   +'<div class="qadd"><button data-q="25">+25</button><button data-q="50">+50</button><button data-q="'+sug+'">+'+sug+'</button></div>'
+   +'<div class="fld"><label>Amount</label><input id="m-a" type="number" placeholder="'+sug+'"></div>'
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Add</button></div>');
+  [].slice.call(document.querySelectorAll('.qadd button')).forEach(function(b){ b.onclick=function(){ $('m-a').value=b.dataset.q; $('m-a').focus(); }; });
   $('m-ok').onclick=function(){
     var a=parseFloat($('m-a').value); if(!a) return;
     var was=g.s; g.s+=a; save(); closeModal(); render();
-    if(was<g.t&&g.s>=g.t){ confetti(); toast('GOAL REACHED: '+g.n+' 🎉'); } else toast('+'+fmt(a)+' → '+g.n);
+    var wp=g.t?was/g.t:0, np=g.t?g.s/g.t:0;
+    if(wp<1&&np>=1){ confetti(); toast('GOAL REACHED: '+g.n+' 🎉'); }
+    else if(wp<.75&&np>=.75) toast('75% there — '+g.n+' is so close! 🔥');
+    else if(wp<.5&&np>=.5) toast('Halfway to '+g.n+'! 💪');
+    else if(wp<.25&&np>=.25) toast('First quarter of '+g.n+' done ✨');
+    else toast('+'+fmt(a)+' → '+g.n);
   };
 };
+function gDate(dt){ var d=new Date(dt+'-01'); return MON[d.getMonth()]+' '+d.getFullYear(); }
 window.gDel=function(i){ S.goals.splice(i,1); save(); render(); };
 function confetti(){
   var cols=['#10B981','#3B82F6','#F59E0B','#F87171','#A78BFA'];
@@ -558,15 +642,19 @@ $('mNext').addEventListener('click',function(){ mSel[1]++; if(mSel[1]>11){mSel[1
 $('fGo').addEventListener('click',function(){
   var now=parseFloat($('f-now').value)||0, mo=parseFloat($('f-mo').value)||0, r=(parseFloat($('f-r').value)||0)/100, sp=parseFloat($('f-sp').value)||0;
   if(!sp||(!now&&!mo)) return toast('Fill spending + at least one saving field');
+  S.fire={n:now,m:mo,r:parseFloat($('f-r').value)||0,s:sp}; save();
   var target=sp*12*25, v=now, m=0, pts=[v];
   while(v<target&&m<1200){ m++; v=v*(1+r/12)+mo; if(m%6===0)pts.push(v); }
   var dt=new Date(); dt.setMonth(dt.getMonth()+m);
   $('f-date').textContent=m>=1200?'>100 yrs':MON[dt.getMonth()]+' '+dt.getFullYear();
   $('f-years').textContent=m>=1200?'increase investing or reduce spending':('in '+(m/12).toFixed(1)+' years');
   $('f-num').textContent=fmt(target);
+  $('f-prog').textContent='25 × yearly spending · you’re '+Math.min(100,Math.round(now/target*100))+'% of the way';
   drawLine($('fChart'), pts.map(function(p,i){return {x:i,y:p};}), target);
   $('fOut').style.display='block';
 });
+function fireRestore(){ if(S.fire&&S.fire.s){ $('f-now').value=S.fire.n||''; $('f-mo').value=S.fire.m||''; $('f-r').value=S.fire.r||7; $('f-sp').value=S.fire.s; $('fGo').click(); } }
+fireRestore();
 
 /* ───────── charts (pure SVG) ───────── */
 function drawLine(svg, pts, target){
@@ -639,6 +727,9 @@ function render(){
   if(lout>0){ var df=(out-lout)/lout*100; ic.push([df<=0?'📉':'📈','Spending '+(df<=0?'down ':'up ')+Math.abs(df).toFixed(0)+'%','vs last month ('+fmt(lout)+')']); }
   if(proj) ic.push(['🔮','On track to spend '+fmt(proj),'by month end at this pace']);
   if(subY>0) ic.push(['💡','Subscriptions cost '+fmt(subY)+'/yr','review them — easiest saving']);
+  var ng=null; S.goals.forEach(function(g){ var l=g.t-g.s; if(l>0&&(ng===null||l<ng.l)) ng={g:g,l:l}; });
+  if(ng&&moNet>0&&ng.l<=moNet) ic.push(['🎯','This month’s surplus could FINISH “'+ng.g.n+'”',fmt(ng.l)+' to go — Plan tab']);
+  else if(ng) ic.push(['🎯',fmt(ng.l)+' to go: '+ng.g.n,'your closest goal — small adds count']);
   $('ins').innerHTML=ic.map(function(x){return '<div class="insc"><div class="ii">'+x[0]+'</div><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>';}).join('');
 
   /* budget */
@@ -648,15 +739,26 @@ function render(){
   var totBud=CATS.reduce(function(s,c){return s+(S.budgets[c]||0);},0);
   var left=totBud-out;
   $('b-left').textContent=fmt(left); $('b-left').className='kval '+(left>=0?'pos':'neg');
-  $('b-lefts').textContent='of '+fmt(totBud)+' total limits';
+  var dim=new Date(mSel[0],mSel[1]+1,0).getDate();
+  var elapsed=isCur? Math.min(1,dToday.getDate()/dim) : 1;
+  var dLeft=isCur? dim-dToday.getDate()+1 : 0;
+  if(isCur&&totBud>0){
+    var paceDelta=totBud*elapsed-out;
+    $('b-outs').innerHTML='Day '+dToday.getDate()+' of '+dim+' · <b class="'+(paceDelta>=0?'pos':'neg')+'">'+fmt(Math.abs(paceDelta))+' '+(paceDelta>=0?'under':'over')+' pace</b>';
+  } else $('b-outs').textContent='';
+  $('b-lefts').textContent = isCur&&left>0&&totBud>0 ? '≈ '+fmt(left/dLeft)+' safe to spend per day · '+dLeft+' days left'
+                            : 'of '+fmt(totBud)+' total limits';
   $('budBars').innerHTML=CATS.map(function(c,i){
     var sp=byCat[c]||0, lim=S.budgets[c]||0, pct=lim?Math.min(130,sp/lim*100):0;
-    return '<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13.5px"><span>'+(EMO[c]||'')+' '+c+'</span><span style="color:'+(sp>lim&&lim?'var(--red)':'var(--mut)')+'">'+fmt(sp)+' / '+fmt(lim)+'</span></div><div class="bar"><i class="'+(sp>lim&&lim?'over':'')+'" style="width:'+Math.min(100,pct)+'%"></i></div></div>';
+    var over=sp>lim&&lim, ahead=isCur&&lim&&!over&&sp/lim>elapsed+.04;
+    var tick=isCur&&lim?'<span class="tick" style="left:'+(elapsed*100).toFixed(1)+'%"></span>':'';
+    return '<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13.5px"><span>'+(EMO[c]||'')+' '+c+'</span><span style="color:'+(over?'var(--red)':ahead?'var(--amber)':'var(--mut)')+'">'+fmt(sp)+' / '+fmt(lim)+(ahead?' · ahead of pace':'')+'</span></div><div class="bar"><i class="'+(over?'over':ahead?'warn':'')+'" style="width:'+Math.min(100,pct)+'%"></i>'+tick+'</div></div>';
   }).join('');
   var list=mtx.slice().sort(function(a,b){return b.d<a.d?-1:1;});
   $('txList').innerHTML=list.length? list.map(function(t){
     var gi=S.tx.indexOf(t);
-    return '<div class="rowi"><div class="em">'+(EMO[t.c]||'📦')+'</div><div class="rb"><div class="rt">'+esc(t.t)+'</div><div class="rs">'+t.d+' · '+t.c+'</div></div><div class="ra '+(t.a>0?'pos':'')+'">'+fmt(t.a)+'</div><button class="del" onclick="delTx('+gi+')">✕</button></div>';
+    var sub=t.c==='Subscriptions'&&t.a<0?' · ≈'+fmt(-t.a*12)+'/yr':'';
+    return '<div class="rowi"><div class="em">'+(EMO[t.c]||'📦')+'</div><div class="rb"><div class="rt">'+esc(t.t)+'</div><div class="rs">'+t.d+' · '+t.c+sub+'</div></div><div class="ra '+(t.a>0?'pos':'')+'">'+fmt(t.a)+'</div><button class="del" onclick="delTx('+gi+')">✕</button></div>';
   }).join('') : '<div class="empty">No transactions in '+mn+'. Tap ＋ Add or Import CSV.</div>';
 
   /* invest */
@@ -684,24 +786,49 @@ function render(){
   var sb=snowball();
   $('q-date').textContent=sb?sb.date:'—';
   $('q-pay').textContent=sb?fmt(sb.pay):'—';
-  $('q-note').textContent=sb?('Snowball: paying smallest first, rolling payments over. Total interest until free: '+fmt(sb.interest)+'.'):(S.debts.length?'Add monthly payments to see your debt-free date.':'');
-  var sorted=S.debts.slice().sort(function(a,b){return a.b-b.b;});
-  $('dList').innerHTML=sorted.length? sorted.map(function(d){
+  var aval=S.dmode==='aval';
+  $('dTitle').textContent=aval?'Debts (highest APR first)':'Debts (smallest first)';
+  $('dmSnow').classList.toggle('on',!aval); $('dmAval').classList.toggle('on',aval);
+  var cmp='';
+  if(sb&&S.debts.length>1){
+    var keepM=S.dmode; S.dmode='snow'; var rS=snowball(); S.dmode='aval'; var rA=snowball(); S.dmode=keepM;
+    if(rS&&rA){
+      var iD=rS.interest-rA.interest, mD=rS.months-rA.months;
+      if(iD>1||mD>0) cmp=' With your debts, Avalanche wins: '+(iD>1?fmt(iD)+' less interest':'')+(iD>1&&mD>0?' and ':'')+(mD>0?mD+' mo sooner':'')+'.';
+      else if(iD<-1||mD<0) cmp=' With your debts, Snowball wins: '+(iD<-1?fmt(-iD)+' less interest':'')+(iD<-1&&mD<0?' and ':'')+(mD<0?(-mD)+' mo sooner':'')+'.';
+      else cmp=' Both methods finish about the same here — pick the one that keeps you motivated.';
+    }
+  }
+  $('q-note').textContent=sb?((aval?'Avalanche: attacking the highest interest rate first — mathematically cheapest.':'Snowball: paying smallest first for quick wins, rolling payments over.')+' Total interest until free: '+fmt(sb.interest)+'.'+cmp):(S.debts.length?'Add monthly payments to see your debt-free date.':'');
+  var sorted=debtSort(S.debts);
+  $('dList').innerHTML=sorted.length? sorted.map(function(d,oi){
     var gi=S.debts.indexOf(d);
-    return '<div class="rowi"><div class="em">🧾</div><div class="rb"><div class="rt">'+esc(d.n)+'</div><div class="rs">'+d.r+'% APR · '+fmt(d.p)+'/mo</div></div><div class="ra">'+fmt(d.b)+'</div><button class="del" onclick="delD('+gi+')">✕</button></div>';
+    return '<div class="rowi"><div class="em">🧾</div><div class="rb"><div class="rt"><span class="ordn">#'+(oi+1)+'</span>'+esc(d.n)+'</div><div class="rs">'+d.r+'% APR · '+fmt(d.p)+'/mo</div></div><div class="ra">'+fmt(d.b)+'</div><button class="del" onclick="delD('+gi+')">✕</button></div>';
   }).join('') : '<div class="empty">Debt-free already? Amazing. Otherwise add them here.</div>';
+  $('whatif').style.display=sb?'block':'none';
+  if(sb) whatIf();
 
   $('p-mn').textContent=mn;
   var gtot=S.goals.reduce(function(s,g){return s+g.s;},0);
   $('p-head').textContent=fmt(totBud)+' planned';
   $('p-heads').textContent=fmt(out)+' spent · '+fmt(gtot)+' in goals';
   $('gList').innerHTML=S.goals.length? S.goals.map(function(g,i){
-    var pct=Math.min(1,g.t?g.s/g.t:0), C=2*Math.PI*30;
+    var mm=goalMeta(g), pct=mm.pct, C=2*Math.PI*30;
+    var tags='';
+    if(pct>=1) tags='<span class="gtag done">Reached 🎉</span>';
+    else{
+      tags='<span class="gtag">'+fmt(mm.left)+' to go</span>';
+      if(g.dt){ tags+= mm.need!=null ? '<span class="gtag need">'+fmt(mm.need)+'/mo by '+gDate(g.dt)+'</span>'
+                                     : '<span class="gtag late">date passed — tap ✎ to replan</span>';
+        if(mm.onTrack===true) tags+='<span class="gtag done">on track ✓</span>';
+        if(mm.onTrack===false) tags+='<span class="gtag late">plan '+fmt(g.pm)+' &lt; needed</span>';
+      } else if(mm.projDate) tags+='<span class="gtag need">at '+fmt(g.pm)+'/mo → '+mm.projDate+'</span>';
+    }
     return '<div class="rowi goal"><svg class="ring" viewBox="0 0 74 74"><circle class="bgc" cx="37" cy="37" r="30"/><circle class="fgc" cx="37" cy="37" r="30" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pct)).toFixed(1)+'" transform="rotate(-90 37 37)"/><text x="37" y="41" text-anchor="middle">'+Math.round(pct*100)+'%</text></svg>'
-      +'<div class="rb"><div class="gname">'+esc(g.n)+(pct>=1?' 🎉':'')+'</div><div class="gsub">'+fmt(g.s)+' of '+fmt(g.t)+'</div>'
+      +'<div class="rb"><div class="gname">'+(g.e||'🎯')+' '+esc(g.n)+'</div><div class="gsub">'+fmt(g.s)+' of '+fmt(g.t)+'</div><div class="gmeta">'+tags+'</div>'
       +'<button class="gbtn" onclick="gDep('+i+')">＋ Add money</button></div>'
-      +'<button class="del" onclick="gDel('+i+')">✕</button></div>';
-  }).join('') : '<div class="empty">Create your first goal — emergency fund, holiday, new car…</div>';
+      +'<button class="del" onclick="gEdit('+i+')">✎</button><button class="del" onclick="gDel('+i+')">✕</button></div>';
+  }).join('') : '<div class="empty">Create your first goal — emergency fund, holiday, new car…<br>Set a target date and I’ll do the monthly math for you.</div>';
   $('pvsr').innerHTML=CATS.map(function(c,i){
     var sp=byCat[c]||0, lim=S.budgets[c]||0; if(!lim&&!sp) return '';
     var pct=lim?Math.min(100,sp/lim*100):100;
@@ -722,10 +849,13 @@ function sampleData(){
   S.tx=[{d:d(1),t:'Salary',a:2650,c:'Income'},{d:d(3),t:'Rent',a:-720,c:'Home'},{d:d(4),t:'MAXIMA groceries',a:-84.3,c:'Food'},{d:d(6),t:'Bolt rides',a:-19.4,c:'Transport'},{d:d(8),t:'Netflix',a:-12.99,c:'Subscriptions'},{d:d(9),t:'Spotify',a:-9.99,c:'Subscriptions'},{d:d(11),t:'Restaurant',a:-56,c:'Fun'},{d:d(13),t:'LIDL groceries',a:-61.2,c:'Food'},{d:d(15),t:'Gym',a:-35,c:'Health'}];
   S.hold=[{n:'VWCE',ty:'ETF',q:118,b:97.4,p:112.8},{n:'AAPL',ty:'Stock',q:14,b:168,p:214},{n:'BTC',ty:'Crypto',q:.041,b:58200,p:96400},{n:'Cash buffer',ty:'Cash',q:1,b:2500,p:2500}];
   S.divs=[{n:'VWCE',a:41.2,d:d(2)},{n:'AAPL',a:3.4,d:d(10)}];
-  S.debts=[{n:'Car loan',b:5400,r:6.9,p:230},{n:'Credit card',b:900,r:18,p:90}];
-  S.goals=[{n:'Emergency fund',t:6000,s:4350},{n:'Trip to Japan',t:3000,s:1240}];
+  S.debts=[{n:'Car loan',b:1900,r:4.9,p:150},{n:'Credit card',b:2400,r:18,p:120}];
+  function mAhead(k){ var t=new Date(); t.setMonth(t.getMonth()+k); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0'); }
+  var dtA=mAhead(14), dtB=mAhead(5);
+  S.goals=[{n:'Emergency fund',t:6000,s:4350,e:'🛟',dt:dtA,pm:150,c0:d(1)},{n:'Trip to Japan',t:3000,s:1240,e:'✈️',dt:dtB,c0:d(1)}];
+  S.fire={n:17510,m:600,r:7,s:1600}; S.dmode='snow';
   S.snaps=[{d:y+'-03-01',v:14100},{d:y+'-04-01',v:14800},{d:y+'-05-01',v:15350},{d:y+'-06-01',v:16420},{d:y+'-07-01',v:17510}];
-  save(); render(); toast('Sample data loaded — explore!');
+  save(); render(); fireRestore(); toast('Sample data loaded — explore!');
   document.getElementById('sampleBar').style.display='none';
 }
 function maybeSample(){
@@ -785,13 +915,13 @@ var AKB=[
  [/guide|set.{0,4}up|start|begin|first|onboard|where do i/i, aGuide],
  [/csv|import|statement|bank/i, "Top bar → <b>Import CSV</b>. Paste rows as <i>date, description, amount</i> (negative = expense):<br><i>2026-07-01, MAXIMA, -32.50<br>2026-07-01, Salary, 2600</i><br>Categories are auto-detected (Bolt→Transport, Netflix→Subscriptions…) and you can edit anything after.", [{a:'csv'},'Setup guide']],
  [/add money|deposit|top.?up/i, "Open the <b>Plan</b> tab and tap <b>＋Add money</b> on a goal — the ring fills up. Hit 100% and you get confetti 🎉", [{a:'goal'}]],
- [/goal|saving|target|confetti/i, "Goals live in the <b>Plan</b> tab: name + target amount (+ what you already saved). Add money anytime — the progress ring fills, and reaching 100% brings confetti.", [{a:'goal'},'What is a snapshot?']],
- [/limit|budget.{0,4}(cap|set|edit)|categor/i, "Budget tab → <b>Edit limits</b> — a monthly cap per category. Bars turn red when you overspend. Start rough (Food, Home, Transport…) and tune after your first month.", [{a:'limits'}]],
+ [/goal|saving|target|confetti/i, "Goals live in the <b>Plan</b> tab: pick an icon, set a target — and add a <b>target date</b> to get the magic number: “<i>save €138/mo to make it by Jun 2027</i>”. Milestone cheers at 25/50/75%, confetti at 100% 🎉. Quick-add buttons make deposits a 2-second job.", [{a:'goal'},'What is a snapshot?']],
+ [/limit|budget.{0,4}(cap|set|edit)|categor|pace|safe to spend/i, "Budget tab → <b>Edit limits</b> — a monthly cap per category. Each bar has a <b>pace tick</b> (where you should be today): amber = ahead of pace, red = over. The “Left to spend” card even tells you a <b>safe daily amount</b> for the rest of the month.", [{a:'limits'}]],
  [/transaction|expense|income|spend|salary|add.{0,8}(entry|record)/i, "Budget tab → <b>＋Add</b>: pick Expense or Income, amount, category, date. Faster for many rows: <b>Import CSV</b> from your bank.", [{a:'tx'},{a:'csv'}]],
  [/dividend/i, "Invest tab → <b>＋Add dividend</b> (holding, amount, date). The yearly total shows your growing passive income.", [{a:'divd'}]],
  [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: name, quantity, buy price, current price. You get value, invested, P/L and the allocation donut on Overview. Update prices whenever you like — it takes seconds.", [{a:'hold'},{a:'divd'}]],
- [/debt|loan|snowball|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You instantly see your <b>debt-free date</b> (snowball: smallest first) and total interest.", [{a:'debt'}]],
- [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending). Educational, not financial advice.", [{a:'fire'}]],
+ [/debt|loan|snowball|avalanche|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), payoff order #1 #2…, and a <b>what-if slider</b> — drag it to see how €50 extra/mo moves your date closer. Addictive in the best way.", [{a:'debt'}]],
+ [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending) and how far along you already are. Your inputs are saved automatically. Educational, not financial advice.", [{a:'fire'}]],
  [/snapshot|net worth|history|curve|wealth/i, "A snapshot saves today’s net worth as a point on your wealth curve (Overview). Save one <b>monthly</b> — after 3–4 months the chart becomes the most motivating thing in the app.", [{a:'snap'}]],
  [/backup|export|restore|transfer|move|another device|sync|copy/i, "Top bar → <b>Backup</b> downloads one .json file with everything. On another device: open the app → <b>Restore</b> → pick that file. Do it weekly — there is no cloud, the file IS your safety net.", [{a:'backup'},{a:'restore'}]],
  [/currency|eur|usd|gbp|dollar|pound|€|\$|£/i, "Top bar, left dropdown: € / $ / £. It changes the symbol everywhere instantly — your numbers stay the same.", ['Setup guide']],
@@ -826,6 +956,7 @@ $('aClose').addEventListener('click',function(){ aP.classList.remove('on'); });
 $('aSend').addEventListener('click',function(){ if(aI.value.trim()){ aAsk(aI.value.trim()); aI.value=''; } });
 aI.addEventListener('keydown',function(e){ if(e.key==='Enter'&&aI.value.trim()){ aAsk(aI.value.trim()); aI.value=''; } });
 
+try{ var tv0=localStorage.getItem('mosTab'); if(tv0&&tv0!=='dash'){ var tb0=document.querySelector('[data-v="'+tv0+'"]'); if(tb0) tb0.click(); } }catch(e){}
 maybeSample();
 render();
 })();
