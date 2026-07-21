@@ -151,6 +151,41 @@ footer a{color:var(--green);text-decoration:none}
 }
 .rv{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
 .rv.in{opacity:1;transform:none}
+/* ── v6 premium motion ── */
+.wm{display:inline-block;overflow:hidden;vertical-align:top}
+.wm i{display:inline-block;font-style:inherit;transform:translateY(105%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.wm.in i{transform:none}
+.spot{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:-1;opacity:0;transition:opacity .6s;
+  background:radial-gradient(circle,rgba(16,185,129,.13),rgba(59,130,246,.07) 45%,transparent 70%);mix-blend-mode:screen}
+.mag{will-change:transform}
+.tilt{transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s;transform-style:preserve-3d}
+h2.clipr{clip-path:inset(0 0 110% 0);transition:clip-path 1.1s cubic-bezier(.16,1,.3,1)}
+h2.clipr.in{clip-path:inset(0 0 -10% 0)}
+.dbar{position:fixed;left:0;right:0;bottom:0;z-index:940;background:rgba(10,15,28,.9);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border-top:1px solid rgba(16,185,129,.3);padding:12px clamp(20px,5vw,64px);display:flex;align-items:center;gap:18px;justify-content:center;
+  transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.dbar.on{transform:none}
+.dbar b{font-family:var(--fd);font-size:20px}
+.dbar s{color:var(--soft);font-size:15px;margin-right:8px}
+.dbar span{color:var(--mut);font-size:13px}
+.dbar a{background:var(--green);color:#04150E;border-radius:100px;padding:11px 24px;font-size:13.5px;font-weight:700;text-decoration:none;white-space:nowrap}
+@media(max-width:760px){.dbar{display:none}}
+/* ── what you get ── */
+.gets{display:grid;gap:2px;margin-top:40px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--line)}
+.get{background:var(--card);padding:clamp(20px,3vw,30px);display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:start;transition:background .35s}
+.get:hover{background:#111C31}
+.get .gi{width:40px;height:40px;border-radius:12px;background:rgba(16,185,129,.1);display:grid;place-items:center;font-size:19px;grid-row:span 2}
+.get h3{font-size:16.5px;font-weight:700}
+.get p{color:var(--mut);font-size:14.5px;margin-top:5px}
+@media(min-width:820px){.gets{grid-template-columns:1fr 1fr}}
+/* ── trust row ── */
+.trust{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+.trust div{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--glass);border-radius:100px;padding:9px 16px;font-size:12.5px;color:var(--mut)}
+.trust b{color:var(--ink);font-weight:600}
+.save{display:inline-block;background:rgba(231,195,106,.14);color:var(--gold);border:1px solid rgba(231,195,106,.35);border-radius:100px;
+  padding:6px 14px;font-family:var(--fb);font-size:13px;font-weight:700;letter-spacing:.02em;line-height:1.2;white-space:nowrap;vertical-align:middle;margin-left:14px}
+@media(max-width:560px){.save{display:block;margin:14px auto 0;width:max-content}}
+@media(prefers-reduced-motion:reduce){.wm i{transform:none!important}.spot{display:none}h2.clipr{clip-path:none!important}.dbar{transition:none}}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}.aur i,.ph,.marq div,.scue::after{animation:none!important}.logo.spin i{animation:none}}
 /* CHAT */
 .cbtn{position:fixed;right:18px;bottom:18px;z-index:960;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#10B981,#3B82F6);color:#04150E;font-size:24px;box-shadow:0 14px 34px -10px rgba(16,185,129,.6);transition:transform .25s}
@@ -289,11 +324,34 @@ footer a{color:var(--green);text-decoration:none}
     <tr><td>Feels like</td><td class="me">a beautiful app</td><td class="x">a subscription trap</td><td class="x">homework</td></tr>
   </table>
 </section>
+<section id="gets">
+  <div class="orn rv"><i></i></div>
+  <span class="tag rv">Everything included</span>
+  <h2 class="rv">One file. <em>Nine things</em> it does for you.</h2>
+  <p class="sd rv">No tiers, no add-ons, no “pro” version. Every buyer gets all of it.</p>
+  <div class="gets">
+    <div class="get rv"><div class="gi">💶</div><h3>Monthly budget that does the math</h3><p>Set a limit per category and every entry updates the bars instantly. A pace marker shows where you should be today, so “am I overspending?” has an answer before the month ends.</p></div>
+    <div class="get rv"><div class="gi">📊</div><h3>Safe-to-spend, per day</h3><p>Not just what you spent — what you can still spend. The app divides what's left by the days remaining and tells you the number.</p></div>
+    <div class="get rv"><div class="gi">📥</div><h3>CSV import that sorts itself</h3><p>Paste your bank export and it files transactions into categories automatically — Bolt to Transport, Netflix to Subscriptions. Fix anything with one tap.</p></div>
+    <div class="get rv"><div class="gi">🎯</div><h3>Goals with real planning</h3><p>Add a target date and it calculates exactly how much to set aside each month. Miss a month and it quietly recalculates instead of shaming you. Progress rings, milestone cheers, confetti at 100%.</p></div>
+    <div class="get rv"><div class="gi">🧾</div><h3>Debt payoff, both methods</h3><p>Snowball or avalanche, with your exact debt-free date and total interest for each — plus a slider that shows what €50 extra a month would actually change.</p></div>
+    <div class="get rv"><div class="gi">📈</div><h3>Investments and dividends</h3><p>Holdings with profit/loss, an allocation donut and a dividend log that adds up your passive income for the year.</p></div>
+    <div class="get rv"><div class="gi">🔥</div><h3>Your financial independence date</h3><p>Four numbers in, and you get the date you could stop working for money, your freedom number, and how far along you already are.</p></div>
+    <div class="get rv"><div class="gi">💬</div><h3>A built-in assistant</h3><p>Ask it anything and it answers — then opens the right screen and the right form for you. A six-step setup guide tracks what you've done.</p></div>
+    <div class="get rv"><div class="gi">💾</div><h3>Backup you control</h3><p>One button saves everything to a single file you keep wherever you like. Restore it on any device in seconds. No cloud, no account, no lock-in.</p></div>
+  </div>
+</section>
 <section id="buy">
   <div class="buy rv">
     <span class="tag">Lifetime access</span>
     <h2>Get Money OS</h2>
-    <div class="big" style="margin-top:16px"><s>€49</s>€24.99</div>
+    <div class="big" style="margin-top:16px"><s>€49</s>€24.99<span class="save">Save 49%</span></div>
+    <div class="trust">
+      <div>⚡ <b>Instant</b> delivery by email</div>
+      <div>🔒 <b>No account</b> needed</div>
+      <div>✈️ Works <b>offline</b></div>
+      <div>↩️ <b>30-day</b> guarantee</div>
+    </div>
     <div class="gbadge">✓ 30-day money-back guarantee — no questions asked</div>
     <p class="sd" style="margin:14px auto 0">One-time payment · instant delivery by email · free updates for version 1</p>
     <div class="ctas" style="justify-content:center;margin-top:28px">
@@ -310,9 +368,98 @@ footer a{color:var(--green);text-decoration:none}
     <details class="rv"><summary>Is my financial data safe?</summary><p>Safer than any app with a server: your data lives only in your own browser. Use the built-in Backup button to keep a copy anywhere you like.</p></details>
     <details class="rv"><summary>Why one-time instead of subscription?</summary><p>Because budgeting software shouldn't be a recurring line in your budget. Pay once, use forever.</p></details>
     <details class="rv"><summary>What if I don't like it?</summary><p>30-day money-back guarantee, no questions asked — the same standard the best lifetime-deal products use.</p></details>
+    <details class="rv"><summary>Why not just use a spreadsheet?</summary><p>You can — and many people do, until the formulas break. Money OS is a file like a spreadsheet, but nothing to build or maintain: the math, the charts, the CSV sorting and the payoff projections are already done. And it looks like an app rather than homework.</p></details>
+    <details class="rv"><summary>Do I need a Google account or any software?</summary><p>No. Unlike spreadsheet-based systems, there's no Google account, no Excel licence and no install. It opens in the browser you already have.</p></details>
+    <details class="rv"><summary>Can I use it on more than one device?</summary><p>Yes — put the file on as many of your own devices as you like. Each keeps its own data; use Backup and Restore to move a copy between them whenever you want.</p></details>
+    <details class="rv"><summary>Is this financial advice?</summary><p>No. It's a calculator and a planner — it does arithmetic on numbers you enter. It doesn't recommend investments and it isn't a substitute for a qualified professional.</p></details>
+    <details class="rv"><summary>Can I see it before paying?</summary><p>Yes, the entire app is free to try in your browser — no signup, no card. Open the live demo and press “Load sample data” to see it fully filled in. What you try is exactly what you buy.</p></details>
   </div>
 </section>
 <div class="callbar"><span class="p"><s>€49</s> €24.99</span><a class="cbb" href="#buy">Get Money OS</a></div>
+<div class="dbar" id="dbar"><b><s>€49</s>€24.99</b><span>one payment · instant delivery · 30-day guarantee</span><a href="#buy">Get Money OS</a></div>
+<div class="spot" id="spot"></div>
+<script>
+/* ── v6 motion layer ── */
+(function(){
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine=matchMedia('(pointer:fine)').matches;
+
+  /* 1. headline: word-by-word mask reveal */
+  var h1=document.querySelector('h1');
+  if(h1&&!reduced){
+    var frag=document.createDocumentFragment();
+    [].slice.call(h1.childNodes).forEach(function(node){
+      if(node.nodeType===3){
+        node.textContent.split(/(\s+)/).forEach(function(w){
+          if(!w.trim()){ frag.appendChild(document.createTextNode(w)); return; }
+          var s=document.createElement('span'); s.className='wm';
+          var i=document.createElement('i'); i.textContent=w; s.appendChild(i); frag.appendChild(s);
+        });
+      } else if(node.nodeType===1){
+        var s=document.createElement('span'); s.className='wm';
+        var i=document.createElement('i'); i.appendChild(node.cloneNode(true)); s.appendChild(i); frag.appendChild(s);
+      }
+    });
+    h1.innerHTML=''; h1.appendChild(frag);
+    var wms=[].slice.call(h1.querySelectorAll('.wm'));
+    wms.forEach(function(w,i){ w.querySelector('i').style.transitionDelay=(i*70)+'ms'; });
+    setTimeout(function(){ wms.forEach(function(w){ w.classList.add('in'); }); },220);
+  }
+
+  /* 2. cursor spotlight (desktop only) */
+  var spot=document.getElementById('spot');
+  if(spot&&fine&&!reduced){
+    var sx=innerWidth/2, sy=innerHeight/2, cx=sx, cy=sy, on=false;
+    addEventListener('pointermove',function(e){ sx=e.clientX; sy=e.clientY; if(!on){on=true;spot.style.opacity='1';} },{passive:true});
+    (function loop(){ cx+=(sx-cx)*.08; cy+=(sy-cy)*.08;
+      spot.style.transform='translate('+(cx-260)+'px,'+(cy-260)+'px)'; requestAnimationFrame(loop); })();
+  }
+
+  /* 3. magnetic buttons */
+  if(fine&&!reduced){
+    [].slice.call(document.querySelectorAll('.btn,.ncta,.dbar a')).forEach(function(b){
+      b.classList.add('mag');
+      b.addEventListener('pointermove',function(e){
+        var r=b.getBoundingClientRect();
+        var dx=(e.clientX-(r.left+r.width/2))/r.width, dy=(e.clientY-(r.top+r.height/2))/r.height;
+        b.style.transform='translate('+(dx*9)+'px,'+(dy*7)+'px)';
+      });
+      b.addEventListener('pointerleave',function(){ b.style.transform=''; });
+    });
+  }
+
+  /* 4. 3D tilt on feature + get cards */
+  if(fine&&!reduced){
+    [].slice.call(document.querySelectorAll('.ft,.st3,.get')).forEach(function(c){
+      c.classList.add('tilt');
+      c.addEventListener('pointermove',function(e){
+        var r=c.getBoundingClientRect();
+        var dx=(e.clientX-(r.left+r.width/2))/r.width, dy=(e.clientY-(r.top+r.height/2))/r.height;
+        c.style.transform='perspective(900px) rotateY('+(dx*5)+'deg) rotateX('+(-dy*5)+'deg) translateY(-5px)';
+      });
+      c.addEventListener('pointerleave',function(){ c.style.transform=''; });
+    });
+  }
+
+  /* 5. section headings clip reveal */
+  var hs=[].slice.call(document.querySelectorAll('section h2'));
+  hs.forEach(function(h){ h.classList.add('clipr'); });
+  if('IntersectionObserver' in window){
+    var io2=new IntersectionObserver(function(en){ en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io2.unobserve(e.target);} }); },{threshold:.25});
+    hs.forEach(function(h){ io2.observe(h); });
+    setTimeout(function(){ hs.forEach(function(h){h.classList.add('in');}); },3000);
+  } else hs.forEach(function(h){h.classList.add('in');});
+
+  /* 6. desktop sticky buy bar — after hero, hidden once buy section reached */
+  var dbar=document.getElementById('dbar'), buy=document.getElementById('buy'), hero=document.querySelector('header');
+  if(dbar&&buy&&hero&&'IntersectionObserver' in window){
+    var pastHero=false, atBuy=false;
+    function sync(){ dbar.classList.toggle('on', pastHero&&!atBuy); }
+    new IntersectionObserver(function(en){ pastHero=!en[0].isIntersecting; sync(); },{threshold:.05}).observe(hero);
+    new IntersectionObserver(function(en){ atBuy=en[0].isIntersecting; sync(); },{threshold:.15}).observe(buy);
+  }
+})();
+</script>
 <footer>Money OS · matasbuika1@gmail.com<br><span style="font-size:11px;opacity:.75;display:block;max-width:72ch;margin:8px auto 0">This tool is for informational and educational purposes only and does not constitute financial, investment, tax, or legal advice. No fiduciary relationship is created by its use. Consult a qualified professional before making financial decisions.</span></footer>
 <script>
 (function(){
