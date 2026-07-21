@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thank you — your Money OS is on its way</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#070B14">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2310B981'/><text y='.72em' x='50' font-size='58' text-anchor='middle'>€</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070B14;--card:#0E1626;--glass:rgba(18,27,48,.55);--ink:#F0F4FB;--mut:#8FA1C0;--soft:#5A6D92;--line:rgba(255,255,255,.09);
+--green:#10B981;--blue:#3B82F6;--gold:#E7C36A;--fd:'Instrument Serif',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--pad:clamp(20px,5vw,64px)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16.5px;line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.aur{position:fixed;inset:-20%;z-index:-2;filter:blur(70px);opacity:.5}
+.aur i{position:absolute;border-radius:50%}
+.aur i:nth-child(1){width:44vw;height:44vw;left:10%;top:-8%;background:radial-gradient(circle,rgba(16,185,129,.45),transparent 65%);animation:a1 26s ease-in-out infinite alternate}
+.aur i:nth-child(2){width:36vw;height:36vw;right:4%;top:26%;background:radial-gradient(circle,rgba(59,130,246,.4),transparent 65%);animation:a2 31s ease-in-out infinite alternate}
+@keyframes a1{to{transform:translate(7vw,6vh) scale(1.12)}}
+@keyframes a2{to{transform:translate(-6vw,8vh) scale(.92)}}
+main{max-width:760px;margin:0 auto;padding:clamp(48px,9vw,96px) var(--pad) 80px}
+.tick{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#10B981,#0EA5A0);display:grid;place-items:center;box-shadow:0 20px 50px -16px rgba(16,185,129,.7);animation:pop .6s cubic-bezier(.16,1,.3,1) both}
+.tick svg{width:36px;height:36px}
+.tick path{stroke-dasharray:32;stroke-dashoffset:32;animation:draw .5s .35s ease forwards}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+h1{font-family:var(--fd);font-weight:400;font-size:clamp(38px,6.4vw,68px);line-height:1.04;letter-spacing:-.015em;margin-top:26px}
+h1 em{font-style:italic;background:linear-gradient(100deg,#10B981,#3B82F6 60%,#E7C36A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mut);margin-top:18px;font-size:clamp(16px,1.6vw,19px);max-width:56ch}
+.mail{margin-top:30px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(16,185,129,.32);border-radius:18px;padding:clamp(20px,3vw,28px)}
+.mail b{color:var(--ink)}
+.mail p{color:var(--mut);font-size:15px}
+.mail p+p{margin-top:9px}
+.orn{display:flex;align-items:center;gap:14px;margin:clamp(38px,6vw,58px) 0 clamp(24px,4vw,34px)}
+.orn::before,.orn::after{content:"";height:1px;background:var(--line);flex:1}
+.orn i{width:5px;height:5px;transform:rotate(45deg);background:var(--gold);flex:none}
+h2{font-family:var(--fd);font-weight:400;font-size:clamp(26px,3.6vw,38px);line-height:1.1}
+h2 em{font-style:italic;color:var(--gold)}
+.steps{margin-top:26px;border-top:1px solid var(--line)}
+.st{display:grid;grid-template-columns:auto 1fr;gap:4px clamp(14px,2.6vw,26px);padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.st .n{font-family:var(--fd);color:var(--gold);font-size:14px;letter-spacing:.1em}
+.st h3{font-size:17px;font-weight:700}
+.st p{color:var(--mut);font-size:14.5px;margin-top:5px}
+.ctas{display:flex;gap:13px;flex-wrap:wrap;margin-top:32px}
+.btn{display:inline-block;border-radius:100px;padding:15px 30px;font-size:14.5px;font-weight:700;text-decoration:none;transition:.25s;position:relative;overflow:hidden}
+.btn.p{background:linear-gradient(135deg,#10B981,#0EA5A0);color:#04150E;box-shadow:0 16px 40px -14px rgba(16,185,129,.55)}
+.btn.s{border:1px solid var(--line);color:var(--ink);background:var(--glass)}
+.btn:hover{transform:translateY(-2px)}
+.help{margin-top:clamp(40px,6vw,60px);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,28px)}
+.help h3{font-size:16.5px;font-weight:700}
+.help p{color:var(--mut);font-size:14.5px;margin-top:8px}
+.help a{color:var(--green);text-decoration:none;font-weight:600}
+footer{text-align:center;color:var(--soft);font-size:12.5px;padding:0 var(--pad) 60px;max-width:760px;margin:0 auto}
+@media(prefers-reduced-motion:reduce){.aur i,.tick,.tick path{animation:none!important}.tick path{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<div class="aur"><i></i><i></i></div>
+<main>
+  <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#04150E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <h1>Thank you. Welcome to <em>clarity.</em></h1>
+  <p class="lead">Your payment went through and Money OS is yours — forever, with no subscription and no account to maintain.</p>
+
+  <div class="mail">
+    <p><b>📩 Check your email now.</b> Your download link has just been sent to the address you used at checkout. It contains the app file and a short quick-start note.</p>
+    <p><b>Don't see it?</b> Give it 2–3 minutes, then check Promotions and Spam. Search for <b>“Money OS”</b> or <b>payhip</b>. Still nothing — email us and we'll send it manually within hours.</p>
+  </div>
+
+  <div class="orn"><i></i></div>
+  <h2>Your first <em>ten minutes</em></h2>
+  <div class="steps">
+    <div class="st"><div class="n">01</div><div><h3>Unzip and open the file</h3><p>Double-click <b>MoneyOS.html</b> — it opens in your browser like a normal app. Nothing to install, no login. Keep the file somewhere safe; it is your copy forever.</p></div></div>
+    <div class="st"><div class="n">02</div><div><h3>Press “Load sample data” first</h3><p>On an empty app you'll see the option right away. It fills everything with realistic numbers so you can click around and understand each screen before entering your own.</p></div></div>
+    <div class="st"><div class="n">03</div><div><h3>Then open the assistant and type “guide”</h3><p>The 💬 button at the bottom right walks you through setup step by step — and opens the right screen for you at each step. Six steps, roughly ten minutes.</p></div></div>
+    <div class="st"><div class="n">04</div><div><h3>Two habits that make it work</h3><p><b>Save a snapshot monthly</b> so your wealth curve builds itself, and <b>press Backup weekly</b>. Since your data never leaves your device, that backup file is your only copy — keep it in your cloud drive of choice.</p></div></div>
+  </div>
+
+  <div class="ctas">
+    <a class="btn p" href="../app/" target="_blank" rel="noopener">Open the live version →</a>
+    <a class="btn s" href="../">Back to the site</a>
+  </div>
+
+  <div class="help">
+    <h3>Something not right?</h3>
+    <p>Email <a href="mailto:matasbuika1@gmail.com?subject=Money%20OS%20—%20help%20with%20my%20order">matasbuika1@gmail.com</a> — a human replies within hours. Your 30-day money-back guarantee starts today, no questions asked.</p>
+  </div>
+</main>
+<footer>Money OS · This tool is for informational and educational purposes only and does not constitute financial, investment, tax, or legal advice.</footer>
+<script>
+(function(){
+  var PIXEL_ID="";              /* set when the Meta pixel exists */
+  var VALUE=24.99, CUR="EUR";
+  if(!PIXEL_ID) return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', PIXEL_ID);
+  fbq('track', 'PageView');
+  /* event_id lets Meta de-duplicate this against the server-side (CAPI) copy of the same purchase */
+  var eid=new URLSearchParams(location.search).get('oid')||('mos_'+Math.random().toString(36).slice(2));
+  fbq('track','Purchase',{value:VALUE,currency:CUR,content_name:'Money OS'},{eventID:eid});
+})();
+</script>
+</body>
+</html>
