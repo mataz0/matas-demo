@@ -246,7 +246,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <p class="sub rv in">Budget, savings goals, investments, debt payoff and your financial freedom date — in one beautiful app that answers to no server, no bank and no subscription. Pay once. Own it forever.</p>
   <div class="ctas rv in">
     <a class="btn p" href="#buy">Get Money OS — €24.99</a>
-    <a class="btn s" href="app/" target="_blank" rel="noopener">Try the live demo →</a>
+    <a class="btn s" href="app/" target="_blank" rel="noopener">Try the free preview →</a>
   </div>
   <p class="rv in" style="margin-top:14px;font-size:13px;color:var(--mut)">💬 Have questions? Our assistant (bottom right) answers instantly and walks you through setup.</p>
   <p class="anchor rv in">YNAB charges <b>$109 every year</b>. Monarch — $99/yr. This is <b>€24.99, once</b>.</p>
@@ -308,7 +308,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 <section id="tour">
   <div class="orn rv"><i></i></div>
   <h2 class="rv center">A look <em>inside</em></h2>
-  <p class="sd rv center">Real screens, real math — this is exactly what you get.</p>
+  <p class="sd rv center">Real screens, real math — every one of these is in the version you download.</p>
   <div class="walk">
     <div class="wk rv"><div class="phone"><img src="img/tab_overview.jpg" alt="Overview" loading="lazy"></div><h3>Overview</h3><p>Net worth, wealth curve and insights that talk to you</p></div>
     <div class="wk rv"><div class="phone"><img src="img/tab_plan.jpg" alt="Plan" loading="lazy"></div><h3>Plan</h3><p>Goals with progress rings — and confetti when you win</p></div>
@@ -356,7 +356,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     <p class="sd" style="margin:14px auto 0">One-time payment · instant delivery by email · free updates for version 1</p>
     <div class="ctas" style="justify-content:center;margin-top:28px">
       <a class="btn p" id="buyB" href="mailto:matasbuika1@gmail.com?subject=Order%3A%20Money%20OS%20(%E2%82%AC24.99)&body=Hi%2C%20I%27d%20like%20to%20buy%20Money%20OS.%0A%0AName%3A%20%0AEmail%20for%20delivery%3A%20%0A%0AI%20agree%20to%20immediate%20delivery%20of%20digital%20content.%0A%0APlease%20send%20payment%20details.">Buy now — €24.99</a>
-      <a class="btn s" href="app/" target="_blank" rel="noopener">Try before you buy</a>
+      <a class="btn s" href="app/" target="_blank" rel="noopener">Try the free preview</a>
     </div>
     <p class="anchor" id="buyNote" style="margin-top:16px">Checkout opens as an email order while card payments are being set up — you'll get payment details within hours.</p>
     <p style="margin-top:10px;font-size:11.5px;color:var(--soft);max-width:62ch;margin-left:auto;margin-right:auto">By ordering you agree to immediate delivery of digital content and acknowledge that the EU 14-day right of withdrawal does not apply once delivery begins — covered instead by our voluntary 30-day guarantee.</p>
@@ -372,7 +372,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     <details class="rv"><summary>Do I need a Google account or any software?</summary><p>No. Unlike spreadsheet-based systems, there's no Google account, no Excel licence and no install. It opens in the browser you already have.</p></details>
     <details class="rv"><summary>Can I use it on more than one device?</summary><p>Yes — put the file on as many of your own devices as you like. Each keeps its own data; use Backup and Restore to move a copy between them whenever you want.</p></details>
     <details class="rv"><summary>Is this financial advice?</summary><p>No. It's a calculator and a planner — it does arithmetic on numbers you enter. It doesn't recommend investments and it isn't a substitute for a qualified professional.</p></details>
-    <details class="rv"><summary>Can I see it before paying?</summary><p>Yes, the entire app is free to try in your browser — no signup, no card. Open the live demo and press “Load sample data” to see it fully filled in. What you try is exactly what you buy.</p></details>
+    <details class="rv"><summary>What’s the difference between the free preview and the paid version?</summary><p>The preview runs on our website so you can walk through every screen before paying — no signup, no card. It holds a handful of entries and, because it’s a web page rather than a file on your machine, it can’t import CSVs or save backups. The version you download removes all of that: unlimited entries, CSV import, Backup and Restore, offline use on every device, plus the setup guide and CSV templates. Same app, no ceiling.</p></details>
   </div>
 </section>
 <div class="callbar"><span class="p"><s>€49</s> €24.99</span><a class="cbb" href="#buy">Get Money OS</a></div>
@@ -566,10 +566,11 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     buyNote.textContent="Secure card checkout · instant delivery to your email · EU VAT handled automatically.";
   }
   var BUY_A = PAYHIP_URL
-    ? "Tap <b>Buy now</b> — secure card checkout with instant delivery to your email, 30-day money-back guarantee. Prefer to look around first? The live demo is free."
+    ? "Tap <b>Buy now</b> — secure card checkout with instant delivery to your email, 30-day money-back guarantee. Prefer to look around first? The free preview needs no card."
     : "Tap <b>Buy now</b> in the Get Money OS section — it opens a short email order (card checkout is being finalized). You get payment details within hours and the app right after payment. Want to try first? The live demo is free.";
   var KB=[
    [/^(hi|hello|hey|labas|yo)\b/i,"Hello! 👋 Ask me anything about Money OS — how it helps, pricing, privacy, what's inside, setup, comparisons with YNAB or spreadsheets.",["How will it help me?","What's inside?","Price?"]],
+   [/(difference|differ|vs\.?|compare).{0,26}(preview|demo|free)|(preview|demo|free).{0,26}(difference|vs\.?|paid|full)|what do i get|what.{0,12}get when|why.{0,24}(pay|buy).{0,34}free|already free|free anyway|point of (buying|paying)/i,"Fair question — here's the honest split.<br><br><b>Free preview:</b> every screen, every feature to look at, sample data included. It holds a handful of entries and can't import CSVs or save backups — it's a web page on our site, not a file on your machine.<br><br><b>What €24.99 buys:</b> unlimited transactions, goals, debts and holdings · CSV import that auto-sorts a whole month in one paste · Backup &amp; Restore to a file you own · the file itself, working offline on every device, forever · a quick-start guide and CSV templates · free v1 updates.<br><br>Short version: the preview shows you it's good. The download is the one you actually run your money on.",["How do I buy?","CSV import help"]],
    [/benefit|worth it|why.{0,26}(useful|help|need|buy|this|bother)|how.{0,20}(useful|help you|help me)|point of|what.{0,8}for me|convince|why should/i,"Fair question. Three things usually change:<br>1️⃣ <b>Leaks become visible</b> — every subscription and small charge in one list, with a per-year price tag. Cancelling one or two often covers the app's price in the first month.<br>2️⃣ <b>Saving starts to feel like winning</b> — progress rings and confetti turn “I should save” into a game you actually want to play.<br>3️⃣ <b>Anxiety turns into a plan</b> — an exact debt-free date and a freedom date replace vague worry. All for ~10 minutes a week.",["Will it help me save?","Set up guide","Price?"]],
    [/save money|help me save|how much.{0,14}save|will i save|spend less|cut spending/i,"Honestly: the app doesn't save money — <b>seeing clearly does</b>. What people consistently find in week one: forgotten subscriptions, delivery creep, small daily charges that quietly add up. The Insights card shows your top spending category and what your subscriptions cost <b>per year</b> — that number alone tends to pay for the app many times over. And that's before the $109/yr you're not paying YNAB.",["How will it help me?","What's inside?"]],
    [/bad with money|can.?t stick|never stick|discipline|motivat|give up|lazy|tried before|failed|always quit/i,"That's exactly who this is built for. Willpower fails; <b>feedback loops don't</b>. Progress rings fill, confetti fires when you hit a goal, your debt-free date visibly moves closer, your wealth curve climbs. Small wins you can <i>see</i> beat discipline every time — and it only asks ~10 minutes a week.",["How will it help me?","Set up guide"]],
@@ -592,7 +593,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
    [/refund|guarantee|money.?back/i,"30-day money-back guarantee, no questions asked. Email matasbuika1@gmail.com and you get a full refund.",["Price?","How do I buy?"]],
    [/privat|secure|safe|encrypt|my data|gdpr|track/i,"Radically private: the app has <b>no server</b> — your data lives only in your browser. Proof: open the app, press F12 → Network — zero requests. No account, no tracking, no bank login, works offline. GDPR-wise there's nothing to worry about because no data ever reaches us.",["How do backups work?","What's inside?"]],
    [/device|phone|mac|windows|android|iphone|ipad|tablet|linux|browser|install|app store/i,"Works everywhere a browser works: Mac, Windows, iPhone, iPad, Android, Linux. One file, no installation, no app store. On mobile it feels native, with a bottom tab bar. Use it on all your devices — sync by sharing one Backup file.",["What's inside?","How do I receive it?"]],
-   [/demo|try|test|sample/i,"Full live demo, no signup: tap <b>Try the live demo</b> (or the button below). Inside, hit <b>Load sample data</b> to see it fully filled in.",["Open live demo"]],
+   [/demo|try|test|sample/i,"Yes — a free preview, no signup: tap <b>Try the free preview</b> (or the button below) and hit <b>Load sample data</b> inside. It walks you through every screen. It caps how many entries it holds and can’t import CSVs or save backups — the downloaded version has no limits.",["Open live demo","What do I get when I buy?"]],
    [/inside|feature|module|what.*(do|can|get)|included/i,"Six modules in one file: 💶 Budget with auto-sorting CSV import · 🎯 Savings goals with confetti · 📈 Investments & dividends · 🧾 Debt snowball with your debt-free date · 🔥 FIRE calculator · 📊 Insights that talk to you. Plus a built-in assistant that walks you through everything.",["How do I set it up?","Price?"]],
    [/price|cost|how much|kaina/i,"Money OS is <b>€24.99 once</b> — no subscription, ever. Compare: YNAB is $109 EVERY year. Comes with a 30-day money-back guarantee.",["How do I buy?","What's inside?"]],
    [/buy|purchase|order|checkout|get it|payment method|card|paypal/i,BUY_A,["Open live demo","Is it private?"]],

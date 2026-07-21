@@ -128,6 +128,17 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 .conf{position:fixed;top:-12px;width:9px;height:14px;z-index:300;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(600deg);opacity:.9}}
 @media(prefers-reduced-motion:reduce){.view.on .card,.view.on .rowi,#donut,.chart path.animln{animation:none!important}.conf{display:none}.cbtn .dot{animation:none!important}}
+/* demo / upsell */
+.dpill{display:inline-block;margin-left:9px;font-size:10px;font-weight:800;letter-spacing:.1em;color:var(--amber);border:1px solid rgba(245,158,11,.45);background:var(--amber2);border-radius:100px;padding:3px 8px;vertical-align:middle}
+.dbanner{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(90deg,rgba(245,158,11,.14),rgba(59,130,246,.10));border:1px solid rgba(245,158,11,.3);border-radius:14px;padding:13px 18px;margin-bottom:16px}
+.dbanner p{flex:1;min-width:220px;font-size:13.5px;color:var(--mut)}
+.dbanner b{color:var(--ink)}
+.dbanner a{background:var(--green);color:#fff;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+.dbanner button{border:0;background:none;color:var(--soft);font-size:17px;cursor:pointer;padding:0 2px}
+.ulist{display:flex;flex-direction:column;gap:9px}
+.ulist div{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--mut)}
+.ulist b{color:var(--green);flex:none}
+.ulist span b{color:var(--ink)}
 /* goals v2 */
 .epick{display:flex;flex-wrap:wrap;gap:6px}
 .epick button{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;width:40px;height:40px;font-size:19px;cursor:pointer}
@@ -223,6 +234,11 @@ button{transition:transform .15s ease,filter .2s,background .2s,color .2s,border
 </div>
 
 <main>
+<div class="dbanner" id="dBanner" style="display:none">
+  <p><b>You're using the online preview.</b> Everything works, but it holds only a handful of entries and can't import CSVs or save backups — those need the file you download.</p>
+  <a href="https://payhip.com/b/zmKZ7" target="_blank" rel="noopener">See what you get — €24.99</a>
+  <button id="dBanX" aria-label="Dismiss">✕</button>
+</div>
 <div id="sampleBar" style="display:none;background:linear-gradient(90deg,rgba(16,185,129,.18),rgba(59,130,246,.16));border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:16px;display:none;align-items:center;gap:14px;flex-wrap:wrap">
   <span style="font-size:14px;flex:1;min-width:200px"><b>New here?</b> <span style="color:var(--mut)">Load realistic sample data to explore — you can wipe it anytime.</span></span>
   <button class="addb" id="sampleB" style="flex:none">Load sample data</button>
@@ -369,6 +385,41 @@ function $(id){ return document.getElementById(id); }
 function toast(t){ var e=$('toast'); e.textContent=t; e.classList.add('on'); setTimeout(function(){e.classList.remove('on');},2200); }
 function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
 
+/* ───────── demo vs full ─────────
+   The hosted preview (github.io) runs limited. The purchased file — opened from
+   your own device — runs unlocked. No keys, no server, no phoning home. */
+var DEMO = /github\.io$/i.test(location.hostname);
+var BUY='https://payhip.com/b/zmKZ7';
+var LIM={tx:15, goals:3, debts:3, hold:4};
+function upsell(head, why){
+  openModal('<h3>'+head+'</h3>'
+   +'<p class="note" style="margin-bottom:14px">'+why+'</p>'
+   +'<div class="ulist">'
+   +'<div><b>✓</b><span><b>Unlimited</b> transactions, goals, debts and holdings</span></div>'
+   +'<div><b>✓</b><span><b>CSV import</b> — paste a bank export, categories sort themselves</span></div>'
+   +'<div><b>✓</b><span><b>Backup &amp; Restore</b> — your data, in a file you keep</span></div>'
+   +'<div><b>✓</b><span><b>The file itself</b> — works offline, on every device, forever</span></div>'
+   +'<div><b>✓</b><span>Quick-start guide, CSV templates and free v1 updates</span></div>'
+   +'</div>'
+   +'<div class="mbtns" style="margin-top:16px"><button class="ghostb" onclick="closeModal()">Keep exploring</button>'
+   +'<a class="addb" href="'+BUY+'" target="_blank" rel="noopener" style="flex:1;text-align:center;text-decoration:none;padding:13px;display:block">Get it — €24.99 once</a></div>');
+}
+function capped(kind){
+  if(!DEMO) return false;
+  var n={tx:S.tx.length,goals:S.goals.length,debts:S.debts.length,hold:S.hold.length}[kind];
+  if(n<LIM[kind]) return false;
+  var label={tx:'transactions',goals:'goals',debts:'debts',hold:'holdings'}[kind];
+  upsell('The preview stops at '+LIM[kind]+' '+label,
+    'You’ve reached what this online preview holds — enough to see how everything works, not enough to run your month. The full version has no limits.');
+  return true;
+}
+function demoOnly(feature){
+  if(!DEMO) return false;
+  upsell(feature+' is in the full version',
+    'This preview runs on our website, so it can’t write files to your computer. The version you download can.');
+  return true;
+}
+
 /* ───────── tabs ───────── */
 document.querySelectorAll('.tab').forEach(function(t){
   t.addEventListener('click',function(){
@@ -389,6 +440,7 @@ window.closeModal=closeModal;
 /* ───────── transactions ───────── */
 function monthTx(){ return S.tx.filter(function(t){ var d=new Date(t.d); return d.getFullYear()===mSel[0]&&d.getMonth()===mSel[1]; }); }
 $('txAdd').addEventListener('click',function(){
+  if(capped('tx')) return;
   var today=new Date().toISOString().slice(0,10);
   openModal('<h3>Add transaction</h3>'
    +'<div class="seg"><button class="on" id="sgE">Expense</button><button id="sgI">Income</button></div>'
@@ -412,6 +464,7 @@ window.delTx=function(i){ S.tx.splice(i,1); save(); render(); };
 var RULES=[['iki|maxima|lidl|rimi|grocer|supermarket|food','Food'],['bolt|uber|fuel|circle|shell|petrol|parking|train|bus','Transport'],['rent|mortgage|electric|water|internet|telia|utilities','Home'],['netflix|spotify|youtube|subscription|icloud','Subscriptions'],['pharmacy|clinic|doctor|gym','Health'],['zara|hm|amazon|shop','Shopping'],['restaurant|cafe|bar|cinema|pizza','Fun']];
 function autoCat(desc){ var d=desc.toLowerCase(); for(var i=0;i<RULES.length;i++){ if(new RegExp(RULES[i][0]).test(d)) return RULES[i][1]; } return 'Other'; }
 $('csvB').addEventListener('click',function(){
+  if(demoOnly('CSV import')) return;
   openModal('<h3>Import CSV</h3><p class="note" style="margin-bottom:10px">Paste rows from your bank export: <b>date, description, amount</b> (negative = expense). Categories are auto-detected — you can edit after.</p>'
    +'<div class="fld"><textarea id="m-csv" placeholder="2026-07-01, MAXIMA, -32.50\n2026-07-02, Salary, 2400"></textarea></div>'
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Import</button></div>');
@@ -436,7 +489,7 @@ $('budEdit').addEventListener('click',function(){
 });
 
 /* ───────── holdings ───────── */
-$('hAdd').addEventListener('click',function(){ holdModal(); });
+$('hAdd').addEventListener('click',function(){ if(capped('hold')) return; holdModal(); });
 function holdModal(idx){
   var h=idx!=null?S.hold[idx]:{n:'',ty:'ETF',q:'',b:'',p:''};
   openModal('<h3>'+(idx!=null?'Edit':'Add')+' holding</h3>'
@@ -468,6 +521,7 @@ window.delDiv=function(i){ S.divs.splice(i,1); save(); render(); };
 
 /* ───────── debts ───────── */
 $('dAdd').addEventListener('click',function(){
+  if(capped('debts')) return;
   openModal('<h3>Add debt</h3><div class="fld"><label>Name</label><input id="m-n" placeholder="Car loan"></div>'
    +'<div class="mrow"><div class="fld"><label>Balance</label><input id="m-b" type="number" step="0.01"></div>'
    +'<div class="fld"><label>APR %</label><input id="m-r" type="number" step="0.1" value="9"></div></div>'
@@ -534,11 +588,13 @@ $('snapB').addEventListener('click',function(){
 
 /* ───────── backup / restore ───────── */
 $('expB').addEventListener('click',function(){
+  if(demoOnly('Backup')) return;
   var blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
   var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='moneyos-backup-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
   toast('Backup downloaded');
 });
 $('impB').addEventListener('click',function(){
+  if(demoOnly('Restore')) return;
   var inp=document.createElement('input'); inp.type='file'; inp.accept='.json';
   inp.onchange=function(){ var f=inp.files[0]; if(!f) return; var r=new FileReader();
     r.onload=function(){ try{ var s=JSON.parse(r.result); if(!s.tx) throw 0; S=s; save(); render(); fireRestore(); toast('Restored ✓'); }catch(e){ toast('Invalid backup file'); } };
@@ -569,7 +625,7 @@ function goalModal(i){
     save(); closeModal(); render(); toast(g?'Goal updated':'Goal created — let’s fill that ring');
   };
 }
-$('gAdd').addEventListener('click',function(){ goalModal(); });
+$('gAdd').addEventListener('click',function(){ if(capped('goals')) return; goalModal(); });
 window.gEdit=function(i){ goalModal(i); };
 function goalMeta(g){
   var left=Math.max(0,g.t-g.s), m={left:left, pct:g.t?Math.min(1,g.s/g.t):0};
@@ -956,6 +1012,13 @@ $('aClose').addEventListener('click',function(){ aP.classList.remove('on'); });
 $('aSend').addEventListener('click',function(){ if(aI.value.trim()){ aAsk(aI.value.trim()); aI.value=''; } });
 aI.addEventListener('keydown',function(e){ if(e.key==='Enter'&&aI.value.trim()){ aAsk(aI.value.trim()); aI.value=''; } });
 
+if(DEMO){
+  var lg=document.getElementById('logoB');
+  if(lg){ var pill=document.createElement('span'); pill.className='dpill'; pill.textContent='PREVIEW'; lg.appendChild(pill); }
+  var shown=false; try{ shown=!!localStorage.getItem('mosDban'); }catch(e){}
+  if(!shown) $('dBanner').style.display='flex';
+  $('dBanX').addEventListener('click',function(){ $('dBanner').style.display='none'; try{localStorage.setItem('mosDban','1');}catch(e){} });
+}
 try{ var tv0=localStorage.getItem('mosTab'); if(tv0&&tv0!=='dash'){ var tb0=document.querySelector('[data-v="'+tv0+'"]'); if(tb0) tb0.click(); } }catch(e){}
 maybeSample();
 render();
