@@ -89,20 +89,8 @@ footer{text-align:center;color:var(--soft);font-size:12.5px;padding:0 var(--pad)
   </div>
 </main>
 <footer>Money OS · This tool is for informational and educational purposes only and does not constitute financial, investment, tax, or legal advice.</footer>
-<script>
-(function(){
-  var PIXEL_ID="";              /* set when the Meta pixel exists */
-  var VALUE=24.99, CUR="EUR";
-  if(!PIXEL_ID) return;
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
-  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', PIXEL_ID);
-  fbq('track', 'PageView');
-  /* event_id lets Meta de-duplicate this against the server-side (CAPI) copy of the same purchase */
-  var eid=new URLSearchParams(location.search).get('oid')||('mos_'+Math.random().toString(36).slice(2));
-  fbq('track','Purchase',{value:VALUE,currency:CUR,content_name:'Money OS'},{eventID:eid});
-})();
-</script>
+<!-- Deliberately NO Meta pixel here. Payhip's own checkout pixel already fires Purchase;
+     this page is reached from the delivery email, often days later and repeatedly, so firing
+     Purchase here would double-count and corrupt optimisation data. -->
 </body>
 </html>
