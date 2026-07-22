@@ -581,6 +581,13 @@ window.toggleLots=function(i){
 };
 var CG={BTC:'bitcoin',ETH:'ethereum',USDT:'tether',BNB:'binancecoin',SOL:'solana',XRP:'ripple',USDC:'usd-coin',ADA:'cardano',DOGE:'dogecoin',TRX:'tron',AVAX:'avalanche-2',LINK:'chainlink',DOT:'polkadot',MATIC:'matic-network',LTC:'litecoin'};
 function curCode(){ return S.cur==='$'?'usd':S.cur==='\u00a3'?'gbp':'eur'; }
+function cgPrice(sym,cb){
+  var id=CG[(sym||'').toUpperCase().trim()]; if(!id) return cb(null);
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids='+id+'&vs_currencies='+curCode())
+   .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+   .then(function(d){ cb(d[id]&&d[id][curCode()]!=null?d[id][curCode()]:null); })
+   .catch(function(){ cb(null); });
+}
 function liveFetch(auto){
   var map={}; S.hold.forEach(function(h){ var id=CG[(h.n||'').toUpperCase().trim()]; if(id) map[id]=true; });
   var ids=Object.keys(map);
@@ -612,10 +619,30 @@ $('liveB').addEventListener('click',function(){
 });
 $('priceB').addEventListener('click',function(){
   if(!S.hold.length) return toast('Add a holding first');
+  var hasCg=S.hold.some(function(h){ return CG[(h.n||'').toUpperCase().trim()]; });
   openModal('<h3>Update current prices</h3>'
    +'<p class="note" style="margin-bottom:12px">One screen for all of them. Takes about twenty seconds — do it whenever you feel like checking in.</p>'
    +S.hold.map(function(h,i){ return '<div class="mrow" style="align-items:flex-end"><div class="fld" style="flex:1.3"><label>'+esc(h.n)+'</label><div class="note" style="margin:0">'+lotSum(h).q+' units · avg '+fmt(lotSum(h).b)+'</div></div><div class="fld"><input type="number" step="any" id="pp-'+i+'" value="'+(h.p||'')+'"></div></div>'; }).join('')
+   +(hasCg?'<button class="ghostb" id="m-fill" style="width:100%;margin-top:4px">Fill live crypto prices</button>':'')
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Save prices</button></div>');
+  if(hasCg) $('m-fill').onclick=function(){
+    var btn=this;
+    if(!S.live){
+      if(!btn.dataset.c){ btn.dataset.c='1'; btn.textContent='Uses CoinGecko (coin symbols only) — tap again to allow'; return; }
+      S.live=true; save();
+    }
+    btn.disabled=true; btn.textContent='Fetching…';
+    var map={}; S.hold.forEach(function(h){ var id=CG[(h.n||'').toUpperCase().trim()]; if(id) map[id]=true; });
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids='+Object.keys(map).join(',')+'&vs_currencies='+curCode())
+     .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+     .then(function(d){
+       var n=0;
+       S.hold.forEach(function(h,i){ var id=CG[(h.n||'').toUpperCase().trim()]; var f=$('pp-'+i);
+         if(id&&d[id]&&d[id][curCode()]!=null&&f){ f.value=d[id][curCode()]; n++; } });
+       btn.textContent='Filled '+n+' live price'+(n===1?'':'s')+' ✓ — review and Save';
+     })
+     .catch(function(){ btn.disabled=false; btn.textContent='Price service unreachable — try again'; });
+  };
   $('m-ok').onclick=function(){
     S.hold.forEach(function(h,i){ var v=parseFloat($('pp-'+i).value); if(!isNaN(v)) h.p=v; });
     save(); closeModal(); render(); toast('Prices updated');
@@ -636,14 +663,34 @@ function holdModal(idx){
    +'<div class="fld"><label>Buy price</label><input id="m-b" type="number" step="any" value="'+h.b+'"></div></div>'
    +'<div class="mrow"><div class="fld"><label>Date bought</label><input id="m-d0" type="date" value="'+(h.d0||today())+'"></div>'
    +'<div class="fld"><label>Current price</label><input id="m-p" type="number" step="any" value="'+h.p+'"></div></div>'
+   +'<div class="note" id="m-live" style="margin:-4px 0 12px;display:none"></div>'
    +(idx!=null?'':'<div class="note" style="margin:-4px 0 12px">You can add more purchases of the same thing later — each keeps its own date and price.</div>')
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Save</button></div>');
+  function autoPrice(sym){
+    var el=$('m-live'); if(!el) return;
+    if(!CG[(sym||'').toUpperCase().trim()]){ el.style.display='none'; return; }
+    if(!S.live){
+      el.style.display='block';
+      el.innerHTML='Live price available for '+esc(sym.toUpperCase())+' — <a href="#" id="m-liveok">allow live prices &amp; fill it</a>. Asks CoinGecko for coin symbols only, nothing else leaves this device.';
+      var a=$('m-liveok'); if(a) a.onclick=function(e){ e.preventDefault(); S.live=true; save(); autoPrice(sym); };
+      return;
+    }
+    el.style.display='block'; el.textContent='Fetching live price…';
+    cgPrice(sym,function(p){
+      if(!document.body.contains(el)) return;
+      if(p==null){ el.textContent='Live price unavailable right now — type it manually.'; return; }
+      var f=$('m-p'); if(f) f.value=p;
+      el.textContent='Live price filled: '+fmt(p)+' ✓';
+    });
+  }
   $('m-pick').onchange=function(){
     if(!this.value) return;
     var parts=this.value.split('|');
     $('m-n').value=parts[0]; $('m-ty').value=parts[1];
+    autoPrice(parts[0]);
     $('m-q').focus();
   };
+  $('m-n').addEventListener('change',function(){ autoPrice(this.value); });
   $('m-ok').onclick=function(){
     var o={n:$('m-n').value.trim(),ty:$('m-ty').value,q:parseFloat($('m-q').value)||0,b:parseFloat($('m-b').value)||0,p:parseFloat($('m-p').value)||0,d0:$('m-d0').value||today()};
     if(!o.n){ toast('Name required'); return; }
@@ -1155,7 +1202,7 @@ var AKB=[
  [/transaction|expense|income|spend|salary|add.{0,8}(entry|record)/i, "Budget tab → <b>＋Add</b>: pick Expense or Income, amount, category, date. Faster for many rows: <b>Import CSV</b> from your bank.", [{a:'tx'},{a:'csv'}]],
  [/dividend/i, "Invest tab → <b>＋Add dividend</b> (holding, amount, date). The yearly total shows your growing passive income.", [{a:'divd'}]],
  [/live price|auto.{0,8}price|coingecko|real.?time/i, "Invest tab \u2192 <b>Live prices</b> button. Off by default; when you enable it, it fetches current prices for the 15 popular cryptos from CoinGecko \u2014 sending coin symbols only, never your amounts. Stocks & ETFs stay manual (<b>Update manually</b> does them all in one screen) because no keyless source exists.", [{a:'hold'}]],
- [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: name, quantity, buy price, current price. You get value, invested, P/L and the allocation donut on Overview. Update prices whenever you like — it takes seconds.", [{a:'hold'},{a:'divd'}]],
+ [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: pick from the Quick pick list or type your own. For the 15 popular cryptos the current price can fill itself (live, opt-in — coin symbols only). Stocks &amp; ETFs stay manual by design. <b>Update prices</b> has a one-tap “Fill live crypto prices” too.", [{a:'hold'},{a:'divd'}]],
  [/debt|loan|snowball|avalanche|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), payoff order #1 #2…, and a <b>what-if slider</b> — drag it to see how €50 extra/mo moves your date closer. Addictive in the best way.", [{a:'debt'}]],
  [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending) and how far along you already are. Your inputs are saved automatically. Educational, not financial advice.", [{a:'fire'}]],
  [/snapshot|net worth|history|curve|wealth/i, "A snapshot saves today’s net worth as a point on your wealth curve (Overview). Save one <b>monthly</b> — after 3–4 months the chart becomes the most motivating thing in the app.", [{a:'snap'}]],
