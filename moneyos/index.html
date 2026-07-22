@@ -29,6 +29,10 @@
 --ease:cubic-bezier(.32,.72,0,1)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-thumb{background:rgba(12,21,36,.18);border-radius:100px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:rgba(12,21,36,.3)}
+::-webkit-scrollbar-track{background:transparent}
 body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16.5px;line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 ::selection{background:rgba(4,120,87,.16);color:var(--ink)}
@@ -93,6 +97,8 @@ h1 em{font-style:italic;background:linear-gradient(100deg,#047857,#2563EB 55%,#A
 .sl{font-size:12.5px;color:var(--mut);margin-top:6px}
 @media(max-width:700px){.stats div{flex:1 1 45%;border-left:0;border-top:1px solid var(--line)}}
 section{padding:clamp(66px,10vw,130px) var(--pad);max-width:1120px;margin:0 auto}
+#why,#try,#gets,#starter{position:relative}
+#why::before,#try::before,#gets::before,#starter::before{content:"";position:absolute;inset:0 -100vw;background:rgba(255,255,255,.55);border-top:1px solid var(--line);border-bottom:1px solid var(--line);z-index:-1}
 .orn{display:flex;align-items:center;gap:14px;margin:0 0 clamp(30px,5vw,50px)}
 .orn::before,.orn::after{content:"";height:1px;background:var(--line);flex:1}
 .orn i{width:5px;height:5px;transform:rotate(45deg);background:var(--gold);flex:none}
@@ -113,7 +119,8 @@ h2 em{font-style:italic;color:var(--gold)}
 .ft::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(16,185,129,.75),transparent);opacity:0;transition:opacity .5s}
 .ft:hover{transform:translateY(-5px);box-shadow:var(--sh2)}
 .ft:hover::before{opacity:1}
-.ft .ic{width:46px;height:46px;border-radius:14px;background:rgba(12,21,36,.045);display:grid;place-items:center;font-size:21px;margin-bottom:14px}
+.ft .ic{width:46px;height:46px;border-radius:14px;background:rgba(4,120,87,.07);color:var(--green);display:grid;place-items:center;margin-bottom:14px;transition:transform .4s var(--ease)}
+.ft:hover .ic{transform:scale(1.08) rotate(-3deg)}
 .ft h3{font-size:17px;font-weight:700}
 .ft p{color:var(--mut);font-size:14.5px;margin-top:7px}
 .outs{margin-top:clamp(28px,5vw,44px);border-top:1px solid var(--line)}
@@ -164,7 +171,14 @@ details[open] p{animation:faqin .45s var(--ease)}
   background:var(--card);border:1px solid var(--line);border-radius:100px;padding:4px 11px;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--sh1)}
 .dots a:hover span{opacity:1}
 @media(max-width:1180px){.dots{display:none}}
-footer{padding:44px var(--pad) 90px;text-align:center;font-size:13px;color:var(--soft);border-top:1px solid var(--line)}
+footer{padding:clamp(40px,6vw,64px) var(--pad) 100px;border-top:1px solid var(--line);background:rgba(255,255,255,.6)}
+.fgrid{max-width:1120px;margin:0 auto;display:grid;gap:32px;grid-template-columns:1fr;text-align:left}
+@media(min-width:720px){.fgrid{grid-template-columns:1.4fr 1fr 1fr}}
+.fcol{display:flex;flex-direction:column;gap:9px}
+.fcol b{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:4px}
+.fcol a{font-size:14px;color:var(--mut);text-decoration:none;width:max-content}
+.fcol a:hover{color:var(--green)}
+.fnote{max-width:1120px;margin:36px auto 0;font-size:11.5px;color:var(--soft);border-top:1px solid var(--line);padding-top:18px}
 footer a{color:var(--green);text-decoration:none}
 .callbar{display:none}
 @media(max-width:760px){
@@ -220,7 +234,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 .pbento{display:grid;gap:14px;margin-top:38px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .pb{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--sh1);transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .pb:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
-.pb .pi{font-size:24px;margin-bottom:12px}
+.pb .pi{width:44px;height:44px;border-radius:13px;background:rgba(37,99,235,.07);color:var(--blue);display:grid;place-items:center;margin-bottom:12px}
 .pb h3{font-size:16.5px;font-weight:700}
 .pb p{color:var(--mut);font-size:14px;margin-top:7px;line-height:1.6}
 @media(min-width:820px){.pb.wide{grid-column:span 3}}
@@ -235,7 +249,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 .gets{display:grid;gap:1px;margin-top:40px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--line);box-shadow:var(--sh1)}
 .get{background:var(--card);padding:clamp(20px,3vw,30px);display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:start;transition:background .35s}
 .get:hover{background:#FAFBFD}
-.get .gi{width:42px;height:42px;border-radius:13px;background:rgba(4,120,87,.08);display:grid;place-items:center;font-size:19px;grid-row:span 2}
+.get .gi{width:42px;height:42px;border-radius:13px;background:rgba(4,120,87,.07);color:var(--green);display:grid;place-items:center;grid-row:span 2}
 .get h3{font-size:16.5px;font-weight:700}
 .get p{color:var(--mut);font-size:14.5px;margin-top:5px}
 @media(min-width:820px){.gets{grid-template-columns:1fr 1fr}}
@@ -352,12 +366,12 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <div class="orn rv"><i></i></div>
   <h2 class="rv center">Everything the €15/month apps do.<br><em>Without the €15/month.</em></h2>
   <div class="feats">
-    <div class="ft rv"><div class="ic">🎯</div><h3>Savings goals</h3><p>Set a target date and it computes your monthly number — “save €138/mo to make it by June”. On-track badges, milestone cheers, confetti at 100%.</p></div>
-    <div class="ft rv"><div class="ic">💶</div><h3>Smart budget</h3><p>Category limits with pace ticks, a “safe to spend per day” number, and a CSV import that auto-sorts your bank statement in seconds.</p></div>
-    <div class="ft rv"><div class="ic">📈</div><h3>Investments & dividends</h3><p>Pick from 15 popular stocks, 15 cryptos or your own tickers. Log each purchase with its date, get P/L in € and % — and optional live crypto prices.</p></div>
-    <div class="ft rv"><div class="ic">🧾</div><h3>Debt payoff, two ways</h3><p>Snowball or avalanche — with your exact debt-free date and a what-if slider: drag it and watch €50 extra shave months off.</p></div>
-    <div class="ft rv"><div class="ic">🔥</div><h3>FIRE calculator</h3><p>Four numbers in, your financial freedom date out — with the most motivating chart you'll ever see.</p></div>
-    <div class="ft rv"><div class="ic">🔒</div><h3>Radically private</h3><p>Works offline. All data stays in your browser. We couldn't see your numbers even if we wanted to.</p></div>
+    <div class="ft rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div><h3>Savings goals</h3><p>Set a target date and it computes your monthly number — “save €138/mo to make it by June”. On-track badges, milestone cheers, confetti at 100%.</p></div>
+    <div class="ft rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><path d="M16.5 14.5h.01"/></svg></div><h3>Smart budget</h3><p>Category limits with pace ticks, a “safe to spend per day” number, and a CSV import that auto-sorts your bank statement in seconds.</p></div>
+    <div class="ft rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></div><h3>Investments & dividends</h3><p>Pick from 15 popular stocks, 15 cryptos or your own tickers. Log each purchase with its date, get P/L in € and % — and optional live crypto prices.</p></div>
+    <div class="ft rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l2.5-1.5L10 21l2-1.5L14 21l2.5-1.5L19 21V3z"/><path d="M9 8h6M9 12h6"/></svg></div><h3>Debt payoff, two ways</h3><p>Snowball or avalanche — with your exact debt-free date and a what-if slider: drag it and watch €50 extra shave months off.</p></div>
+    <div class="ft rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3q1 4 4 6.5t3 5.5a7 7 0 0 1-14 0q0-3 2.5-5T12 3z"/></svg></div><h3>FIRE calculator</h3><p>Four numbers in, your financial freedom date out — with the most motivating chart you'll ever see.</p></div>
+    <div class="ft rv"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><h3>Radically private</h3><p>Works offline. All data stays in your browser. We couldn't see your numbers even if we wanted to.</p></div>
   </div>
 </section>
 <section class="center">
@@ -417,10 +431,10 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <span class="tag rv">Private by design</span>
   <h2 class="rv">Not a promise. <em>An architecture.</em></h2>
   <div class="pbento">
-    <div class="pb rv"><div class="pi">🖥️</div><h3>No server to hack</h3><p>Your data isn't “encrypted in the cloud” — it's simply not in any cloud. There is no Money OS database of users, because there are no users to store. A breach of us leaks nothing about you.</p></div>
-    <div class="pb rv"><div class="pi">🔍</div><h3>Verifiable in 10 seconds</h3><p>Open the app, press F12, choose Network, use it. Zero requests — unless you switch on live crypto prices, whose single request you'll see, containing coin symbols and nothing else.</p></div>
-    <div class="pb rv"><div class="pi">✈️</div><h3>Works on a plane</h3><p>Airplane mode is the ultimate privacy test, and Money OS passes it. Budget in a cabin, on a flight, in a blackout — the file doesn't care.</p></div>
-    <div class="pb rv wide"><div class="pi">🤝</div><h3>The honest trade</h3><p>Apps with bank sync are convenient — and they read your transactions on their servers. We made the opposite trade: you paste a CSV once a month, and in return nobody, including us, ever sees a single number. You decide which trade is right for you.</p></div>
+    <div class="pb rv"><div class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2"/><path d="M8 7h.01M8 17h.01"/><path d="M3 3l18 18"/></svg></div><h3>No server to hack</h3><p>Your data isn't “encrypted in the cloud” — it's simply not in any cloud. There is no Money OS database of users, because there are no users to store. A breach of us leaks nothing about you.</p></div>
+    <div class="pb rv"><div class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg></div><h3>Verifiable in 10 seconds</h3><p>Open the app, press F12, choose Network, use it. Zero requests — unless you switch on live crypto prices, whose single request you'll see, containing coin symbols and nothing else.</p></div>
+    <div class="pb rv"><div class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5L3 11l1.5-2 5.5 1L16 4l2.5.5L14 11l5 1.5-1.5 2-5.5-2-2 3 1 3-2 1-1.5-4z"/></svg></div><h3>Works on a plane</h3><p>Airplane mode is the ultimate privacy test, and Money OS passes it. Budget in a cabin, on a flight, in a blackout — the file doesn't care.</p></div>
+    <div class="pb rv wide"><div class="pi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l3.5 3.5a2 2 0 0 0 3 0L17 12"/><path d="M3 9l4-4 5 2 5-2 4 4-4 8H7z"/></svg></div><h3>The honest trade</h3><p>Apps with bank sync are convenient — and they read your transactions on their servers. We made the opposite trade: you paste a CSV once a month, and in return nobody, including us, ever sees a single number. You decide which trade is right for you.</p></div>
   </div>
 </section>
 <section id="starter">
@@ -451,15 +465,15 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <h2 class="rv">One file. <em>Nine things</em> it does for you.</h2>
   <p class="sd rv">No tiers, no add-ons, no “pro” version. Every buyer gets all of it.</p>
   <div class="gets">
-    <div class="get rv"><div class="gi">💶</div><h3>Monthly budget that does the math</h3><p>Set a limit per category and every entry updates the bars instantly. A pace marker shows where you should be today, so “am I overspending?” has an answer before the month ends.</p></div>
-    <div class="get rv"><div class="gi">📊</div><h3>Safe-to-spend, per day</h3><p>Not just what you spent — what you can still spend. The app divides what's left by the days remaining and tells you the number.</p></div>
-    <div class="get rv"><div class="gi">📥</div><h3>CSV import that sorts itself</h3><p>Paste your bank export and it files transactions into categories automatically — Bolt to Transport, Netflix to Subscriptions. Fix anything with one tap.</p></div>
-    <div class="get rv"><div class="gi">🎯</div><h3>Goals with real planning</h3><p>Add a target date and it calculates exactly how much to set aside each month. Miss a month and it quietly recalculates instead of shaming you. Progress rings, milestone cheers, confetti at 100%.</p></div>
-    <div class="get rv"><div class="gi">🧾</div><h3>Debt payoff, both methods</h3><p>Snowball or avalanche, with your exact debt-free date and total interest for each — plus a slider that shows what €50 extra a month would actually change.</p></div>
-    <div class="get rv"><div class="gi">📈</div><h3>Investments and dividends</h3><p>Holdings with profit/loss, an allocation donut and a dividend log that adds up your passive income for the year.</p></div>
-    <div class="get rv"><div class="gi">🔥</div><h3>Your financial independence date</h3><p>Four numbers in, and you get the date you could stop working for money, your freedom number, and how far along you already are.</p></div>
-    <div class="get rv"><div class="gi">💬</div><h3>A built-in assistant</h3><p>Ask it anything and it answers — then opens the right screen and the right form for you. A six-step setup guide tracks what you've done.</p></div>
-    <div class="get rv"><div class="gi">💾</div><h3>Backup you control</h3><p>One button saves everything to a single file you keep wherever you like. Restore it on any device in seconds. No cloud, no account, no lock-in.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><path d="M16.5 14.5h.01"/></svg></div><h3>Monthly budget that does the math</h3><p>Set a limit per category and every entry updates the bars instantly. A pace marker shows where you should be today, so “am I overspending?” has an answer before the month ends.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/><path d="M12 14h.01"/></svg></div><h3>Safe-to-spend, per day</h3><p>Not just what you spent — what you can still spend. The app divides what's left by the days remaining and tells you the number.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10"/><polyline points="8 10 12 14 16 10"/><path d="M5 19h14"/></svg></div><h3>CSV import that sorts itself</h3><p>Paste your bank export and it files transactions into categories automatically — Bolt to Transport, Netflix to Subscriptions. Fix anything with one tap.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div><h3>Goals with real planning</h3><p>Add a target date and it calculates exactly how much to set aside each month. Miss a month and it quietly recalculates instead of shaming you. Progress rings, milestone cheers, confetti at 100%.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l2.5-1.5L10 21l2-1.5L14 21l2.5-1.5L19 21V3z"/><path d="M9 8h6M9 12h6"/></svg></div><h3>Debt payoff, both methods</h3><p>Snowball or avalanche, with your exact debt-free date and total interest for each — plus a slider that shows what €50 extra a month would actually change.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></div><h3>Investments and dividends</h3><p>Holdings with profit/loss, an allocation donut and a dividend log that adds up your passive income for the year.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3q1 4 4 6.5t3 5.5a7 7 0 0 1-14 0q0-3 2.5-5T12 3z"/></svg></div><h3>Your financial independence date</h3><p>Four numbers in, and you get the date you could stop working for money, your freedom number, and how far along you already are.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2.2-2.6A8 8 0 1 1 21 12z"/><path d="M9 11h6M9 14h3"/></svg></div><h3>A built-in assistant</h3><p>Ask it anything and it answers — then opens the right screen and the right form for you. A six-step setup guide tracks what you've done.</p></div>
+    <div class="get rv"><div class="gi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9.5 12l2 2 3.5-3.5"/></svg></div><h3>Backup you control</h3><p>One button saves everything to a single file you keep wherever you like. Restore it on any device in seconds. No cloud, no account, no lock-in.</p></div>
   </div>
 </section>
 <section id="buy">
@@ -499,7 +513,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 </section>
 <div class="callbar"><span class="p"><s>€49</s> €24.99</span><a class="cbb" href="#buy">Get Money OS</a></div>
 <div class="dbar" id="dbar"><b><s>€49</s>€24.99</b><span>one payment · instant delivery · 30-day guarantee</span><a href="#buy">Get Money OS</a></div>
-<nav class="dots" id="dots" aria-label="Sections">
+<div class="dots" id="dots" role="navigation" aria-label="Sections">
   <a href="#how" data-s="how"><span>How it works</span></a>
   <a href="#why" data-s="why"><span>What changes</span></a>
   <a href="#calc" data-s="calc"><span>The math</span></a>
@@ -507,7 +521,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <a href="#priv" data-s="priv"><span>Privacy</span></a>
   <a href="#gets" data-s="gets"><span>Everything included</span></a>
   <a href="#buy" data-s="buy"><span>Get it</span></a>
-</nav>
+</div>
 <div class="spot" id="spot"></div>
 <script>
 /* ── v6 motion layer ── */
@@ -623,15 +637,36 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   }
 })();
 </script>
-<footer>Money OS · matasbuika1@gmail.com<br><span style="font-size:11px;opacity:.75;display:block;max-width:72ch;margin:8px auto 0">This tool is for informational and educational purposes only and does not constitute financial, investment, tax, or legal advice. No fiduciary relationship is created by its use. Consult a qualified professional before making financial decisions.</span></footer>
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="logo" style="justify-content:flex-start"><i>€</i>Money OS</div>
+      <p style="margin-top:10px;font-size:13px;color:var(--mut);max-width:30ch">The private finance planner you buy once and own forever.</p>
+    </div>
+    <div class="fcol"><b>Product</b>
+      <a href="app/" target="_blank" rel="noopener">Free preview</a>
+      <a href="https://payhip.com/b/abIzJ" target="_blank" rel="noopener">Free starter kit</a>
+      <a href="#gets">Everything included</a>
+      <a href="#buy">Pricing</a>
+    </div>
+    <div class="fcol"><b>Help</b>
+      <a href="#buy">FAQ</a>
+      <a href="mailto:matasbuika1@gmail.com">Email a human</a>
+      <a href="https://payhip.com/b/zmKZ7" target="_blank" rel="noopener">Checkout page</a>
+    </div>
+  </div>
+  <p class="fnote">Money OS · This tool is for informational and educational purposes only and does not constitute financial, investment, tax, or legal advice. No fiduciary relationship is created by its use. Consult a qualified professional before making financial decisions.</p>
+</footer>
 <script>
 (function(){
   var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var nav=document.getElementById('nav'), prog=document.getElementById('prog');
+  var aur=document.querySelector('.aur');
   addEventListener('scroll',function(){
     var y=scrollY||0, h=document.documentElement.scrollHeight-innerHeight;
     nav.classList.toggle('stuck',y>40);
     prog.style.width=(h>0?y/h*100:0)+'%';
+    if(aur&&!reduced) aur.style.transform='translateY('+(y*.05)+'px)';
   },{passive:true});
   var els=[].slice.call(document.querySelectorAll('.rv'));
   function all(){els.forEach(function(e){e.classList.add('in');});}
