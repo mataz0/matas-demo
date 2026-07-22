@@ -122,7 +122,7 @@ h2 em{font-style:italic;color:var(--gold)}
 .wk{text-align:center}
 .phone{border-radius:28px;border:1px solid var(--line);background:#fff;padding:8px;box-shadow:var(--sh3);transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .wk:hover .phone{transform:translateY(-8px) scale(1.02);box-shadow:0 40px 70px -30px rgba(12,21,36,.34)}
-.phone img{width:100%;border-radius:19px;display:block}
+.phone img,.phone video{width:100%;border-radius:19px;display:block}
 .wk h3{font-family:var(--fd);font-size:19px;font-weight:400;margin-top:15px}
 .wk p{color:var(--mut);font-size:13.5px;margin-top:4px}
 .cmp{width:100%;border-collapse:collapse;margin-top:40px;font-size:14.5px;background:var(--card);border-radius:20px;overflow:hidden;box-shadow:var(--sh1)}
@@ -204,6 +204,9 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 .pb h3{font-size:16.5px;font-weight:700}
 .pb p{color:var(--mut);font-size:14px;margin-top:7px;line-height:1.6}
 @media(min-width:820px){.pb.wide{grid-column:span 3}}
+/* lead magnet */
+.leadbox{display:flex;gap:clamp(20px,4vw,44px);align-items:center;justify-content:space-between;flex-wrap:wrap;background:linear-gradient(150deg,rgba(4,120,87,.06),rgba(37,99,235,.05)),var(--card);border:1px solid rgba(4,120,87,.22);border-radius:24px;padding:clamp(24px,4vw,44px);box-shadow:var(--sh1)}
+.leadbox>div{flex:1;min-width:260px}
 /* maker */
 .makerbox{display:flex;gap:clamp(20px,4vw,40px);align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,44px);box-shadow:var(--sh1)}
 .makerbox .mi{width:64px;height:64px;flex:none;border-radius:20px;background:linear-gradient(135deg,#10B981,#2563EB);color:#fff;display:grid;place-items:center;font-family:var(--fd);font-size:30px;box-shadow:0 14px 30px -10px rgba(4,120,87,.4)}
@@ -348,10 +351,10 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <h2 class="rv center">A look <em>inside</em></h2>
   <p class="sd rv center">Real screens, real math — every one of these is in the version you download.</p>
   <div class="walk">
-    <div class="wk rv"><div class="phone"><img src="img/tab_overview.jpg" alt="Overview" loading="lazy"></div><h3>Overview</h3><p>Net worth, wealth curve and insights that talk to you</p></div>
-    <div class="wk rv"><div class="phone"><img src="img/tab_plan.jpg" alt="Plan" loading="lazy"></div><h3>Plan</h3><p>Goals with progress rings — and confetti when you win</p></div>
-    <div class="wk rv"><div class="phone"><img src="img/tab_debt.jpg" alt="Debts" loading="lazy"></div><h3>Debts</h3><p>Your exact debt-free date and interest you'll save</p></div>
-    <div class="wk rv"><div class="phone"><img src="img/tab_fire.jpg" alt="FIRE" loading="lazy"></div><h3>FIRE</h3><p>The date you could stop working. Yes, really.</p></div>
+    <div class="wk rv"><div class="phone"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_overview.jpg" aria-label="Overview demo"><source src="img/clip_overview.mp4" type="video/mp4"></video></div><h3>Overview</h3><p>Net worth, wealth curve and insights that talk to you</p></div>
+    <div class="wk rv"><div class="phone"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_plan.jpg" aria-label="Plan demo"><source src="img/clip_plan.mp4" type="video/mp4"></video></div><h3>Plan</h3><p>Goals with progress rings — and confetti when you win</p></div>
+    <div class="wk rv"><div class="phone"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_debt.jpg" aria-label="Debts demo"><source src="img/clip_debt.mp4" type="video/mp4"></video></div><h3>Debts</h3><p>Your exact debt-free date and interest you'll save</p></div>
+    <div class="wk rv"><div class="phone"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_fire.jpg" aria-label="FIRE demo"><source src="img/clip_fire.mp4" type="video/mp4"></video></div><h3>FIRE</h3><p>The date you could stop working. Yes, really.</p></div>
   </div>
   <table class="cmp rv">
     <tr><th></th><th class="me">Money OS</th><th>Subscription apps</th><th>Spreadsheets</th></tr>
@@ -398,6 +401,17 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     <div class="pb rv"><div class="pi">🔍</div><h3>Verifiable in 10 seconds</h3><p>Open the app, press F12, choose Network, use it. Zero requests — unless you switch on live crypto prices, whose single request you'll see, containing coin symbols and nothing else.</p></div>
     <div class="pb rv"><div class="pi">✈️</div><h3>Works on a plane</h3><p>Airplane mode is the ultimate privacy test, and Money OS passes it. Budget in a cabin, on a flight, in a blackout — the file doesn't care.</p></div>
     <div class="pb rv wide"><div class="pi">🤝</div><h3>The honest trade</h3><p>Apps with bank sync are convenient — and they read your transactions on their servers. We made the opposite trade: you paste a CSV once a month, and in return nobody, including us, ever sees a single number. You decide which trade is right for you.</p></div>
+  </div>
+</section>
+<section id="starter">
+  <div class="orn rv"><i></i></div>
+  <div class="leadbox rv">
+    <div>
+      <span class="tag">Not ready to buy?</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px)">Take the free <em>starter kit.</em></h2>
+      <p class="sd" style="margin-top:10px">A ready-made CSV import template plus a 10-minute money check-up checklist — the same first steps buyers get. Free, delivered to your email, and you'll hear about version updates. No spam, unsubscribe anytime.</p>
+    </div>
+    <a class="btn p" href="https://payhip.com/b/abIzJ" target="_blank" rel="noopener">Get the free kit →</a>
   </div>
 </section>
 <section id="maker">
@@ -537,6 +551,8 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     setTimeout(function(){ hs.forEach(function(h){h.classList.add('in');}); },3000);
   } else hs.forEach(function(h){h.classList.add('in');});
 
+  /* 8. respect reduced motion for demo videos */
+  if(reduced){ [].slice.call(document.querySelectorAll('.phone video')).forEach(function(v){ v.removeAttribute('autoplay'); v.pause(); }); }
   /* 7. subscription calculator */
   var calcSlider=document.getElementById('cyrs');
   if(calcSlider){
@@ -684,6 +700,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
    [/debt|loan|snowball|avalanche|credit card/i,"Debts tab → add each debt (balance, APR, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), and a <b>what-if slider</b> — drag it to watch €50 extra per month move your date months closer. People log in just to play with it.",["Set up guide"]],
    [/backup|restore|transfer|move|(sync|share).{0,22}(device|phone|computer|laptop)|clear.{0,10}(browser|history|cache)|lose|lost data/i,"Top bar → <b>Backup</b> downloads a single .json file with everything. On any device: open the app → <b>Restore</b> → pick the file. Do it weekly — since there's no cloud by design, your backup file is your safety net (clearing browser data without one would erase the app's memory).",["Is it private?","Set up guide"]],
    [/ynab|monarch|copilot|mint|quicken|compar|versus|vs\b|alternative|better than/i,"Honest comparison: YNAB is <b>$109/yr</b>, Monarch $99–199/yr, Copilot $95/yr — great apps, but you rent them forever and your data sits on their servers. Money OS is <b>€24.99 once</b>, covers budget + goals + investments + debts + FIRE, and keeps every number on your device. What it deliberately doesn't do: auto-sync with your bank (that's the privacy trade — CSV import fills the gap in seconds).",["Price?","Is it private?","What's inside?"]],
+   [/free kit|starter kit|template|checklist|freebie|free download/i,"Yes — the <b>free Starter Kit</b>: a ready CSV import template + an interactive 10-minute money check-up checklist. No card needed, delivered by email: <a href='https://payhip.com/b/abIzJ' target='_blank' rel='noopener' style='color:var(--green);font-weight:600'>grab it here</a>. You'll also hear about free v1 updates.",["What's inside?","How do I buy?"]],
    [/excel|sheet|spreadsheet|notion|template/i,"Compared to a spreadsheet: no formulas to build or break, beautiful charts out of the box, auto-categorizing CSV import, confetti on goals — and it still works fully offline like a file. It IS a file, just one that feels like a polished app.",["What's inside?","Try live demo"]],
    [/subscription|one.?time|lifetime|forever|recurring/i,"One-time <b>€24.99</b>, lifetime use, free updates for version 1. We think budgeting software shouldn't be a recurring line in your budget — that's the whole philosophy.",["Price?","How do I buy?"]],
    [/update|new version|improve|roadmap|future/i,"Version 1 updates are free — you get them by email. And because the app is a self-contained file, the version you own keeps working forever even if updates stopped tomorrow.",["How do I receive it?","Price?"]],
@@ -696,7 +713,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
    [/refund|guarantee|money.?back/i,"30-day money-back guarantee, no questions asked. Email matasbuika1@gmail.com and you get a full refund.",["Price?","How do I buy?"]],
    [/privat|secure|safe|encrypt|my data|gdpr|track/i,"Radically private: the app has <b>no server</b> — your data lives only in your browser. Proof: open the app, press F12 → Network — zero requests. No account, no tracking, no bank login, works offline. GDPR-wise there's nothing to worry about because no data ever reaches us.",["How do backups work?","What's inside?"]],
    [/device|phone|mac|windows|android|iphone|ipad|tablet|linux|browser|install|app store/i,"Works everywhere a browser works: Mac, Windows, iPhone, iPad, Android, Linux. One file, no installation, no app store. On mobile it feels native, with a bottom tab bar. Use it on all your devices — sync by sharing one Backup file.",["What's inside?","How do I receive it?"]],
-   [/demo|try|test|sample/i,"Yes — a free preview, no signup: tap <b>Try the free preview</b> (or the button below) and hit <b>Load sample data</b> inside. It walks you through every screen. It caps how many entries it holds and can’t import CSVs or save backups — the downloaded version has no limits.",["Open live demo","What do I get when I buy?"]],
+ [/demo|try|test|sample/i,"Yes — a free preview, no signup: tap <b>Try the free preview</b> (or the button below) and hit <b>Load sample data</b> inside. It walks you through every screen. It caps how many entries it holds and can’t import CSVs or save backups — the downloaded version has no limits.",["Open live demo","What do I get when I buy?"]],
    [/inside|feature|module|what.*(do|can|get)|included/i,"Six modules in one file: 💶 Budget with auto-sorting CSV import · 🎯 Savings goals with confetti · 📈 Investments & dividends · 🧾 Debt snowball with your debt-free date · 🔥 FIRE calculator · 📊 Insights that talk to you. Plus a built-in assistant that walks you through everything.",["How do I set it up?","Price?"]],
    [/price|cost|how much|kaina/i,"Money OS is <b>€24.99 once</b> — no subscription, ever. Compare: YNAB is $109 EVERY year. Comes with a 30-day money-back guarantee.",["How do I buy?","What's inside?"]],
    [/buy|purchase|order|checkout|get it|payment method|card|paypal/i,BUY_A,["Open live demo","Is it private?"]],
