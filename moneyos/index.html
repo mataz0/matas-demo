@@ -58,11 +58,13 @@ header{min-height:100svh;display:flex;flex-direction:column;justify-content:cent
 .pill{display:inline-flex;gap:9px;align-items:center;border:1px solid var(--line);background:var(--card);box-shadow:var(--sh1);border-radius:100px;padding:9px 18px;font-size:12.5px;font-weight:600;color:var(--mut)}
 .pill b{color:var(--green)}
 h1{font-family:var(--fd);font-weight:400;font-size:clamp(46px,7.6vw,96px);line-height:1.02;letter-spacing:-.015em;margin-top:26px;max-width:16ch}
-h1 em{font-style:italic;background:linear-gradient(100deg,#047857,#2563EB 55%,#A9761B);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 em{font-style:italic;background:linear-gradient(100deg,#047857,#2563EB 45%,#A9761B 70%,#047857);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:hshine 9s ease-in-out infinite alternate}
+@keyframes hshine{to{background-position:100% 0}}
 .sub{color:var(--mut);margin-top:22px;max-width:54ch;font-size:clamp(16px,1.5vw,19px)}
 .ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;justify-content:center}
 .btn{display:inline-block;border-radius:100px;padding:17px 34px;font-size:15px;font-weight:700;text-decoration:none;transition:.25s;position:relative;overflow:hidden}
-.btn.p{background:linear-gradient(180deg,#0B9268,#047857);color:#fff;box-shadow:0 1px 2px rgba(4,120,87,.3),0 16px 34px -12px rgba(4,120,87,.5)}
+.btn.p{background:linear-gradient(180deg,#0B9268,#047857);color:#fff;box-shadow:0 1px 2px rgba(4,120,87,.3),0 16px 34px -12px rgba(4,120,87,.5);animation:bglow 4.2s ease-in-out infinite}
+@keyframes bglow{50%{box-shadow:0 1px 2px rgba(4,120,87,.3),0 18px 44px -10px rgba(4,120,87,.68)}}
 .btn.s{border:1px solid var(--line);color:var(--ink);background:var(--card);box-shadow:var(--sh1)}
 .btn:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
 .btn:active{transform:scale(.975)}
@@ -89,6 +91,12 @@ h1 em{font-style:italic;background:linear-gradient(100deg,#047857,#2563EB 55%,#A
 .marq span{font-family:var(--fd);font-size:clamp(15px,1.8vw,21px);letter-spacing:.2em;text-transform:uppercase;color:var(--mut);white-space:nowrap;display:flex;align-items:center;gap:48px}
 .marq span::after{content:"◆";color:var(--greenL);font-size:.45em}
 @keyframes mv{to{transform:translateX(-50%)}}
+/* live price ticker */
+.pm div{gap:34px;animation-duration:52s}
+.pm span{font-family:var(--fb);font-size:clamp(12.5px,1.4vw,14.5px);letter-spacing:0;text-transform:none;font-weight:600;color:var(--mut);gap:34px}
+.pm span::after{content:"·";color:var(--line);font-size:1em}
+.pm b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:700;margin-left:7px}
+.pm .lp{width:6px;height:6px;border-radius:50%;background:var(--greenL);display:inline-block;margin-right:9px;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
 .stats{display:flex;flex-wrap:wrap;max-width:1080px;margin:0 auto;padding:clamp(30px,5vw,50px) var(--pad) 0;gap:0}
 .stats div{flex:1;min-width:170px;padding:18px 22px;border-left:1px solid var(--line)}
 .stats div:first-child{border-left:0}
@@ -261,7 +269,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   padding:6px 14px;font-family:var(--fb);font-size:13px;font-weight:700;letter-spacing:.02em;line-height:1.2;white-space:nowrap;vertical-align:middle;margin-left:14px}
 @media(max-width:560px){.save{display:block;margin:14px auto 0;width:max-content}}
 @media(prefers-reduced-motion:reduce){.wm i{transform:none!important}.spot{display:none}h2.clipr{clip-path:none!important}.dbar{transition:none}}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}.aur i,.ph,.marq div,.scue::after{animation:none!important}.logo.spin i{animation:none}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}.aur i,.ph,.marq div,.scue::after,h1 em,.btn.p{animation:none!important}.logo.spin i{animation:none}}
 /* CHAT */
 .cbtn{position:fixed;right:18px;bottom:18px;z-index:960;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#10B981,#2563EB);color:#fff;font-size:24px;box-shadow:0 14px 34px -10px rgba(4,120,87,.5);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 .cbtn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 20px 40px -12px rgba(4,120,87,.55)}
@@ -334,6 +342,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <div class="scue">scroll</div>
 </header>
 <div class="marq"><div><span>Budget</span><span>Savings goals</span><span>Investments</span><span>Debt payoff</span><span>FIRE date</span><span>100% private</span><span>Budget</span><span>Savings goals</span><span>Investments</span><span>Debt payoff</span><span>FIRE date</span><span>100% private</span></div></div>
+<div class="marq pm" id="pmq" hidden><div id="pmqIn"></div></div>
 <div class="stats">
   <div class="rv"><div class="sn"><b data-count="431">0</b>€</div><div class="sl">you keep vs 5 yrs of YNAB</div></div>
   <div class="rv"><div class="sn"><b data-count="0">0</b></div><div class="sl">accounts, logins or uploads of your data</div></div>
@@ -635,6 +644,21 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     new IntersectionObserver(function(en){ pastHero=!en[0].isIntersecting; sync(); },{threshold:.05}).observe(hero);
     new IntersectionObserver(function(en){ atBuy=en[0].isIntersecting; sync(); },{threshold:.15}).observe(buy);
   }
+
+  /* 7. live price ticker — the app's real public feed, straight onto the page */
+  fetch('https://mataz0.github.io/matas-demo/moneyos/prices.json')
+   .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+   .then(function(d){
+     var eur=(d.fx&&d.fx.EUR)||1;
+     function px(q){ return q.c==='EUR'?q.p:q.p*eur; }
+     function f(v){ return '€'+(v>=1000?Math.round(v).toLocaleString('en-US'):v>=1?v.toFixed(2):v.toPrecision(3)); }
+     var picks=[['AAPL','stocks'],['MSFT','stocks'],['NVDA','stocks'],['TSLA','stocks'],['SPY','stocks'],['VWCE','stocks'],['BTC','crypto'],['ETH','crypto'],['SOL','crypto'],['XRP','crypto']];
+     var items=picks.map(function(p){ var q=(d[p[1]]||{})[p[0]]; return q?'<span><i class="lp"></i>'+p[0]+'<b>'+f(px(q))+'</b></span>':''; }).join('');
+     if(!items) return;
+     document.getElementById('pmqIn').innerHTML=items+items;
+     document.getElementById('pmq').hidden=false;
+   })
+   .catch(function(){});
 })();
 </script>
 <footer>
