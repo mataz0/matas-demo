@@ -412,6 +412,7 @@ button:active{transition-duration:.09s}
 /* ───────── state ───────── */
 var K='moneyos_v1';
 var S=load(); if(!S.goals) S.goals=[];
+S.live=true; /* live prices are built in — always on for everyone */
 function load(){ try{ var s=JSON.parse(localStorage.getItem(K)); if(s&&s.tx) return s; }catch(e){}
   return {cur:'€', tx:[], budgets:{Food:400,Transport:150,Home:800,Fun:150,Health:100,Other:200}, hold:[], divs:[], debts:[], snaps:[], goals:[], cash:0}; }
 function save(){ localStorage.setItem(K, JSON.stringify(S)); }
@@ -470,7 +471,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     t.classList.add('on'); $('v-'+t.dataset.v).classList.add('on');
     try{localStorage.setItem('mosTab',t.dataset.v);}catch(e){}
     render();
-    if(t.dataset.v==='inv'&&S.live&&(!S.liveT||Date.now()-S.liveT>300000)) liveFetch(true);
+    if(t.dataset.v==='inv'&&(!S.liveT||Date.now()-S.liveT>300000)) liveFetch(true);
   });
 });
 
@@ -625,11 +626,36 @@ function fhQuote(sym,cb){
    })
    .catch(function(){ cb(null); });
 }
+/* built-in price feed: public static file, contains nothing about the user */
+var PJURL='https://mataz0.github.io/matas-demo/moneyos/prices.json';
+var PJ=null,PJT=0;
+function pjGet(cb){
+  if(PJ&&Date.now()-PJT<600000) return cb(PJ);
+  fetch(PJURL+'?t='+Math.floor(Date.now()/600000))
+   .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+   .then(function(d){ PJ=d; PJT=Date.now(); cb(d); })
+   .catch(function(){ cb(PJ); });
+}
+function pjConv(q,d){
+  var cur=S.cur==='$'?'USD':S.cur==='£'?'GBP':'EUR';
+  if(q.c===cur) return q.p;
+  var r=d.fx||{};
+  var usd=q.c==='USD'?q.p:(r[q.c]?q.p/r[q.c]:null);
+  if(usd==null) return null;
+  return cur==='USD'?usd:(r[cur]?usd*r[cur]:null);
+}
 function priceFor(h,cb){
-  var u=(h.n||'').toUpperCase().trim();
-  if(h.ty==='Crypto'||CG[u]) return cgPrice(u,cb);
-  if(h.ty==='Stock'||h.ty==='ETF') return fhQuote(u,cb);
-  cb(null);
+  var u=(h.n||'').toUpperCase().trim(); if(!u) return cb(null);
+  var isC=h.ty==='Crypto'||(!!CG[u]&&h.ty!=='Stock'&&h.ty!=='ETF');
+  pjGet(function(d){
+    if(d){
+      var q=isC?(d.crypto||{})[u]:(d.stocks||{})[u];
+      if(q){ var p=pjConv(q,d); if(p!=null) return cb(p); }
+    }
+    if(isC) return cgPrice(u,cb);
+    if((h.ty==='Stock'||h.ty==='ETF')&&S.fk) return fhQuote(u,cb);
+    cb(null);
+  });
 }
 function rp(p){ return p>=1?Math.round(p*10000)/10000:p; } /* don't destroy sub-cent coin prices */
 function liveFetch(auto){
@@ -647,36 +673,17 @@ function liveFetch(auto){
     priceFor(h,function(p){ if(p!=null){ h.p=p; n++; } next(); });
   })();
 }
-$('liveB').addEventListener('click',function(){
-  if(S.live){ liveFetch(false); return; }
-  openModal('<h3>Turn on live crypto prices?</h3>'
-   +'<p class="note" style="margin-bottom:12px">Honesty first: this is the <b>only</b> feature in Money OS that touches the internet, and it is off until you say yes.</p>'
-   +'<div class="ulist">'
-   +'<div><b>\u2713</b><span>Crypto: asks CoinGecko, a public price service, for <b>ticker symbols only</b> (e.g. \u201cbitcoin, ethereum\u201d) \u2014 any coin it lists</span></div>'
-   +'<div><b>\u2713</b><span>Stocks &amp; ETFs: optional, via <b>your own free Finnhub key</b> \u2014 requests go straight from this device, symbols only</span></div>'
-   +'<div><b>\u2713</b><span>Currency conversion uses Frankfurter, a public exchange-rate service \u2014 no data about you is sent</span></div>'
-   +'<div><b>\u2713</b><span>Your amounts, names, goals and everything else <b>never leave this device</b> \u00b7 turn it off anytime, the app works fully offline</span></div>'
-   +'</div>'
-   +'<div class="mbtns" style="margin-top:16px"><button class="ghostb" onclick="closeModal()">Keep it fully offline</button><button class="addb" id="m-ok">Enable live prices</button></div>');
-  $('m-ok').onclick=function(){ S.live=true; save(); closeModal(); liveFetch(false); };
-});
+$('liveB').addEventListener('click',function(){ liveFetch(false); });
 $('priceB').addEventListener('click',function(){
   if(!S.hold.length) return toast('Add a holding first');
   var liveable=S.hold.some(function(h){ return h.ty==='Crypto'||h.ty==='Stock'||h.ty==='ETF'||CG[(h.n||'').toUpperCase().trim()]; });
-  var stocksNoKey=!S.fk&&S.hold.some(function(h){ return (h.ty==='Stock'||h.ty==='ETF')&&!CG[(h.n||'').toUpperCase().trim()]; });
   openModal('<h3>Update current prices</h3>'
-   +'<p class="note" style="margin-bottom:12px">One screen for all of them. Takes about twenty seconds — do it whenever you feel like checking in.</p>'
+   +'<p class="note" style="margin-bottom:12px">Live prices fill themselves — this screen is for anything the feed doesn’t cover (bonds, cash, exotic funds) or for your own numbers.</p>'
    +S.hold.map(function(h,i){ return '<div class="mrow" style="align-items:flex-end"><div class="fld" style="flex:1.3"><label>'+esc(h.n)+'</label><div class="note" style="margin:0">'+lotSum(h).q+' units · avg '+fmt(lotSum(h).b)+'</div></div><div class="fld"><input type="number" step="any" id="pp-'+i+'" value="'+(h.p||'')+'"></div></div>'; }).join('')
    +(liveable?'<button class="ghostb" id="m-fill" style="width:100%;margin-top:4px">Fill live prices</button>':'')
-   +(stocksNoKey?'<div class="note" id="m-fknote" style="margin-top:8px">Stocks &amp; ETFs need a free Finnhub key (finnhub.io, 2-min signup; stored only on this device): <input id="m-fki" placeholder="paste key" style="width:130px;padding:4px 8px"> <a href="#" id="m-fks">save</a></div>':'')
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Save prices</button></div>');
-  if(stocksNoKey) $('m-fks').onclick=function(e){ e.preventDefault(); var k=$('m-fki').value.trim(); if(!k) return toast('Paste the key first'); S.fk=k; save(); $('m-fknote').textContent='Stock prices enabled ✓ — tap Fill live prices'; };
   if(liveable) $('m-fill').onclick=function(){
     var btn=this;
-    if(!S.live){
-      if(!btn.dataset.c){ btn.dataset.c='1'; btn.textContent='Asks public price services (ticker symbols only) — tap again to allow'; return; }
-      S.live=true; save();
-    }
     btn.disabled=true; btn.textContent='Fetching…';
     var i=0,n=0;
     (function next(){
@@ -711,24 +718,12 @@ function holdModal(idx){
   function autoPrice(sym){
     var el=$('m-live'); if(!el) return;
     var u=(sym||'').toUpperCase().trim(), ty=$('m-ty').value;
-    var isCrypto=ty==='Crypto'||CG[u], isStock=(ty==='Stock'||ty==='ETF')&&!CG[u];
-    if(!u||(!isCrypto&&!isStock)){ el.style.display='none'; return; }
-    el.style.display='block';
-    if(isCrypto&&!S.live){
-      el.innerHTML='Live price available for '+esc(u)+' — <a href="#" id="m-liveok">allow live prices &amp; fill it</a>. Asks CoinGecko for ticker symbols only, nothing else leaves this device.';
-      var a=$('m-liveok'); if(a) a.onclick=function(e){ e.preventDefault(); S.live=true; save(); autoPrice(sym); };
-      return;
-    }
-    if(isStock&&!S.fk){
-      el.innerHTML='Stocks can fill themselves with a free Finnhub key (finnhub.io, 2-min signup; stored only on this device): <input id="m-fki" placeholder="paste key" style="width:130px;padding:4px 8px"> <a href="#" id="m-fks">save</a>';
-      var s=$('m-fks'); if(s) s.onclick=function(e){ e.preventDefault(); var k=$('m-fki').value.trim(); if(!k) return toast('Paste the key first'); S.fk=k; if(!S.live) S.live=true; save(); autoPrice(sym); };
-      return;
-    }
-    el.textContent='Fetching live price…';
-    var get=isCrypto?cgPrice:fhQuote;
-    get(u,function(p){
+    var liveable=ty==='Crypto'||ty==='Stock'||ty==='ETF'||CG[u];
+    if(!u||!liveable){ el.style.display='none'; return; }
+    el.style.display='block'; el.textContent='Fetching live price…';
+    priceFor({n:u,ty:ty},function(p){
       if(!document.body.contains(el)) return;
-      if(p==null){ el.textContent=isStock?'No quote for '+esc(u)+' on the free tier (EU funds often missing) — type it manually.':'Live price unavailable right now — type it manually.'; return; }
+      if(p==null){ el.textContent=(ty==='Crypto'?'Couldn’t find that coin — check the ticker, or type the price manually.':'No live source for '+esc(u)+' — type the price manually.'); return; }
       var f=$('m-p'); if(f) f.value=rp(p);
       el.textContent='Live price filled: '+(p<1?S.cur+String(rp(p)):fmt(p))+' ✓';
     });
@@ -1080,8 +1075,8 @@ function render(){
   var val=0,cost=0;
   S.hold.forEach(function(h){ val+=h.q*h.p; cost+=h.q*h.b; });
   var pl=val-cost;
-  $('liveB').classList.toggle('on',!!S.live);
-  $('liveTs').textContent = S.live&&S.liveT ? ('live \u00b7 '+new Date(S.liveT).toTimeString().slice(0,5)) : '';
+  $('liveB').classList.add('on');
+  $('liveTs').textContent = S.liveT ? ('live \u00b7 '+new Date(S.liveT).toTimeString().slice(0,5)) : '';
   $('i-val').textContent=fmt(val); $('i-cost').textContent=fmt(cost);
   $('i-pl').textContent=fmt(pl); $('i-pl').className='kval '+(pl>=0?'pos':'neg');
   $('i-plp').textContent=cost?((pl>=0?'+':'')+(pl/cost*100).toFixed(1)+'%'):'';
@@ -1253,7 +1248,7 @@ var AKB=[
  [/transaction|expense|income|spend|salary|add.{0,8}(entry|record)/i, "Budget tab → <b>＋Add</b>: pick Expense or Income, amount, category, date. Faster for many rows: <b>Import CSV</b> from your bank.", [{a:'tx'},{a:'csv'}]],
  [/dividend/i, "Invest tab → <b>＋Add dividend</b> (holding, amount, date). The yearly total shows your growing passive income.", [{a:'divd'}]],
  [/live price|auto.{0,8}price|coingecko|real.?time/i, "Invest tab \u2192 <b>Live prices</b> button. Off by default; when you enable it, it fetches current prices for the 15 popular cryptos from CoinGecko \u2014 sending coin symbols only, never your amounts. Stocks & ETFs stay manual (<b>Update manually</b> does them all in one screen) because no keyless source exists.", [{a:'hold'}]],
- [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: pick from the Quick pick list or type your own ticker. <b>Any crypto</b> CoinGecko lists fills its price itself (live, opt-in — symbols only). <b>Stocks &amp; ETFs</b> fill themselves too once you paste your own free Finnhub key (2-min signup, key stays on this device). After that, prices refresh automatically every time you open Invest.", [{a:'hold'},{a:'divd'}]],
+ [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: pick from the Quick pick list or type your own ticker. Live prices are <b>built in</b> — popular stocks &amp; ETFs (incl. VWCE, IWDA and other EU funds) come from a public price feed, and any crypto works too. Prices refresh themselves every time you open Invest — no keys, no setup. Anything the feed doesn’t cover you can update in one bulk screen.", [{a:'hold'},{a:'divd'}]],
  [/debt|loan|snowball|avalanche|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), payoff order #1 #2…, and a <b>what-if slider</b> — drag it to see how €50 extra/mo moves your date closer. Addictive in the best way.", [{a:'debt'}]],
  [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending) and how far along you already are. Your inputs are saved automatically. Educational, not financial advice.", [{a:'fire'}]],
  [/snapshot|net worth|history|curve|wealth/i, "A snapshot saves today’s net worth as a point on your wealth curve (Overview). Save one <b>monthly</b> — after 3–4 months the chart becomes the most motivating thing in the app.", [{a:'snap'}]],
@@ -1263,7 +1258,7 @@ var AKB=[
  [/month|previous|last|navigate|july|june/i, "Budget tab, top: <b>‹ month ›</b> arrows move between months — entries stay in the month of their date.", [{a:'tx'}]],
  [/sample|example|demo data|play/i, "Tap the logo (top-left) when the app is empty and you’ll see <b>Load sample data</b> — a full realistic setup to explore. Your own entries later replace it.", [{a:'sample'}]],
  [/fresh|wipe|clear|reset|delete all/i, "To fully reset: Backup first (top bar), then clear this site’s data in your browser settings — or simply delete rows you don’t need. There is no hidden copy anywhere; you control everything.", [{a:'backup'}]],
- [/privat|secure|safe|data|cloud|server|gdpr/i, "Everything about you lives in <b>your browser only</b> — no server, no account, no tracking. One honest exception: if you turn on <b>live prices</b> (off by default), the app asks public price services — CoinGecko for crypto, Finnhub with your own key for stocks, Frankfurter for currency — for <b>ticker symbols only</b>, never your amounts. Leave it off and there are zero requests — check F12 → Network yourself. Backup matters: your file is the only copy.", [{a:'backup'}]],
+ [/privat|secure|safe|data|cloud|server|gdpr/i, "Everything about you lives in <b>your browser only</b> — no server, no account, no tracking. The only thing the app fetches is <b>public price data</b>: one shared price file (identical for every user — it contains nothing about you), plus a symbol-only lookup for less-common coins. Your amounts, names and goals never leave your device — check F12 → Network yourself: no personal data in any request. Backup matters: your file is the only copy.", [{a:'backup'}]],
  [/buy|price|cost|purchase|pay|license/i, "Money OS is <b>€24.99 once</b> — no subscription. If you’re in the free demo now, everything you see is exactly what you get, forever.", ['Setup guide']],
  [/human|contact|support|email|bug|problem/i, "A human is one email away: <b>matasbuika1@gmail.com</b> — replies within hours. For most questions I’m faster, though 😉", ['Setup guide']]
 ];
