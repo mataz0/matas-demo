@@ -283,9 +283,24 @@ button:active{transition-duration:.09s}
 
 <main>
 <div class="dbanner" id="dBanner" style="display:none">
-  <p><b>You're using the online preview.</b> Everything works, but it holds only a handful of entries and can't import CSVs or save backups — those need the file you download.</p>
+  <p><b>You're using the online preview.</b> Everything works, but it holds only a handful of entries and can't import CSVs or save backups — those need the full version. Bought it already? <a href="#" onclick="unlockModal();return false" style="background:none;color:var(--green);padding:0;font-weight:700">Enter your unlock code</a>.</p>
   <a href="https://payhip.com/b/zmKZ7" target="_blank" rel="noopener">See what you get — €24.99</a>
   <button id="dBanX" aria-label="Dismiss">✕</button>
+</div>
+<div class="dbanner" id="recBar" style="display:none">
+  <p>↻ <b id="recTxt">Recurring for this month</b> <span id="recList" style="color:var(--mut)"></span></p>
+  <a href="#" id="recAdd" style="cursor:pointer">Add all</a>
+  <button id="recSkip" aria-label="Skip">✕</button>
+</div>
+<div class="dbanner" id="bakBar" style="display:none">
+  <p>🛟 <b>Back up your data.</b> <span style="color:var(--mut)">Your numbers live only in this browser — one file keeps them safe. Last backup: <span id="bakAgo">never</span>.</span></p>
+  <a href="#" id="bakNow" style="cursor:pointer">Backup now</a>
+  <button id="bakLater" aria-label="Later">✕</button>
+</div>
+<div class="dbanner" id="updBar" style="display:none">
+  <p>⬆️ <b>A free update is out.</b> <span style="color:var(--mut)">Re-download from your purchase link — your data stays, only the app file changes.</span></p>
+  <a href="https://payhip.com/b/zmKZ7" target="_blank" rel="noopener">Get the update</a>
+  <button id="updX" aria-label="Dismiss">✕</button>
 </div>
 <div id="sampleBar" style="display:none;background:linear-gradient(90deg,rgba(16,185,129,.18),rgba(59,130,246,.16));border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:16px;display:none;align-items:center;gap:14px;flex-wrap:wrap">
   <span style="font-size:14px;flex:1;min-width:200px"><b>New here?</b> <span style="color:var(--mut)">Load realistic sample data to explore — you can wipe it anytime.</span></span>
@@ -335,7 +350,7 @@ button:active{transition-duration:.09s}
     <div class="card"><div class="klabel">Spending</div><div class="kval" id="b-out">—</div><div class="ksub" id="b-outs"></div></div>
     <div class="card"><div class="klabel">Left to spend</div><div class="kval" id="b-left">—</div><div class="ksub" id="b-lefts"></div></div>
   </div>
-  <div class="sect"><h2>Category budgets</h2><button class="ghostb" id="budEdit">Edit limits</button></div>
+  <div class="sect"><h2>Category budgets</h2><div style="display:flex;gap:8px"><button class="ghostb" id="catEditB">Categories</button><button class="ghostb" id="budEdit">Edit limits</button><button class="ghostb" id="recB">↻ Recurring</button></div></div>
   <div class="card" id="budBars"></div>
   <div class="sect"><h2>Transactions</h2></div>
   <div class="rows" id="txList"></div>
@@ -431,8 +446,59 @@ S.live=true; /* live prices are built in — always on for everyone */
 function load(){ try{ var s=JSON.parse(localStorage.getItem(K)); if(s&&s.tx) return s; }catch(e){}
   return {cur:'€', tx:[], budgets:{Food:400,Transport:150,Home:800,Fun:150,Health:100,Other:200}, hold:[], divs:[], debts:[], snaps:[], goals:[], cash:0}; }
 function save(){ localStorage.setItem(K, JSON.stringify(S)); }
-var CATS=['Food','Transport','Home','Fun','Health','Shopping','Subscriptions','Other'];
+if(!S.cats||!S.cats.length) S.cats=['Food','Transport','Home','Fun','Health','Shopping','Subscriptions','Other'];
+if(S.cats.indexOf('Other')<0) S.cats.push('Other');
+var CATS=S.cats; /* live reference — edits via the Categories editor persist */
 var EMO={Food:'🍎',Transport:'🚗',Home:'🏠',Fun:'🎉',Health:'💊',Shopping:'🛍️',Subscriptions:'📺',Other:'📦',Income:'💰'};
+if(S.emo) for(var _e in S.emo){ EMO[_e]=S.emo[_e]; }
+/* categories editor: add / rename / delete (tx & limits follow along) */
+window.catsModal=function(){
+  function row(c,i){
+    var locked=c==='Other';
+    return '<div class="mrow" style="align-items:center"><div class="fld" style="flex:0 0 76px"><input id="ce-'+i+'" value="'+(EMO[c]||'📦')+'" maxlength="4" style="text-align:center"></div>'
+      +'<div class="fld" style="flex:1"><input id="cn-'+i+'" value="'+esc(c)+'"'+(locked?' disabled':'')+'></div>'
+      +(locked?'<span style="width:40px"></span>':'<button class="del" style="flex:none" onclick="delCat('+i+')">✕</button>')+'</div>';
+  }
+  openModal('<h3>Categories</h3>'
+   +'<p class="note" style="margin-bottom:12px">Rename, change the emoji, or add your own — Kids, Travel, Pets, anything. “Other” stays as the catch-all.</p>'
+   +'<div id="catRows">'+CATS.map(row).join('')+'</div>'
+   +'<div class="mrow" style="align-items:center;margin-top:6px"><div class="fld" style="flex:0 0 76px"><input id="ce-new" placeholder="🐶" maxlength="4" style="text-align:center"></div>'
+   +'<div class="fld" style="flex:1"><input id="cn-new" placeholder="New category…"></div><span style="width:40px"></span></div>'
+   +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Save</button></div>');
+  $('m-ok').onclick=function(){
+    S.emo=S.emo||{};
+    var renames={};
+    CATS.forEach(function(c,i){
+      var nn=($('cn-'+i)?$('cn-'+i).value.trim():c)||c;
+      var em=($('ce-'+i)?$('ce-'+i).value.trim():'')||EMO[c]||'📦';
+      if(nn!==c&&c!=='Other'){ renames[c]=nn; }
+      S.emo[nn]=em; EMO[nn]=em;
+    });
+    Object.keys(renames).forEach(function(oldN){
+      var nn=renames[oldN], idx=CATS.indexOf(oldN);
+      if(idx>=0) CATS[idx]=nn;
+      S.tx.forEach(function(t){ if(t.c===oldN) t.c=nn; });
+      (S.rec||[]).forEach(function(r){ if(r.c===oldN) r.c=nn; });
+      if(S.budgets[oldN]!=null){ S.budgets[nn]=S.budgets[oldN]; delete S.budgets[oldN]; }
+    });
+    var nn=$('cn-new').value.trim();
+    if(nn&&CATS.indexOf(nn)<0){
+      CATS.splice(CATS.length-1,0,nn); /* prieš Other */
+      var em=$('ce-new').value.trim()||'🏷️';
+      S.emo[nn]=em; EMO[nn]=em;
+    }
+    save(); closeModal(); render(); toast('Categories saved');
+  };
+};
+window.delCat=function(i){
+  var c=CATS[i]; if(c==='Other') return;
+  var used=S.tx.filter(function(t){return t.c===c;}).length;
+  if(used&&!confirm('“'+c+'” has '+used+' transactions — they’ll move to “Other”. Delete category?')) return;
+  S.tx.forEach(function(t){ if(t.c===c) t.c='Other'; });
+  (S.rec||[]).forEach(function(r){ if(r.c===c) r.c='Other'; });
+  delete S.budgets[c];
+  CATS.splice(i,1); save(); catsModal(); render();
+};
 var CATCOL=['#0E9F6E','#2563EB','#D97706','#DC5A5A','#7C3AED','#0891B2','#DB2777','#64748B'];
 var mNow=new Date(); var mSel=[mNow.getFullYear(), mNow.getMonth()];
 var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -446,8 +512,21 @@ function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&a
 /* ───────── demo vs full ─────────
    The hosted preview (github.io) runs limited. The purchased file — opened from
    your own device — runs unlocked. No keys, no server, no phoning home. */
-var DEMO = /github\.io$/i.test(location.hostname);
+var UNLOCK='MOS-2496-FOREVER';
+var DEMO = /github\.io$/i.test(location.hostname) && (function(){try{return localStorage.getItem('mosUnlock')!==UNLOCK;}catch(e){return true;}})();
 var BUY='https://payhip.com/b/zmKZ7';
+window.unlockModal=function(){
+  openModal('<h3>Unlock the full version</h3>'
+   +'<p class="note" style="margin-bottom:14px">Bought Money OS? Your unlock code is in the download — in <b>README.txt</b> and the <b>START&nbsp;HERE</b> guide. It turns this page into the full app on any device, phone included.</p>'
+   +'<div class="fld"><label>Unlock code</label><input id="m-uk" placeholder="MOS-XXXX-XXXXXXX" autocapitalize="characters"></div>'
+   +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Unlock</button></div>');
+  $('m-ok').onclick=function(){
+    var v=($('m-uk').value||'').trim().toUpperCase();
+    if(v!==UNLOCK){ toast('That code doesn’t match — check README.txt'); return; }
+    try{localStorage.setItem('mosUnlock',UNLOCK);}catch(e){}
+    closeModal(); toast('Unlocked — welcome to the full version'); setTimeout(function(){location.reload();},900);
+  };
+};
 var LIM={tx:15, goals:3, debts:3, hold:4};
 function upsell(head, why){
   openModal('<h3>'+head+'</h3>'
@@ -460,7 +539,8 @@ function upsell(head, why){
    +'<div><b>✓</b><span>Quick-start guide, CSV templates and free v1 updates</span></div>'
    +'</div>'
    +'<div class="mbtns" style="margin-top:16px"><button class="ghostb" onclick="closeModal()">Keep exploring</button>'
-   +'<a class="addb" href="'+BUY+'" target="_blank" rel="noopener" style="flex:1;text-align:center;text-decoration:none;padding:13px;display:block">Get it — €24.99 once</a></div>');
+   +'<a class="addb" href="'+BUY+'" target="_blank" rel="noopener" style="flex:1;text-align:center;text-decoration:none;padding:13px;display:block">Get it — €24.99 once</a></div>'
+   +'<p class="note" style="margin-top:12px;text-align:center">Already bought it? <a href="#" onclick="unlockModal();return false" style="color:var(--green);font-weight:700">Enter your unlock code</a></p>');
 }
 function capped(kind){
   if(!DEMO) return false;
@@ -507,13 +587,19 @@ $('txAdd').addEventListener('click',function(){
    +'<div class="mrow"><div class="fld"><label>Amount</label><input id="m-a" type="number" step="0.01" placeholder="24.90"></div>'
    +'<div class="fld"><label>Date</label><input id="m-dt" type="date" value="'+today+'"></div></div>'
    +'<div class="fld" id="catW"><label>Category</label><select id="m-c">'+CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select></div>'
+   +'<label style="display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;color:var(--mut);margin:2px 0 14px;cursor:pointer"><input type="checkbox" id="m-rec" style="width:19px;height:19px;accent-color:var(--green)"> ↻ Repeats every month <span style="font-weight:500">(rent, salary, subscriptions…)</span></label>'
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Save</button></div>');
   var isInc=false;
   $('sgE').onclick=function(){isInc=false;this.classList.add('on');$('sgI').classList.remove('on');$('catW').style.display='';};
   $('sgI').onclick=function(){isInc=true;this.classList.add('on');$('sgE').classList.remove('on');$('catW').style.display='none';};
   $('m-ok').onclick=function(){
     var a=parseFloat($('m-a').value); if(!a||!$('m-d').value.trim()){ toast('Fill description and amount'); return; }
-    S.tx.push({d:$('m-dt').value||today, t:$('m-d').value.trim(), a:isInc?a:-a, c:isInc?'Income':$('m-c').value});
+    var dt=$('m-dt').value||today;
+    S.tx.push({d:dt, t:$('m-d').value.trim(), a:isInc?a:-a, c:isInc?'Income':$('m-c').value});
+    if($('m-rec').checked){
+      S.rec=S.rec||[];
+      S.rec.push({t:$('m-d').value.trim(), a:isInc?a:-a, c:isInc?'Income':$('m-c').value, day:new Date(dt).getDate(), m:dt.slice(0,7)});
+    }
     save(); closeModal(); render(); toast(isInc?'Income added':'Expense added');
   };
 });
@@ -528,17 +614,112 @@ $('csvB').addEventListener('click',function(){
    +'<div class="fld"><textarea id="m-csv" placeholder="2026-07-01, MAXIMA, -32.50\n2026-07-02, Salary, 2400"></textarea></div>'
    +'<div class="mbtns"><button class="ghostb" onclick="closeModal()">Cancel</button><button class="addb" id="m-ok">Import</button></div>');
   $('m-ok').onclick=function(){
-    var n=0;
-    $('m-csv').value.split(/\n+/).forEach(function(line){
-      var p=line.split(/[,;\t]/).map(function(x){return x.trim();});
-      if(p.length<3) return;
-      var a=parseFloat(p[p.length-1].replace(/[€$£\s]/g,'').replace(',','.')); var d=p[0]; var t=p.slice(1,-1).join(' ');
-      if(!a||!t||isNaN(Date.parse(d))) return;
-      S.tx.push({d:new Date(d).toISOString().slice(0,10), t:t, a:a, c:a>0?'Income':autoCat(t)}); n++;
+    var n=0, bad=0;
+    var raw=$('m-csv').value;
+    /* delimiter: kabliataškis (EU bankai) > tab > kablelis */
+    var delim=raw.indexOf(';')>=0?';':(raw.indexOf('\t')>=0?'\t':',');
+    raw.split(/\r?\n+/).forEach(function(line){
+      if(!line.trim()) return;
+      var p=line.split(delim).map(function(x){ return x.trim().replace(/^"(.*)"$/,'$1').trim(); });
+      if(p.length<3){ bad++; return; }
+      var d=csvDate(p[0]); var amtRaw=p[p.length-1]; var t=p.slice(1,-1).join(' ').trim();
+      if(!d&&csvDate(p[p.length-1])){ /* kai kurie bankai deda datą gale */
+        d=csvDate(p[p.length-1]); amtRaw=p[p.length-2]; t=p.slice(0,-2).join(' ').trim();
+      }
+      var a=csvAmt(amtRaw);
+      if(!d||!t||!a||/date|description|amount/i.test(p[0]+t)){ bad++; return; }
+      S.tx.push({d:d, t:t, a:a, c:a>0?'Income':autoCat(t)}); n++;
     });
-    save(); closeModal(); render(); toast(n+' transactions imported');
+    save(); closeModal(); render();
+    toast(n+' imported'+(bad?' · '+bad+' rows skipped':''));
   };
 });
+/* EU/US datos: YYYY-MM-DD · DD.MM.YYYY · DD/MM/YYYY · MM/DD/YYYY */
+function csvDate(s){
+  s=(s||'').trim(); var m;
+  if((m=s.match(/^(\d{4})-(\d{2})-(\d{2})/))) return m[1]+'-'+m[2]+'-'+m[3];
+  if((m=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})/))) return m[3]+'-'+String(m[2]).padStart(2,'0')+'-'+String(m[1]).padStart(2,'0');
+  if((m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/))){
+    var a=+m[1], b=+m[2];
+    if(a>12) return m[3]+'-'+String(b).padStart(2,'0')+'-'+String(a).padStart(2,'0');      /* DD/MM */
+    if(b>12) return m[3]+'-'+String(a).padStart(2,'0')+'-'+String(b).padStart(2,'0');      /* MM/DD */
+    return m[3]+'-'+String(b).padStart(2,'0')+'-'+String(a).padStart(2,'0');               /* dviprasmiška → EU */
+  }
+  var t=Date.parse(s); return isNaN(t)?null:new Date(t).toISOString().slice(0,10);
+}
+/* sumos: 1 234,56 · 1,234.56 · 1.234,56 · −12,5 · (12.50) */
+function csvAmt(s){
+  s=(s||'').replace(/[€$£\s ]/g,'');
+  var neg=/^\(.*\)$/.test(s); s=s.replace(/[()]/g,'');
+  if(s.indexOf(',')>=0&&s.indexOf('.')>=0){
+    if(s.lastIndexOf(',')>s.lastIndexOf('.')) s=s.replace(/\./g,'').replace(',','.'); /* 1.234,56 */
+    else s=s.replace(/,/g,'');                                                        /* 1,234.56 */
+  } else s=s.replace(',','.');
+  var v=parseFloat(s); if(isNaN(v)) return 0;
+  return neg?-v:v;
+}
+
+/* ───────── recurring engine ───────── */
+function curMonth(){ return new Date().toISOString().slice(0,7); }
+function recPending(){ var cm=curMonth(); return (S.rec||[]).filter(function(r){ return r.m!==cm; }); }
+function recApply(){
+  var cm=curMonth(), y=+cm.slice(0,4), mo=+cm.slice(5,7), last=new Date(y,mo,0).getDate(), n=0;
+  recPending().forEach(function(r){
+    var d=cm+'-'+String(Math.min(r.day||1,last)).padStart(2,'0');
+    S.tx.push({d:d, t:r.t, a:r.a, c:r.c, rec:1}); r.m=cm; n++;
+  });
+  save(); render(); recBanner(); toast(n+' recurring added for this month');
+}
+function recBanner(){
+  var p=recPending(), bar=$('recBar');
+  if(!p.length){ bar.style.display='none'; return; }
+  var mn=new Date().toLocaleString('en-US',{month:'long'});
+  $('recTxt').textContent=p.length+' recurring for '+mn+':';
+  $('recList').textContent=p.map(function(r){ return r.t+' '+(r.a>0?'+':'')+fmt(r.a); }).join(' · ');
+  bar.style.display='flex';
+}
+$('recAdd').addEventListener('click',function(e){ e.preventDefault(); recApply(); });
+$('recSkip').addEventListener('click',function(){ var cm=curMonth(); (S.rec||[]).forEach(function(r){ r.m=cm; }); save(); recBanner(); });
+window.delRec=function(i){ S.rec.splice(i,1); save(); recModal(); recBanner(); };
+window.recModal=function(){
+  var rows=(S.rec&&S.rec.length)? S.rec.map(function(r,i){
+    return '<div class="mrow" style="align-items:center"><div class="fld" style="flex:1"><b>'+esc(r.t)+'</b><div class="note" style="margin:0">'+(EMO[r.c]||'📦')+' '+esc(r.c)+' · day '+(r.day||1)+'</div></div>'
+      +'<div style="font-weight:800;font-variant-numeric:tabular-nums;color:'+(r.a>0?'var(--green)':'var(--ink)')+'">'+(r.a>0?'+':'')+fmt(r.a)+'</div>'
+      +'<button class="del" style="flex:none;margin-left:10px" onclick="delRec('+i+')">✕</button></div>';
+  }).join('') : '<p class="note">Nothing yet. Tick <b>“↻ Repeats every month”</b> when adding a transaction — rent, salary, subscriptions — and they’ll offer to add themselves each month.</p>';
+  openModal('<h3>Recurring every month</h3>'+rows
+   +'<div class="mbtns"><button class="addb" onclick="closeModal()" style="flex:1">Done</button></div>');
+};
+$('recB').addEventListener('click',recModal);
+$('catEditB').addEventListener('click',catsModal);
+
+/* ───────── backup nudge ───────── */
+function bakBanner(){
+  if(DEMO) return;
+  var enough=S.tx.length>=10||S.hold.length>=2||S.goals.length>=1;
+  var stale=!S.bakT||Date.now()-S.bakT>14*86400000;
+  var snoozed=S.bakZ&&Date.now()<S.bakZ;
+  if(!(enough&&stale&&!snoozed)) return;
+  $('bakAgo').textContent=S.bakT? Math.round((Date.now()-S.bakT)/86400000)+' days ago' : 'never';
+  $('bakBar').style.display='flex';
+}
+$('bakNow').addEventListener('click',function(e){ e.preventDefault(); $('expB').click(); $('bakBar').style.display='none'; });
+$('bakLater').addEventListener('click',function(){ S.bakZ=Date.now()+7*86400000; save(); $('bakBar').style.display='none'; });
+
+/* ───────── update check (public static file, nothing personal) ───────── */
+var VER=2;
+function updCheck(){
+  if(DEMO) return; /* svetainėje visada naujausia */
+  fetch('https://mataz0.github.io/matas-demo/moneyos/version.json?d='+Math.floor(Date.now()/86400000))
+   .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+   .then(function(d){
+     if(d&&d.v>VER&&localStorage.getItem('mosVerSeen')!==String(d.v)){
+       $('updBar').style.display='flex';
+       $('updX').onclick=function(){ try{localStorage.setItem('mosVerSeen',String(d.v));}catch(e){} $('updBar').style.display='none'; };
+     }
+   }).catch(function(){});
+}
+recBanner(); bakBanner(); updCheck();
 
 /* budgets */
 $('budEdit').addEventListener('click',function(){
@@ -844,6 +1025,7 @@ $('snapB').addEventListener('click',function(){
 /* ───────── backup / restore ───────── */
 $('expB').addEventListener('click',function(){
   if(demoOnly('Backup')) return;
+  S.bakT=Date.now(); save();
   var blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
   var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='moneyos-backup-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
   toast('Backup downloaded');
@@ -852,7 +1034,7 @@ $('impB').addEventListener('click',function(){
   if(demoOnly('Restore')) return;
   var inp=document.createElement('input'); inp.type='file'; inp.accept='.json';
   inp.onchange=function(){ var f=inp.files[0]; if(!f) return; var r=new FileReader();
-    r.onload=function(){ try{ var s=JSON.parse(r.result); if(!s.tx) throw 0; S=s; save(); render(); fireRestore(); toast('Restored ✓'); }catch(e){ toast('Invalid backup file'); } };
+    r.onload=function(){ try{ var s=JSON.parse(r.result); if(!s.tx) throw 0; S=s; save(); toast('Restored ✓'); setTimeout(function(){location.reload();},700); }catch(e){ toast('Invalid backup file'); } };
     r.readAsText(f); };
   inp.click();
 });
@@ -1225,6 +1407,8 @@ var ACT={
   fire:['Open FIRE',function(){aGo('fire');}],
   snap:['Save snapshot',function(){aGo('dash');$('snapB').click();}],
   backup:['Backup now',function(){$('expB').click();}],
+  rec:['Recurring',function(){aGo('bud');recModal();}],
+  cats:['Categories',function(){aGo('bud');catsModal();}],
   restore:['Restore backup',function(){$('impB').click();}],
   sample:['Load sample data',function(){sampleData();}]
 };
@@ -1265,6 +1449,9 @@ var AKB=[
  [/dividend/i, "Invest tab → <b>＋Add dividend</b> (holding, amount, date). The yearly total shows your growing passive income.", [{a:'divd'}]],
  [/live price|auto.{0,8}price|coingecko|real.?time/i, "Invest tab \u2192 <b>Live prices</b> button. Off by default; when you enable it, it fetches current prices for the 15 popular cryptos from CoinGecko \u2014 sending coin symbols only, never your amounts. Stocks & ETFs stay manual (<b>Update manually</b> does them all in one screen) because no keyless source exists.", [{a:'hold'}]],
  [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: pick from the Quick pick list or type your own ticker. Live prices are <b>built in</b> — popular stocks &amp; ETFs (incl. VWCE, IWDA and other EU funds) come from a public price feed, and any crypto works too. Prices refresh themselves every time you open Invest — no keys, no setup. Anything the feed doesn’t cover you can update in one bulk screen.", [{a:'hold'},{a:'divd'}]],
+ [/recurr|repeat|rent|salary|every month|monthly bill/i, "Tick <b>“↻ Repeats every month”</b> when adding a transaction — rent, salary, subscriptions. At the start of each month a banner offers to add them all in one tap (you stay in control, nothing is added silently). Manage the list under Budget → <b>↻ Recurring</b>.", [{a:'rec'},{a:'tx'}]],
+ [/categor|rename|custom cat|add cat/i, "Budget → <b>Categories</b>: rename any category, change its emoji, delete ones you don’t use, or add your own — Kids, Travel, Pets, anything. Your transactions and limits follow along automatically.", [{a:'cats'},{a:'limits'}]],
+ [/unlock|code|already bought|purchased|full version/i, "Bought Money OS? Your <b>unlock code</b> is in the download — README.txt and the START&nbsp;HERE guide. On this website tap <b>“Enter your unlock code”</b> (in the preview banner) and this page becomes the full app — handy on phones.", []],
  [/debt|loan|snowball|avalanche|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), payoff order #1 #2…, and a <b>what-if slider</b> — drag it to see how €50 extra/mo moves your date closer. Addictive in the best way.", [{a:'debt'}]],
  [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending) and how far along you already are. Your inputs are saved automatically. Educational, not financial advice.", [{a:'fire'}]],
  [/snapshot|net worth|history|curve|wealth/i, "A snapshot saves today’s net worth as a point on your wealth curve (Overview). Save one <b>monthly</b> — after 3–4 months the chart becomes the most motivating thing in the app.", [{a:'snap'}]],
