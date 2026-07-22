@@ -11,6 +11,12 @@
 <meta property="og:url" content="https://mataz0.github.io/matas-demo/moneyos/">
 <meta property="og:image" content="https://mataz0.github.io/matas-demo/moneyos/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://mataz0.github.io/matas-demo/moneyos/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Money OS","applicationCategory":"FinanceApplication",
+"operatingSystem":"Any (browser-based)","description":"Private, offline-first personal finance planner: budget, savings goals, investments, debt payoff and FIRE date in one file. One-time purchase, no subscription, no account.",
+"offers":{"@type":"Offer","price":"24.99","priceCurrency":"EUR","url":"https://payhip.com/b/zmKZ7"}}
+</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2310B981'/><text y='.72em' x='50' font-size='58' text-anchor='middle'>€</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -62,7 +68,7 @@ h1 em{font-style:italic;background:linear-gradient(100deg,#047857,#2563EB 55%,#A
 .anchor b{color:var(--ink)}
 .stage{position:relative;width:min(880px,94vw);height:clamp(300px,42vw,430px);margin-top:clamp(30px,5vw,54px);perspective:1200px}
 .ph{position:absolute;border-radius:28px;border:1px solid var(--line);background:#fff;padding:7px;box-shadow:var(--sh3),0 0 0 1px rgba(12,21,36,.04);will-change:transform}
-.ph img{width:100%;border-radius:20px;display:block}
+.ph img,.ph video{width:100%;border-radius:20px;display:block}
 .ph.c{width:clamp(170px,24vw,240px);left:50%;top:0;transform:translateX(-50%);z-index:3;animation:floC 7s ease-in-out infinite}
 .ph.l{width:clamp(140px,19vw,195px);left:8%;top:14%;z-index:2;animation:flo 8.5s ease-in-out infinite 1.2s}
 .ph.r{width:clamp(140px,19vw,195px);right:8%;top:10%;z-index:2;animation:flo 9s ease-in-out infinite .6s}
@@ -72,7 +78,9 @@ h1 em{font-style:italic;background:linear-gradient(100deg,#047857,#2563EB 55%,#A
 .scue{margin-top:6px;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:8px}
 .scue::after{content:"";width:1px;height:40px;background:linear-gradient(var(--greenL),transparent);animation:cue 2s ease-in-out infinite}
 @keyframes cue{50%{opacity:.25}}
-.marq{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;background:rgba(255,255,255,.6)}
+.marq{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;background:rgba(255,255,255,.6);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq:hover div{animation-play-state:paused}
 .marq div{display:flex;gap:48px;width:max-content;animation:mv 38s linear infinite}
 .marq span{font-family:var(--fd);font-size:clamp(15px,1.8vw,21px);letter-spacing:.2em;text-transform:uppercase;color:var(--mut);white-space:nowrap;display:flex;align-items:center;gap:48px}
 .marq span::after{content:"◆";color:var(--greenL);font-size:.45em}
@@ -125,7 +133,8 @@ h2 em{font-style:italic;color:var(--gold)}
 .phone img,.phone video{width:100%;border-radius:19px;display:block}
 .wk h3{font-family:var(--fd);font-size:19px;font-weight:400;margin-top:15px}
 .wk p{color:var(--mut);font-size:13.5px;margin-top:4px}
-.cmp{width:100%;border-collapse:collapse;margin-top:40px;font-size:14.5px;background:var(--card);border-radius:20px;overflow:hidden;box-shadow:var(--sh1)}
+.cmpwrap{margin-top:40px;overflow-x:auto;border-radius:20px;box-shadow:var(--sh1);-webkit-overflow-scrolling:touch}
+.cmp{width:100%;min-width:600px;border-collapse:collapse;font-size:14.5px;background:var(--card);border-radius:20px;overflow:hidden}
 .cmp th{padding:14px 16px;text-align:left;color:var(--mut);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line)}
 .cmp th.me{color:var(--green)}
 .cmp td{padding:14px 16px;border-bottom:1px solid var(--line)}
@@ -144,6 +153,17 @@ summary::-webkit-details-marker{display:none}
 summary::after{content:"+";color:var(--green);font-size:23px;transition:transform .4s var(--ease)}
 details[open] summary::after{transform:rotate(45deg)}
 details p{color:var(--mut);padding:0 0 20px;font-size:15px;max-width:72ch}
+details[open] p{animation:faqin .45s var(--ease)}
+@keyframes faqin{from{opacity:0;transform:translateY(-6px)}to{opacity:1}}
+:focus-visible{outline:0;box-shadow:0 0 0 4px rgba(4,120,87,.16);border-radius:12px}
+.dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:930;display:flex;flex-direction:column;gap:11px}
+.dots a{width:8px;height:8px;border-radius:50%;background:rgba(12,21,36,.16);transition:transform .3s var(--ease),background .3s;position:relative}
+.dots a:hover{background:var(--soft)}
+.dots a.on{background:var(--green);transform:scale(1.45)}
+.dots a span{position:absolute;right:18px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:11px;font-weight:600;color:var(--mut);
+  background:var(--card);border:1px solid var(--line);border-radius:100px;padding:4px 11px;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:var(--sh1)}
+.dots a:hover span{opacity:1}
+@media(max-width:1180px){.dots{display:none}}
 footer{padding:44px var(--pad) 90px;text-align:center;font-size:13px;color:var(--soft);border-top:1px solid var(--line)}
 footer a{color:var(--green);text-decoration:none}
 .callbar{display:none}
@@ -293,7 +313,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <p class="anchor rv in">YNAB charges <b>$109 every year</b>. Monarch — $99/yr. This is <b>€24.99, once</b>.</p>
   <div class="stage" id="stage">
     <div class="ph l" data-d="18"><img src="img/tab_overview.jpg" alt="Overview screen"></div>
-    <div class="ph c" data-d="10"><img src="img/tab_plan.jpg" alt="Plan screen"></div>
+    <div class="ph c" data-d="10"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_plan.jpg" aria-label="Plan screen demo"><source src="img/clip_plan.mp4" type="video/mp4"></video></div>
     <div class="ph r" data-d="24"><img src="img/tab_fire.jpg" alt="FIRE screen"></div>
     <div class="fadeb"></div>
   </div>
@@ -356,14 +376,14 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     <div class="wk rv"><div class="phone"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_debt.jpg" aria-label="Debts demo"><source src="img/clip_debt.mp4" type="video/mp4"></video></div><h3>Debts</h3><p>Your exact debt-free date and interest you'll save</p></div>
     <div class="wk rv"><div class="phone"><video autoplay muted loop playsinline preload="metadata" poster="img/tab_fire.jpg" aria-label="FIRE demo"><source src="img/clip_fire.mp4" type="video/mp4"></video></div><h3>FIRE</h3><p>The date you could stop working. Yes, really.</p></div>
   </div>
-  <table class="cmp rv">
+  <div class="cmpwrap rv"><table class="cmp">
     <tr><th></th><th class="me">Money OS</th><th>Subscription apps</th><th>Spreadsheets</th></tr>
     <tr><td>Price</td><td class="me">€24.99 once</td><td class="x">€100–180 every year</td><td class="x">free, but…</td></tr>
     <tr><td>Your data</td><td class="me y">✓ stays on your device</td><td class="x">on their servers</td><td class="x">in the cloud</td></tr>
     <tr><td>Bank login required</td><td class="me y">✓ never</td><td class="x">usually yes</td><td class="x">no</td></tr>
     <tr><td>Goals, debts & FIRE built in</td><td class="me y">✓ all included</td><td class="x">some, behind paywalls</td><td class="x">build it yourself</td></tr>
     <tr><td>Feels like</td><td class="me">a beautiful app</td><td class="x">a subscription trap</td><td class="x">homework</td></tr>
-  </table>
+  </table></div>
 </section>
 <section id="calc">
   <div class="orn rv"><i></i></div>
@@ -473,11 +493,21 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     <details class="rv"><summary>Do I need a Google account or any software?</summary><p>No. Unlike spreadsheet-based systems, there's no Google account, no Excel licence and no install. It opens in the browser you already have.</p></details>
     <details class="rv"><summary>Can I use it on more than one device?</summary><p>Yes — put the file on as many of your own devices as you like. Each keeps its own data; use Backup and Restore to move a copy between them whenever you want.</p></details>
     <details class="rv"><summary>Is this financial advice?</summary><p>No. It's a calculator and a planner — it does arithmetic on numbers you enter. It doesn't recommend investments and it isn't a substitute for a qualified professional.</p></details>
+    <details class="rv"><summary>Will version 2 cost me again?</summary><p>All version-1 updates are free, forever — delivered by email as new file versions. We won't promise what a hypothetical v2 costs years from now, but we can promise this: the version you buy keeps working unchanged for as long as browsers exist, and nothing you own ever expires or gets degraded to push an upgrade.</p></details>
     <details class="rv"><summary>What’s the difference between the free preview and the paid version?</summary><p>The preview runs on our website so you can walk through every screen before paying — no signup, no card. It holds a handful of entries and, because it’s a web page rather than a file on your machine, it can’t import CSVs or save backups. The version you download removes all of that: unlimited entries, CSV import, Backup and Restore, offline use on every device, plus the setup guide and CSV templates. Same app, no ceiling.</p></details>
   </div>
 </section>
 <div class="callbar"><span class="p"><s>€49</s> €24.99</span><a class="cbb" href="#buy">Get Money OS</a></div>
 <div class="dbar" id="dbar"><b><s>€49</s>€24.99</b><span>one payment · instant delivery · 30-day guarantee</span><a href="#buy">Get Money OS</a></div>
+<nav class="dots" id="dots" aria-label="Sections">
+  <a href="#how" data-s="how"><span>How it works</span></a>
+  <a href="#why" data-s="why"><span>What changes</span></a>
+  <a href="#calc" data-s="calc"><span>The math</span></a>
+  <a href="#try" data-s="try"><span>Try it</span></a>
+  <a href="#priv" data-s="priv"><span>Privacy</span></a>
+  <a href="#gets" data-s="gets"><span>Everything included</span></a>
+  <a href="#buy" data-s="buy"><span>Get it</span></a>
+</nav>
 <div class="spot" id="spot"></div>
 <script>
 /* ── v6 motion layer ── */
@@ -551,6 +581,21 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     setTimeout(function(){ hs.forEach(function(h){h.classList.add('in');}); },3000);
   } else hs.forEach(function(h){h.classList.add('in');});
 
+  /* 9. section dots */
+  var dotsNav=document.getElementById('dots');
+  if(dotsNav&&'IntersectionObserver' in window){
+    var dmap={};
+    [].slice.call(dotsNav.querySelectorAll('a')).forEach(function(a){ dmap[a.dataset.s]=a; });
+    var dio=new IntersectionObserver(function(en){
+      en.forEach(function(e){
+        if(e.isIntersecting){
+          [].slice.call(dotsNav.querySelectorAll('a')).forEach(function(a){a.classList.remove('on');});
+          var a=dmap[e.target.id]; if(a) a.classList.add('on');
+        }
+      });
+    },{rootMargin:'-35% 0px -55% 0px'});
+    Object.keys(dmap).forEach(function(id){ var el=document.getElementById(id); if(el) dio.observe(el); });
+  }
   /* 8. respect reduced motion for demo videos */
   if(reduced){ [].slice.call(document.querySelectorAll('.phone video')).forEach(function(v){ v.removeAttribute('autoplay'); v.pause(); }); }
   /* 7. subscription calculator */
