@@ -143,6 +143,13 @@ button:active{transition-duration:.09s}
 .flock b{font-size:15px;color:var(--ink)}
 .flock span{font-size:13px;color:var(--mut);max-width:44ch;line-height:1.55}
 .flock a{margin-top:6px;background:linear-gradient(180deg,#0B9268,#047857);color:#fff;border-radius:12px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 8px 18px -8px rgba(4,120,87,.5)}
+/* live prices */
+.liveb{display:inline-flex;align-items:center;gap:7px;color:var(--green);border-color:rgba(4,120,87,.3)}
+.liveb .ldot{width:7px;height:7px;border-radius:50%;background:var(--greenL);box-shadow:0 0 0 0 rgba(16,185,129,.5)}
+.liveb.on .ldot{animation:lpulse 2s infinite}
+@keyframes lpulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.45)}70%{box-shadow:0 0 0 7px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.lts{font-size:11px;font-weight:600;color:var(--soft);margin-left:8px;letter-spacing:.02em}
+@media(prefers-reduced-motion:reduce){.liveb .ldot{animation:none!important}}
 /* holdings v2 */
 .hcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--sh1);transition:box-shadow .4s var(--ease),transform .4s var(--ease)}
 .hcard:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
@@ -326,7 +333,7 @@ button:active{transition-duration:.09s}
     <div class="card"><div class="klabel">Invested</div><div class="kval" id="i-cost">—</div></div>
     <div class="card"><div class="klabel">Profit / loss</div><div class="kval" id="i-pl">—</div><div class="ksub" id="i-plp"></div></div>
   </div>
-  <div class="sect"><h2>Holdings</h2><div style="display:flex;gap:8px"><button class="ghostb" id="priceB">Update prices</button><button class="addb blue" id="hAdd">＋ Add holding</button></div></div>
+  <div class="sect"><h2>Holdings <span class="lts" id="liveTs"></span></h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ghostb liveb" id="liveB"><i class="ldot"></i>Live prices</button><button class="ghostb" id="priceB">Update manually</button><button class="addb blue" id="hAdd">＋ Add holding</button></div></div>
   <div class="rows" id="hList"></div>
   <p class="note">Prices are yours to update — nothing is fetched, nothing leaves this device. Tip: update once a week, it takes 30 seconds.</p>
   <div class="sect"><h2>Dividend log</h2><button class="ghostb" id="divAdd">＋ Add dividend</button></div>
@@ -386,7 +393,7 @@ button:active{transition-duration:.09s}
 </section>
 </main>
 
-<footer>Money OS · All data stays in your browser (localStorage) — nothing is uploaded, ever. Press F12 → Network to verify: zero requests.<br>Backup regularly via the Backup button.<br><span style="font-size:10.5px;opacity:.75">For informational and educational purposes only — not financial, investment, tax, or legal advice.</span></footer>
+<footer>Money OS · Your numbers stay in your browser (localStorage) — nothing about you is ever uploaded. The only optional network feature is live crypto prices, which sends coin symbols only, and only if you turn it on.<br>Backup regularly via the Backup button.<br><span style="font-size:10.5px;opacity:.75">For informational and educational purposes only — not financial, investment, tax, or legal advice.</span></footer>
 
 <!-- MODAL -->
 <div class="mask" id="mask"><div class="modal" id="modal"></div></div>
@@ -463,6 +470,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     t.classList.add('on'); $('v-'+t.dataset.v).classList.add('on');
     try{localStorage.setItem('mosTab',t.dataset.v);}catch(e){}
     render();
+    if(t.dataset.v==='inv'&&S.live&&(!S.liveT||Date.now()-S.liveT>300000)) liveFetch(true);
   });
 });
 
@@ -571,6 +579,37 @@ window.toggleLots=function(i){
   el.style.display=open?'none':'block';
   var b=document.getElementById('lotb-'+i); if(b) b.textContent=open?('▾ '+((S.hold[i].lots||[]).length)+' purchases'):'▴ hide purchases';
 };
+var CG={BTC:'bitcoin',ETH:'ethereum',USDT:'tether',BNB:'binancecoin',SOL:'solana',XRP:'ripple',USDC:'usd-coin',ADA:'cardano',DOGE:'dogecoin',TRX:'tron',AVAX:'avalanche-2',LINK:'chainlink',DOT:'polkadot',MATIC:'matic-network',LTC:'litecoin'};
+function curCode(){ return S.cur==='$'?'usd':S.cur==='\u00a3'?'gbp':'eur'; }
+function liveFetch(auto){
+  var map={}; S.hold.forEach(function(h){ var id=CG[(h.n||'').toUpperCase().trim()]; if(id) map[id]=true; });
+  var ids=Object.keys(map);
+  if(!ids.length){ if(!auto) toast('No known coins yet — live covers the 15 popular cryptos'); return; }
+  var el=$('liveB'); el.disabled=true;
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids='+ids.join(',')+'&vs_currencies='+curCode())
+   .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+   .then(function(d){
+     var n=0;
+     S.hold.forEach(function(h){ var id=CG[(h.n||'').toUpperCase().trim()]; if(id&&d[id]&&d[id][curCode()]!=null){ h.p=d[id][curCode()]; n++; } });
+     S.liveT=Date.now(); save(); render();
+     if(!auto) toast('Live: updated '+n+' crypto price'+(n===1?'':'s'));
+   })
+   .catch(function(){ if(!auto) toast('Price service unreachable — try again in a minute'); })
+   .finally(function(){ el.disabled=false; });
+}
+$('liveB').addEventListener('click',function(){
+  if(S.live){ liveFetch(false); return; }
+  openModal('<h3>Turn on live crypto prices?</h3>'
+   +'<p class="note" style="margin-bottom:12px">Honesty first: this is the <b>only</b> feature in Money OS that touches the internet, and it is off until you say yes.</p>'
+   +'<div class="ulist">'
+   +'<div><b>\u2713</b><span>It asks CoinGecko, a public price service, for <b>coin symbols only</b> (e.g. \u201cbitcoin, ethereum\u201d)</span></div>'
+   +'<div><b>\u2713</b><span>Your amounts, names, goals and everything else <b>never leave this device</b></span></div>'
+   +'<div><b>\u2713</b><span>Covers the 15 popular cryptos \u00b7 stocks &amp; ETFs stay manual \u2014 no keyless source exists, and we won\u2019t sneak one in</span></div>'
+   +'<div><b>\u2713</b><span>Turn it off anytime \u2014 the app works fully offline without it</span></div>'
+   +'</div>'
+   +'<div class="mbtns" style="margin-top:16px"><button class="ghostb" onclick="closeModal()">Keep it fully offline</button><button class="addb" id="m-ok">Enable live prices</button></div>');
+  $('m-ok').onclick=function(){ S.live=true; save(); closeModal(); liveFetch(false); };
+});
 $('priceB').addEventListener('click',function(){
   if(!S.hold.length) return toast('Add a holding first');
   openModal('<h3>Update current prices</h3>'
@@ -929,6 +968,8 @@ function render(){
   var val=0,cost=0;
   S.hold.forEach(function(h){ val+=h.q*h.p; cost+=h.q*h.b; });
   var pl=val-cost;
+  $('liveB').classList.toggle('on',!!S.live);
+  $('liveTs').textContent = S.live&&S.liveT ? ('live \u00b7 '+new Date(S.liveT).toTimeString().slice(0,5)) : '';
   $('i-val').textContent=fmt(val); $('i-cost').textContent=fmt(cost);
   $('i-pl').textContent=fmt(pl); $('i-pl').className='kval '+(pl>=0?'pos':'neg');
   $('i-plp').textContent=cost?((pl>=0?'+':'')+(pl/cost*100).toFixed(1)+'%'):'';
@@ -1099,6 +1140,7 @@ var AKB=[
  [/limit|budget.{0,4}(cap|set|edit)|categor|pace|safe to spend/i, "Budget tab → <b>Edit limits</b> — a monthly cap per category. Each bar has a <b>pace tick</b> (where you should be today): amber = ahead of pace, red = over. The “Left to spend” card even tells you a <b>safe daily amount</b> for the rest of the month.", [{a:'limits'}]],
  [/transaction|expense|income|spend|salary|add.{0,8}(entry|record)/i, "Budget tab → <b>＋Add</b>: pick Expense or Income, amount, category, date. Faster for many rows: <b>Import CSV</b> from your bank.", [{a:'tx'},{a:'csv'}]],
  [/dividend/i, "Invest tab → <b>＋Add dividend</b> (holding, amount, date). The yearly total shows your growing passive income.", [{a:'divd'}]],
+ [/live price|auto.{0,8}price|coingecko|real.?time/i, "Invest tab \u2192 <b>Live prices</b> button. Off by default; when you enable it, it fetches current prices for the 15 popular cryptos from CoinGecko \u2014 sending coin symbols only, never your amounts. Stocks & ETFs stay manual (<b>Update manually</b> does them all in one screen) because no keyless source exists.", [{a:'hold'}]],
  [/invest|holding|stock|etf|crypto|portfolio|price/i, "Invest tab → <b>＋Add holding</b>: name, quantity, buy price, current price. You get value, invested, P/L and the allocation donut on Overview. Update prices whenever you like — it takes seconds.", [{a:'hold'},{a:'divd'}]],
  [/debt|loan|snowball|avalanche|credit/i, "Debts tab → add each debt (balance, APR %, monthly payment). You get your <b>debt-free date</b>, a <b>Snowball / Avalanche toggle</b> (with how much interest each saves), payoff order #1 #2…, and a <b>what-if slider</b> — drag it to see how €50 extra/mo moves your date closer. Addictive in the best way.", [{a:'debt'}]],
  [/fire|retire|freedom|independence/i, "FIRE tab → 4 numbers: current invested, monthly investing, expected return %, monthly spending → your freedom date + number (25× yearly spending) and how far along you already are. Your inputs are saved automatically. Educational, not financial advice.", [{a:'fire'}]],
@@ -1109,7 +1151,7 @@ var AKB=[
  [/month|previous|last|navigate|july|june/i, "Budget tab, top: <b>‹ month ›</b> arrows move between months — entries stay in the month of their date.", [{a:'tx'}]],
  [/sample|example|demo data|play/i, "Tap the logo (top-left) when the app is empty and you’ll see <b>Load sample data</b> — a full realistic setup to explore. Your own entries later replace it.", [{a:'sample'}]],
  [/fresh|wipe|clear|reset|delete all/i, "To fully reset: Backup first (top bar), then clear this site’s data in your browser settings — or simply delete rows you don’t need. There is no hidden copy anywhere; you control everything.", [{a:'backup'}]],
- [/privat|secure|safe|data|cloud|server|gdpr/i, "Everything lives in <b>your browser only</b> — no server, no account, no tracking. Proof: F12 → Network — zero requests. That’s also why Backup matters: your file is the only copy.", [{a:'backup'}]],
+ [/privat|secure|safe|data|cloud|server|gdpr/i, "Everything about you lives in <b>your browser only</b> — no server, no account, no tracking. One honest exception: if you turn on <b>live crypto prices</b>, the app asks a public price service for coin symbols only (never your amounts). Leave it off and there are zero requests — check F12 → Network yourself. Backup matters: your file is the only copy.", [{a:'backup'}]],
  [/buy|price|cost|purchase|pay|license/i, "Money OS is <b>€24.99 once</b> — no subscription. If you’re in the free demo now, everything you see is exactly what you get, forever.", ['Setup guide']],
  [/human|contact|support|email|bug|problem/i, "A human is one email away: <b>matasbuika1@gmail.com</b> — replies within hours. For most questions I’m faster, though 😉", ['Setup guide']]
 ];

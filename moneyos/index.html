@@ -175,6 +175,39 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 .dbar span{color:var(--mut);font-size:13px}
 .dbar a{background:linear-gradient(180deg,#0B9268,#047857);color:#fff;box-shadow:0 8px 18px -8px rgba(4,120,87,.5);border-radius:100px;padding:11px 24px;font-size:13.5px;font-weight:700;text-decoration:none;white-space:nowrap}
 @media(max-width:760px){.dbar{display:none}}
+/* calculator */
+.calcbox{margin-top:38px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,40px);box-shadow:var(--sh2)}
+.crow{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;color:var(--mut)}
+.crow b{font-family:var(--fd);font-size:clamp(24px,3vw,32px);color:var(--ink)}
+#cyrs{width:100%;margin:18px 0 26px;accent-color:var(--green);height:6px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.cc{border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center;background:#FBFCFE}
+.cc span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.cc b{display:block;font-family:var(--fd);font-size:clamp(26px,3.4vw,38px);margin-top:6px;font-variant-numeric:tabular-nums}
+.cc i{display:block;font-style:normal;font-size:11.5px;color:var(--soft);margin-top:4px}
+.cc.me{background:rgba(4,120,87,.05);border-color:rgba(4,120,87,.3)}
+.cc.me b{color:var(--green)}
+.csum{margin-top:20px;text-align:center;font-size:15px;color:var(--mut)}
+.csum b{color:var(--green);font-variant-numeric:tabular-nums}
+/* live preview frame */
+.tryframe{margin-top:38px;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--sh3);background:var(--card)}
+.trybar{display:flex;align-items:center;gap:7px;padding:11px 16px;border-bottom:1px solid var(--line);background:#FBFCFE}
+.trybar i{width:11px;height:11px;border-radius:50%;background:#E4E7EC}
+.trybar i:nth-child(1){background:#F2B8B5}.trybar i:nth-child(2){background:#F5DEA3}.trybar i:nth-child(3){background:#B7E1C1}
+.trybar span{margin-left:8px;font-size:12px;color:var(--soft);font-weight:600}
+.tryframe iframe{width:100%;height:min(640px,72vh);border:0;display:block}
+/* privacy bento */
+.pbento{display:grid;gap:14px;margin-top:38px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.pb{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--sh1);transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.pb:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.pb .pi{font-size:24px;margin-bottom:12px}
+.pb h3{font-size:16.5px;font-weight:700}
+.pb p{color:var(--mut);font-size:14px;margin-top:7px;line-height:1.6}
+@media(min-width:820px){.pb.wide{grid-column:span 3}}
+/* maker */
+.makerbox{display:flex;gap:clamp(20px,4vw,40px);align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,44px);box-shadow:var(--sh1)}
+.makerbox .mi{width:64px;height:64px;flex:none;border-radius:20px;background:linear-gradient(135deg,#10B981,#2563EB);color:#fff;display:grid;place-items:center;font-family:var(--fd);font-size:30px;box-shadow:0 14px 30px -10px rgba(4,120,87,.4)}
+@media(max-width:640px){.makerbox{flex-direction:column}}
 /* ── what you get ── */
 .gets{display:grid;gap:1px;margin-top:40px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--line);box-shadow:var(--sh1)}
 .get{background:var(--card);padding:clamp(20px,3vw,30px);display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:start;transition:background .35s}
@@ -246,7 +279,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 <div class="prog" id="prog"></div>
 <nav id="nav"><div class="logo" id="logoB"><i>€</i>Money OS</div><a class="ncta" href="#buy">Get it — €24.99</a></nav>
 <header>
-  <span class="pill rv in"><b>🔒</b> 100% private · zero network requests · works offline</span>
+  <span class="pill rv in"><b>🔒</b> 100% private · works offline · your numbers never leave your device</span>
   <h1 class="rv in">Wealth begins with <em>clarity.</em></h1>
   <p class="sub rv in">Budget, savings goals, investments, debt payoff and your financial freedom date — in one beautiful app that answers to no server, no bank and no subscription. Pay once. Own it forever.</p>
   <div class="ctas rv in">
@@ -266,7 +299,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
 <div class="marq"><div><span>Budget</span><span>Savings goals</span><span>Investments</span><span>Debt payoff</span><span>FIRE date</span><span>100% private</span><span>Budget</span><span>Savings goals</span><span>Investments</span><span>Debt payoff</span><span>FIRE date</span><span>100% private</span></div></div>
 <div class="stats">
   <div class="rv"><div class="sn"><b data-count="431">0</b>€</div><div class="sl">you keep vs 5 yrs of YNAB</div></div>
-  <div class="rv"><div class="sn"><b data-count="0">0</b></div><div class="sl">bytes of your data sent anywhere</div></div>
+  <div class="rv"><div class="sn"><b data-count="0">0</b></div><div class="sl">accounts, logins or uploads of your data</div></div>
   <div class="rv"><div class="sn"><b data-count="6">0</b></div><div class="sl">money modules in one file</div></div>
   <div class="rv"><div class="sn"><b data-count="1">0</b></div><div class="sl">payment. Ever.</div></div>
 </div>
@@ -298,7 +331,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <div class="feats">
     <div class="ft rv"><div class="ic">🎯</div><h3>Savings goals</h3><p>Set a target date and it computes your monthly number — “save €138/mo to make it by June”. On-track badges, milestone cheers, confetti at 100%.</p></div>
     <div class="ft rv"><div class="ic">💶</div><h3>Smart budget</h3><p>Category limits with pace ticks, a “safe to spend per day” number, and a CSV import that auto-sorts your bank statement in seconds.</p></div>
-    <div class="ft rv"><div class="ic">📈</div><h3>Investments & dividends</h3><p>Holdings with live P/L math, allocation chart and a dividend log showing your yearly passive income.</p></div>
+    <div class="ft rv"><div class="ic">📈</div><h3>Investments & dividends</h3><p>Pick from 15 popular stocks, 15 cryptos or your own tickers. Log each purchase with its date, get P/L in € and % — and optional live crypto prices.</p></div>
     <div class="ft rv"><div class="ic">🧾</div><h3>Debt payoff, two ways</h3><p>Snowball or avalanche — with your exact debt-free date and a what-if slider: drag it and watch €50 extra shave months off.</p></div>
     <div class="ft rv"><div class="ic">🔥</div><h3>FIRE calculator</h3><p>Four numbers in, your financial freedom date out — with the most motivating chart you'll ever see.</p></div>
     <div class="ft rv"><div class="ic">🔒</div><h3>Radically private</h3><p>Works offline. All data stays in your browser. We couldn't see your numbers even if we wanted to.</p></div>
@@ -328,6 +361,55 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     <tr><td>Goals, debts & FIRE built in</td><td class="me y">✓ all included</td><td class="x">some, behind paywalls</td><td class="x">build it yourself</td></tr>
     <tr><td>Feels like</td><td class="me">a beautiful app</td><td class="x">a subscription trap</td><td class="x">homework</td></tr>
   </table>
+</section>
+<section id="calc">
+  <div class="orn rv"><i></i></div>
+  <span class="tag rv">The subscription math</span>
+  <h2 class="rv">Drag the slider. <em>Watch the gap grow.</em></h2>
+  <p class="sd rv">Subscription apps look cheap per month. Time disagrees.</p>
+  <div class="calcbox rv">
+    <div class="crow"><span>If you track your money for</span><b id="cyr">5 years</b></div>
+    <input type="range" id="cyrs" min="1" max="10" step="1" value="5" aria-label="Years">
+    <div class="cgrid">
+      <div class="cc"><span>YNAB</span><b id="c-y">$545</b><i>$109 × years</i></div>
+      <div class="cc"><span>Monarch</span><b id="c-m">$495</b><i>$99 × years</i></div>
+      <div class="cc me"><span>Money OS</span><b>€24.99</b><i>once. that's the whole column</i></div>
+    </div>
+    <p class="csum" id="c-sum">You keep roughly <b>€480</b> — enough to actually put into the savings goals this app tracks.</p>
+  </div>
+</section>
+<section id="try">
+  <div class="orn rv"><i></i></div>
+  <span class="tag rv">Don't take our word for it</span>
+  <h2 class="rv center">Touch it. <em>It's real.</em></h2>
+  <p class="sd rv center">This is the actual app running right here — press “Load sample data” inside and click around.</p>
+  <div class="tryframe rv">
+    <div class="trybar"><i></i><i></i><i></i><span>Money OS — free preview</span></div>
+    <iframe src="app/" title="Money OS live preview" loading="lazy"></iframe>
+  </div>
+  <p class="rv center" style="margin-top:14px;font-size:13.5px;color:var(--mut)">Prefer a bigger window? <a href="app/" target="_blank" rel="noopener" style="color:var(--green);font-weight:600">Open the preview full-screen →</a></p>
+</section>
+<section id="priv">
+  <div class="orn rv"><i></i></div>
+  <span class="tag rv">Private by design</span>
+  <h2 class="rv">Not a promise. <em>An architecture.</em></h2>
+  <div class="pbento">
+    <div class="pb rv"><div class="pi">🖥️</div><h3>No server to hack</h3><p>Your data isn't “encrypted in the cloud” — it's simply not in any cloud. There is no Money OS database of users, because there are no users to store. A breach of us leaks nothing about you.</p></div>
+    <div class="pb rv"><div class="pi">🔍</div><h3>Verifiable in 10 seconds</h3><p>Open the app, press F12, choose Network, use it. Zero requests — unless you switch on live crypto prices, whose single request you'll see, containing coin symbols and nothing else.</p></div>
+    <div class="pb rv"><div class="pi">✈️</div><h3>Works on a plane</h3><p>Airplane mode is the ultimate privacy test, and Money OS passes it. Budget in a cabin, on a flight, in a blackout — the file doesn't care.</p></div>
+    <div class="pb rv wide"><div class="pi">🤝</div><h3>The honest trade</h3><p>Apps with bank sync are convenient — and they read your transactions on their servers. We made the opposite trade: you paste a CSV once a month, and in return nobody, including us, ever sees a single number. You decide which trade is right for you.</p></div>
+  </div>
+</section>
+<section id="maker">
+  <div class="orn rv"><i></i></div>
+  <div class="makerbox rv">
+    <div class="mi">€</div>
+    <div>
+      <span class="tag">Who's behind this</span>
+      <h2 style="font-size:clamp(24px,3.6vw,36px)">Built by one person<br><em>who wanted it to exist.</em></h2>
+      <p class="sd" style="margin-top:12px">Money OS is made by an independent European developer who got tired of renting budgeting software and being the product of free apps. No VC, no growth team, no data department — which is exactly why it can afford to not want your data. You email, a human answers within hours: <a href="mailto:matasbuika1@gmail.com" style="color:var(--green);font-weight:600">matasbuika1@gmail.com</a></p>
+    </div>
+  </div>
 </section>
 <section id="gets">
   <div class="orn rv"><i></i></div>
@@ -369,7 +451,7 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   <div style="margin-top:clamp(40px,6vw,64px)">
     <div class="orn rv"><i></i></div>
     <details class="rv"><summary>How do I receive it?</summary><p>Instantly by email: a single file that opens in any browser on any device — Mac, Windows, iPhone, Android. No installation, no account.</p></details>
-    <details class="rv"><summary>Can you prove it's private?</summary><p>Yes — technically. Open the app, press F12 → Network tab: zero requests while you use it. Your numbers physically cannot leave your device, because the app has no server to send them to. And if we ever disappear, your file keeps working forever.</p></details>
+    <details class="rv"><summary>Can you prove it's private?</summary><p>Yes — technically. Open the app, press F12 → Network tab and use it: you'll see zero requests. One honest exception exists, and it's opt-in: live crypto prices. Turn that on and the app asks a public price service for coin symbols only — never your amounts, never your names. Leave it off and the app touches the internet exactly never. Either way, your numbers have no server to go to, and if we disappeared tomorrow your file keeps working.</p></details>
     <details class="rv"><summary>Is my financial data safe?</summary><p>Safer than any app with a server: your data lives only in your own browser. Use the built-in Backup button to keep a copy anywhere you like.</p></details>
     <details class="rv"><summary>Why one-time instead of subscription?</summary><p>Because budgeting software shouldn't be a recurring line in your budget. Pay once, use forever.</p></details>
     <details class="rv"><summary>What if I don't like it?</summary><p>30-day money-back guarantee, no questions asked — the same standard the best lifetime-deal products use.</p></details>
@@ -455,6 +537,21 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
     setTimeout(function(){ hs.forEach(function(h){h.classList.add('in');}); },3000);
   } else hs.forEach(function(h){h.classList.add('in');});
 
+  /* 7. subscription calculator */
+  var calcSlider=document.getElementById('cyrs');
+  if(calcSlider){
+    var YN=109, MO=99, OURS=24.99, EURUSD=1.08;
+    function cfmt(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+    function crun(){
+      var y=parseInt(calcSlider.value);
+      document.getElementById('cyr').textContent=y+(y===1?' year':' years');
+      document.getElementById('c-y').textContent=cfmt(YN*y);
+      document.getElementById('c-m').textContent=cfmt(MO*y);
+      var keepEur=Math.round(YN*y/EURUSD-OURS);
+      document.getElementById('c-sum').innerHTML='You keep roughly <b>\u20ac'+keepEur.toLocaleString('en-US')+'</b> vs YNAB \u2014 enough to actually put into the savings goals this app tracks.';
+    }
+    calcSlider.addEventListener('input',crun); crun();
+  }
   /* 6. desktop sticky buy bar — after hero, hidden once buy section reached */
   var dbar=document.getElementById('dbar'), buy=document.getElementById('buy'), hero=document.querySelector('header');
   if(dbar&&buy&&hero&&'IntersectionObserver' in window){
@@ -592,7 +689,8 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
    [/update|new version|improve|roadmap|future/i,"Version 1 updates are free — you get them by email. And because the app is a self-contained file, the version you own keeps working forever even if updates stopped tomorrow.",["How do I receive it?","Price?"]],
    [/family|couple|partner|wife|husband|share|two people/i,"Yes — your purchase is for your household. Put the file on both devices; each keeps its own data, or share one Backup file to stay in sync manually. No per-seat pricing.",["How do backups work?","Price?"]],
    [/currency|eur|usd|gbp|dollar|pound/i,"Built-in € / $ / £ switcher in the top bar — changes the symbol everywhere instantly.",["What's inside?"]],
-   [/(sync|connect|link).{0,18}bank|bank.{0,14}(sync|connect|link|login|account)|plaid|open banking/i,"By design there is <b>no bank connection</b> — that's the privacy feature, not a gap. You never hand over bank credentials. Instead, paste your bank's CSV export and it auto-sorts in seconds.",["CSV import help","Is it private?"]],
+   [/live price|real.?time|price feed|coingecko|auto.{0,8}price/i,"Yes — optional <b>live crypto prices</b> (the 15 popular coins) via CoinGecko. It's off by default; when you enable it, the app sends coin symbols only — never your amounts. Stocks & ETFs update manually in one bulk screen, because no keyless price source exists for them and we won't sneak in one that phones home.",["Is it private?","What's inside?"]],
+ [/(sync|connect|link).{0,18}bank|bank.{0,14}(sync|connect|link|login|account)|plaid|open banking/i,"By design there is <b>no bank connection</b> — that's the privacy feature, not a gap. You never hand over bank credentials. Instead, paste your bank's CSV export and it auto-sorts in seconds.",["CSV import help","Is it private?"]],
    [/discount|coupon|cheaper|deal|promo/i,"The launch price <b>€24.99</b> (down from €49) IS the deal — and honestly, one skipped takeaway pizza vs. $109/yr for YNAB. 30-day guarantee means zero risk to try.",["How do I buy?"]],
    [/vat|invoice|receipt|business|company purchase/i,"You'll receive a purchase receipt by email. Need something specific for accounting? Email <b>matasbuika1@gmail.com</b> and we'll sort it out.",["How do I buy?"]],
    [/refund|guarantee|money.?back/i,"30-day money-back guarantee, no questions asked. Email matasbuika1@gmail.com and you get a full refund.",["Price?","How do I buy?"]],
