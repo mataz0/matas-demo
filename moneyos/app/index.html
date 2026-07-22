@@ -31,7 +31,9 @@ h1{font-size:20px;font-weight:800;letter-spacing:-.02em}
 .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px clamp(16px,4vw,32px);display:flex;justify-content:space-between;align-items:center;gap:10px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
 .logo i{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#10B981,#3B82F6);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:15px}
-.tools{display:flex;gap:8px;align-items:center}
+.tools{display:flex;gap:8px;align-items:center;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tools::-webkit-scrollbar{display:none}
+.tools>*{flex:none}
 .ghostb{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 15px;font-size:12.5px;font-weight:600;color:var(--mut);cursor:pointer;box-shadow:var(--sh1)}
 .ghostb:hover{color:var(--ink);box-shadow:var(--sh2);transform:translateY(-1px)}
 main{max-width:1080px;margin:0 auto;padding:clamp(16px,3.5vw,32px)}
@@ -1490,7 +1492,7 @@ aI.addEventListener('keydown',function(e){ if(e.key==='Enter'&&aI.value.trim()){
 
 if(DEMO){
   var lg=document.getElementById('logoB');
-  if(lg){ var pill=document.createElement('span'); pill.className='dpill'; pill.textContent='PREVIEW'; lg.appendChild(pill); }
+  if(lg){ var pill=document.createElement('span'); pill.className='dpill'; pill.textContent='PREVIEW · 🔓'; pill.title='Enter your unlock code'; pill.style.cursor='pointer'; pill.addEventListener('click',function(e){ e.stopPropagation(); unlockModal(); }); lg.appendChild(pill); }
   var shown=false; try{ shown=!!localStorage.getItem('mosDban'); }catch(e){}
   if(!shown) $('dBanner').style.display='flex';
   $('dBanX').addEventListener('click',function(){ $('dBanner').style.display='none'; try{localStorage.setItem('mosDban','1');}catch(e){} });
