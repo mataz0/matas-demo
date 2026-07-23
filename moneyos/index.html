@@ -514,16 +514,16 @@ h2.clipr.in{clip-path:inset(0 0 -10% 0)}
   </div>
   <script>
   window.REVIEWS=[
-   {t:"Everything got clearer — and putting money aside finally feels easy.", n:"Matt"},
-   {t:"Simple, clear picture of where my money goes. Saving is just easier now.", n:"John"},
-   {t:"Love that there's no monthly subscription. And it's really comfortable to use.", n:"Oscar"}
+   {s:5, t:"Everything got clearer — and putting money aside finally feels easy.", n:"Matt"},
+   {s:5, t:"Simple, clear picture of where my money goes. Saving is just easier now.", n:"John"},
+   {s:5, t:"Love that there's no monthly subscription. And it's really comfortable to use.", n:"Oscar"}
   ];
   (function(){
     if(!window.REVIEWS||REVIEWS.length<3) return;
     var g=document.getElementById('revGrid');
     g.innerHTML=REVIEWS.map(function(r){
       return '<div style="background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 26px;box-shadow:0 14px 34px -20px rgba(12,21,36,.25)">'
-        +'<div style="color:var(--green);font-size:22px;line-height:1;margin-bottom:10px">&ldquo;</div>'
+        +(r.s?'<div style="color:#F59E0B;font-size:17px;letter-spacing:2px;margin-bottom:10px">'+'★'.repeat(r.s)+'</div>':'')
         +'<p style="font-size:14.5px;line-height:1.55;color:var(--ink)">'+r.t+'</p>'
         +'<div style="margin-top:12px;font-weight:700;font-size:13px;color:var(--mut)">— '+r.n+'</div></div>';
     }).join('');
