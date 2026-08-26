@@ -1,0 +1,194 @@
+<!doctype html>
+<!-- DTFILM WEB SHOWCASE · dizaino sistema: Dark Streetwear Lookbook · paletė: kliento brand (lime #C3E82E + #0B0B0C) · šriftai: Anton (latin-ext OK) + Poppins · VARIANCE 8 / MOTION 7 / DENSITY 3 -->
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DTFilm · Tavo dizainas. Ant bet ko.</title>
+<meta name="description" content="DTF spauda Kaune. Maikės, hoodžiai, kelnės su tavo dizainu. Atsiuntei failą, gavai rūbus.">
+<meta property="og:title" content="DTFilm · Tavo dizainas. Ant bet ko.">
+<meta property="og:image" content="img/g_tee1.jpg">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--lime:#C3E82E;--bg:#0B0B0C;--bg2:#131315;--ink:#F4F4F2;--mut:rgba(244,244,242,.62);--line:rgba(244,244,242,.12);--r:18px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.5px;text-transform:uppercase}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:16px 28px;background:linear-gradient(rgba(11,11,12,.88),rgba(11,11,12,0));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.logo-pill{background:var(--lime);border-radius:999px;padding:10px 22px;display:flex;align-items:center;cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.logo-pill:hover{transform:scale(1.04)}
+.logo-pill img{height:22px;width:auto}
+.nav-cta{font-weight:600;font-size:15px;letter-spacing:1px;border:1.5px solid var(--lime);color:var(--lime);border-radius:999px;padding:10px 22px;transition:background .25s,color .25s}
+.nav-cta:hover{background:var(--lime);color:#0B0B0C}
+
+/* HERO */
+.hero{min-height:100dvh;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:20px;padding:120px 28px 40px;max-width:1240px;margin:0 auto;position:relative}
+.hero h1{font-size:clamp(56px,7.4vw,118px);line-height:.98;color:var(--ink)}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero p{margin-top:26px;font-size:18px;color:var(--mut);max-width:38ch;line-height:1.6}
+.hero .cta{display:inline-block;margin-top:38px;background:var(--lime);color:#0B0B0C;font-family:Anton,Impact,sans-serif;font-size:21px;letter-spacing:1.5px;text-transform:uppercase;padding:18px 40px;border-radius:999px;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s}
+.hero .cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(195,232,46,.28)}
+.hero .cta:active{transform:scale(.97)}
+.hero-vis{position:relative;display:flex;justify-content:center}
+.hero-vis::before{content:"";position:absolute;inset:8% 4%;background:radial-gradient(closest-side,rgba(195,232,46,.24),rgba(195,232,46,0));filter:blur(30px)}
+.hero-vis img{position:relative;width:min(46vw,540px);filter:drop-shadow(0 50px 70px rgba(0,0,0,.7));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-16px) rotate(1deg)}}
+
+/* MARQUEE */
+.mq{background:var(--lime);color:#0B0B0C;overflow:hidden;padding:16px 0;transform:rotate(-1.2deg);margin:0 -20px}
+.mq-track{display:flex;gap:44px;white-space:nowrap;font-family:Anton,Impact,sans-serif;font-size:26px;letter-spacing:2px;animation:mq 26s linear infinite;width:max-content}
+.mq-track span{display:flex;align-items:center;gap:44px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* LOOKBOOK */
+.look{padding:110px 0 40px}
+.look h2{font-size:clamp(40px,4.6vw,72px);margin-bottom:14px}
+.look .sub{color:var(--mut);max-width:52ch;line-height:1.6;margin-bottom:54px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:230px;gap:14px}
+.cell{border-radius:var(--r);overflow:hidden;position:relative;background:var(--bg2)}
+.cell img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.cell:hover img{transform:scale(1.05)}
+.cell.tall{grid-row:span 2}
+.cell.wide{grid-column:span 2}
+.cell.lime{background:var(--lime)}
+.cell.lime img{object-fit:contain;padding:10%}
+.cell .cap{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-weight:600;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .35s}
+.cell:hover .cap{opacity:1}
+
+/* FULL-BLEED BREAK */
+.break{position:relative;margin:110px 0;min-height:78vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.break img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;opacity:.5}
+.break::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(11,11,12,0) 30%,rgba(11,11,12,.88) 100%)}
+.break h2{position:relative;z-index:2;font-size:clamp(44px,6vw,96px);text-align:center;line-height:1.04}
+.break h2 em{font-style:normal;color:var(--lime)}
+
+/* PROCESS */
+.proc{padding:20px 0 90px}
+.proc h2{font-size:clamp(40px,4.6vw,72px);margin-bottom:56px}
+.step{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;padding:34px 0;border-top:1px solid var(--line);align-items:baseline}
+.step:last-of-type{border-bottom:1px solid var(--line)}
+.step h3{font-size:clamp(26px,2.6vw,40px)}
+.step h3 b{color:var(--lime);font-weight:400;margin-right:14px}
+.step p{color:var(--mut);line-height:1.65;max-width:52ch}
+
+/* CTA */
+.end{background:var(--lime);color:#0B0B0C;padding:110px 28px;text-align:center;position:relative;overflow:hidden}
+.end .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.5) 2.6px,transparent 2.6px);background-size:150px 120px;opacity:.5}
+.end img{height:60px;width:auto;margin:0 auto 40px;position:relative}
+.end h2{font-size:clamp(46px,5.6vw,88px);line-height:1.06;position:relative}
+.end .cta{display:inline-block;margin-top:44px;background:#0B0B0C;color:var(--lime);font-family:Anton,Impact,sans-serif;font-size:21px;letter-spacing:1.5px;text-transform:uppercase;padding:18px 44px;border-radius:999px;position:relative;transition:transform .25s}
+.end .cta:hover{transform:translateY(-2px)}
+.end .meta{margin-top:34px;font-weight:600;font-size:15px;color:rgba(0,0,0,.62);position:relative}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.rv.on{opacity:1;transform:none}
+
+/* grain */
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-vis img{animation:none}
+  .mq-track{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:130px;text-align:left;gap:8px}
+  .hero-vis{order:2;margin-top:10px}
+  .hero-vis img{width:min(78vw,420px)}
+  .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}
+  .cell.wide{grid-column:span 2}
+  .step{grid-template-columns:1fr;gap:10px;padding:26px 0}
+}
+@media (max-width:520px){
+  .wrap{padding:0 18px}
+  nav{padding:12px 18px}
+  .grid{grid-template-columns:1fr;grid-auto-rows:300px}
+  .cell.wide{grid-column:span 1}
+  .hero h1{font-size:clamp(48px,13vw,64px)}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav>
+  <div class="logo-pill" id="logoTop"><img src="img/logo.png" alt="DTFilm"></div>
+  <a class="nav-cta" href="https://dtfilm.lt" target="_blank" rel="noopener">Užsakyti</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <h1>Tavo dizainas.<br><em>Ant bet ko.</em></h1>
+    <p>DTF spauda Kaune. Atsiunti failą, mes atspausdinam ant maikių, hoodžių, kelnių. Ryšku ir ilgaamžiška.</p>
+    <a class="cta" href="https://dtfilm.lt" target="_blank" rel="noopener">Užsakyti</a>
+  </div>
+  <div class="hero-vis"><img src="img/tee_astro.png" alt="Juoda oversized maikė su neoniniu astronauto printu" fetchpriority="high"></div>
+</header>
+
+<div style="overflow:hidden"><div class="mq" aria-hidden="true">
+  <div class="mq-track">
+    <span>MAIKĖS ◆ HOODŽIAI ◆ KELNĖS ◆ DŽEMPERIAI ◆ KEPURĖS ◆ DTF SPAUDA ◆ TAVO BRAND'AS ◆</span>
+    <span>MAIKĖS ◆ HOODŽIAI ◆ KELNĖS ◆ DŽEMPERIAI ◆ KEPURĖS ◆ DTF SPAUDA ◆ TAVO BRAND'AS ◆</span>
+  </div>
+</div></div>
+
+<section class="look wrap">
+  <h2 class="rv">Lookbook</h2>
+  <p class="sub rv">Spausdinam bet kokį dizainą ant bet kokio rūbo. Čia dalis darbų ir dizainų, kurie parodo, kaip tai atrodo realybėje.</p>
+  <div class="grid">
+    <div class="cell tall rv"><img src="img/g_tee1.jpg" loading="lazy" alt="Juoda maikė su kaukolės printu"><div class="cap">Oversized maikė</div></div>
+    <div class="cell rv"><img src="img/tshirt1.jpg" loading="lazy" alt="DTFilm maikė su astronauto printu"><div class="cap">DTFilm kolekcija</div></div>
+    <div class="cell lime rv"><img src="img/d_skull.jpg" loading="lazy" alt="Kaukolės dizainas"><div class="cap">Dizainas spaudai</div></div>
+    <div class="cell wide rv"><img src="img/g_hoodie1.jpg" loading="lazy" alt="Juodas hoodis su gotikiniu printu"><div class="cap">Heavyweight hoodis</div></div>
+    <div class="cell rv"><img src="img/tshirt2.jpg" loading="lazy" alt="DTFilm maikė su grunge printu"><div class="cap">DTFilm kolekcija</div></div>
+    <div class="cell tall rv"><img src="img/g_pants1.jpg" loading="lazy" alt="Juodos straight leg kelnės"><div class="cap">Straight leg kelnės</div></div>
+    <div class="cell rv"><img src="img/g_tee2.jpg" loading="lazy" alt="Maikė su žaliu printu ant nugaros"><div class="cap">Printas ant nugaros</div></div>
+    <div class="cell rv"><img src="img/tshirtt.jpg" loading="lazy" alt="DTFilm maikė su taškuotu printu"><div class="cap">DTFilm kolekcija</div></div>
+    <div class="cell wide rv"><img src="img/g_jacket.jpg" loading="lazy" alt="Juoda striukė su chrome printu ant nugaros"><div class="cap">Workwear striukė</div></div>
+    <div class="cell lime rv"><img src="img/d_oni.jpg" loading="lazy" alt="Oni kaukės dizainas"><div class="cap">Dizainas spaudai</div></div>
+    <div class="cell rv"><img src="img/g_pants2.jpg" loading="lazy" alt="Džinsai su printu"><div class="cap">Printas ant džinsų</div></div>
+  </div>
+</section>
+
+<section class="break">
+  <img src="img/d_gothic.jpg" alt="" loading="lazy" id="breakImg">
+  <h2 class="rv">Dizainas tampa <em>rūbu.</em></h2>
+</section>
+
+<section class="proc wrap">
+  <h2 class="rv">Kaip tai veikia</h2>
+  <div class="step rv"><h3><b>Atsiųsk</b> failą</h3><p>PNG, SVG, PDF arba AI formatu per dtfilm.lt formą. Tinka ir paprasta nuotrauka, padėsim paruošti.</p></div>
+  <div class="step rv"><h3><b>Patvirtinam</b> maketą</h3><p>Parodom, kaip dizainas atrodys ant pasirinkto rūbo, ir suderinam dydį bei vietą.</p></div>
+  <div class="step rv"><h3><b>Spausdinam</b> ir išsiunčiam</h3><p>DTF spauda: ryškios spalvos, tiksli detalė, atspari skalbimui. Atsiimi Kaune arba gauni paštu.</p></div>
+</section>
+
+<footer class="end">
+  <div class="dots"></div>
+  <img src="img/logo.png" alt="DTFilm">
+  <h2 class="rv">Tu kuri.<br>Mes pagaminam.</h2>
+  <a class="cta rv" href="https://dtfilm.lt" target="_blank" rel="noopener">Užsakyti</a>
+  <p class="meta rv">info@dtfilm.lt · R. Kalantos 76E, Kaunas</p>
+</footer>
+
+<script>
+// logo -> smooth i virsu (be reload)
+document.getElementById('logoTop').addEventListener('click',()=>{scrollTo({top:0,behavior:'smooth'})});
+// reveal + failsafe
+const els=[...document.querySelectorAll('.rv')];
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.18});
+els.forEach(el=>io.observe(el));
+setTimeout(()=>els.forEach(el=>el.classList.add('on')),2500);
+</script>
+</body>
+</html>
