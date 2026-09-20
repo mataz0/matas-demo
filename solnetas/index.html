@@ -13,7 +13,7 @@ body{background:#01040C;color:#DCEBFF;font:400 16px/1.5 "Space Grotesk",system-u
 @media(max-width:900px){.wrap{grid-template-columns:1fr}}
 h1{font-size:24px;margin-bottom:4px}h1 span{color:#4FA8FF}
 .sub{opacity:.7;font-size:14px;margin-bottom:18px}
-.stage{position:relative;width:100%;aspect-ratio:1;border:1px solid #1E6BFF55;border-radius:8px;overflow:hidden;touch-action:none;cursor:grab;background:#020817}
+.stage{position:relative;width:100%;max-width:640px;margin:0 auto;aspect-ratio:2480/3508;border:1px solid #1E6BFF55;border-radius:8px;overflow:hidden;touch-action:none;cursor:grab;background:#020817}
 .stage canvas{width:100%;height:100%;display:block}
 .step{border:1px solid #1E6BFF44;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#061A4733}
 .step b{display:block;color:#4FA8FF;font:600 12px "JetBrains Mono",monospace;letter-spacing:.14em;margin-bottom:8px}
@@ -34,7 +34,7 @@ summary{cursor:pointer;font-size:14px;opacity:.8}
   <div>
     <h1>SOL<span>netas</span> – plakatų kūrimas</h1>
     <div class="sub">Pasirink mokytoją, įkelk nuotrauką, atsisiųsk. Visa kita padaroma savaime. Nuotrauka niekur nesiunčiama – viskas vyksta tavo naršyklėje.</div>
-    <div class="stage" id="stage"><canvas id="cv" width="2160" height="2160"></canvas></div>
+    <div class="stage" id="stage"><canvas id="cv" width="2480" height="3508"></canvas></div>
   </div>
   <div>
     <div class="step"><b>1 · MOKYTOJAS</b><select id="who"></select></div>
@@ -43,7 +43,7 @@ summary{cursor:pointer;font-size:14px;opacity:.8}
       <div id="msg"></div>
     </div>
     <div class="step"><b>3 · ATSISIŲSTI</b>
-      <button id="dl" disabled>Atsisiųsti PNG</button>
+      <button id="dl" disabled>Atsisiųsti A4 PNG</button>
     </div>
     <details class="step"><summary>Jei kažkas ne taip (nebūtina)</summary>
       <div class="hint" style="margin-bottom:10px">Nuotrauką galima patempti pele ir pakeisti dydį. Tekstus galima pataisyti.</div>
@@ -59,14 +59,14 @@ summary{cursor:pointer;font-size:14px;opacity:.8}
 </div>
 
 <script type="module">
-const C1='#1E6BFF',C2='#4FA8FF',C3='#BFE1FF',K=2;              // K = 2160/1080
+const C1='#1E6BFF',C2='#4FA8FF',C3='#BFE1FF',K=2480/1080,CW=2480,CH=3508,HL=CH/K;   // A4 300 dpi; logika 1080×~1527
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const $=id=>document.getElementById(id);
 const load=src=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=src});
 const [BG,FR,T]=await Promise.all([load('fonas.jpg'),load('remas.png'),fetch('teachers.json').then(r=>r.json())]);
 await Promise.all(['700 66px "Space Grotesk"','500 18px "Space Grotesk"','400 16px "JetBrains Mono"'].map(f=>document.fonts.load(f)));
 
-let person=null,px=540,py=462,scale=1,fcx=0,fcy=0,ang=0,gain=1,skipCut=false,guide=true;
+let person=null,px=540,py=650,scale=1,fcx=0,fcy=0,ang=0,gain=1,skipCut=false,guide=true;
 
 // ---- sąrašas
 T.forEach((t,i)=>{const o=document.createElement('option');o.value=i;o.textContent=String(i+1).padStart(3,'0')+' · '+t.name;$('who').append(o)});
@@ -89,15 +89,15 @@ function texts(){
   ctx.textAlign='right';ctx.save();const g=ctx.createLinearGradient(0,60*K,0,220*K);g.addColorStop(0,'#fff');g.addColorStop(.5,'#CFE3FF');g.addColorStop(1,'#fff');
   ctx.fillStyle=g;ctx.shadowColor=C1;ctx.shadowBlur=24*K;nl.forEach((l,i)=>ctx.fillText(l,1028*K,(218-(nl.length-1-i)*sz*1.04)*K));ctx.restore();
   // PAREIGOS – dešinė panelė
-  ctx.textAlign='left';let t=wrap($('pos').value.toUpperCase(),160,6,18,10,700,'Space Grotesk',.06);ctx.fillStyle='#fff';
-  t.lines.forEach((l,i)=>ctx.fillText(l,870*K,(478+i*t.sz*1.32)*K));
+  ctx.textAlign='left';let t=wrap($('pos').value.toUpperCase(),160,7,19,10,700,'Space Grotesk',.06);ctx.fillStyle='#fff';
+  t.lines.forEach((l,i)=>ctx.fillText(l,870*K,(600+i*t.sz*1.32)*K));
   // numeris
-  const nr=Math.max(0,+$('nr').value||0);setFont(700,30,'Space Grotesk',.02);ctx.fillStyle='#fff';ctx.fillText('#'+String(nr).padStart(3,'0'),870*K,752*K);
+  const nr=Math.max(0,+$('nr').value||0);setFont(700,30,'Space Grotesk',.02);ctx.fillStyle='#fff';ctx.fillText('#'+String(nr).padStart(3,'0'),870*K,940*K);
   // ROLĖ LT + po ja mažesnė EN – apačioje
-  ctx.textAlign='center';const RL=$('role').value.toUpperCase();t=wrap(RL,620,2,34,25,700,'Space Grotesk',.07);
-  if(t.lines.length>2||t.lines.some(l=>ctx.measureText(l).width>620*K))t=wrap(RL,620,3,25,16,700,'Space Grotesk',.07);
-  const e=wrap('// '+$('en').value.toUpperCase(),600,2,15,10,600,'JetBrains Mono',.14);
-  const lh=t.sz*1.16,eh=e.sz*1.5,gap=12,H=t.lines.length*lh+gap+e.lines.length*eh;let y=888-H/2;
+  ctx.textAlign='center';const RL=$('role').value.toUpperCase();t=wrap(RL,600,2,40,28,700,'Space Grotesk',.07);
+  if(t.lines.length>2||t.lines.some(l=>ctx.measureText(l).width>600*K))t=wrap(RL,600,3,28,18,700,'Space Grotesk',.07);
+  const e=wrap('// '+$('en').value.toUpperCase(),600,2,17,11,600,'JetBrains Mono',.14);
+  const lh=t.sz*1.16,eh=e.sz*1.5,gap=12,H=t.lines.length*lh+gap+e.lines.length*eh;let y=1296-H/2;
   setFont(700,t.sz,'Space Grotesk',.07);ctx.save();ctx.fillStyle='#EAF4FF';ctx.shadowColor=C1;ctx.shadowBlur=22*K;
   t.lines.forEach(l=>{y+=lh;ctx.fillText(l,540*K,(y-lh*.2)*K);ctx.fillText(l,540*K,(y-lh*.2)*K)});ctx.restore();
   y+=gap;setFont(600,e.sz,'JetBrains Mono',.14);ctx.fillStyle=C2;e.lines.forEach(l=>{y+=eh;ctx.fillText(l,540*K,(y-eh*.25)*K)});
@@ -106,77 +106,78 @@ function texts(){
 
 // ---- UNIKALŪS kiekvieno žmogaus elementai: viskas skaičiuojama iš vardo, tad kartojant išeina tas pats
 function rng(str){let h=2166136261;for(const c of str){h^=c.codePointAt(0);h=Math.imul(h,16777619)}let a=h>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-const SUN={x:540,y:462};
+const SUN={x:540,y:650};
 function sunSignature(){ // „skaitmeninė saulė“ už galvos – spindulių raštas unikalus kiekvienam
   const r=rng('sun'+$('name').value),N=96;ctx.save();ctx.lineCap='round';ctx.shadowColor=C1;ctx.shadowBlur=10*K;
-  for(let i=0;i<N;i++){const a=i/N*Math.PI*2-Math.PI/2,v=r(),long=i%8==0,len=long?70+v*70:14+v*v*60,r0=292,c=Math.cos(a),sn=Math.sin(a);
+  for(let i=0;i<N;i++){const a=i/N*Math.PI*2-Math.PI/2,v=r(),long=i%8==0,len=long?86+v*86:16+v*v*74,r0=360,c=Math.cos(a),sn=Math.sin(a);
     ctx.strokeStyle=long?'#DDEEFF':C2;ctx.globalAlpha=long?.9:.35+v*.5;ctx.lineWidth=(long?3:1.6)*K;ctx.beginPath();ctx.moveTo((SUN.x+c*r0)*K,(SUN.y+sn*r0)*K);ctx.lineTo((SUN.x+c*(r0+len))*K,(SUN.y+sn*(r0+len))*K);ctx.stroke();
     if(long){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc((SUN.x+c*(r0+len+8))*K,(SUN.y+sn*(r0+len+8))*K,2.6*K,0,7);ctx.fill()}}
-  ctx.globalAlpha=.9;ctx.strokeStyle=C3;ctx.lineWidth=1.4*K;ctx.beginPath();ctx.arc(SUN.x*K,SUN.y*K,284*K,0,7);ctx.stroke();
+  ctx.globalAlpha=.9;ctx.strokeStyle=C3;ctx.lineWidth=1.4*K;ctx.beginPath();ctx.arc(SUN.x*K,SUN.y*K,350*K,0,7);ctx.stroke();
   // orbitos su „palydovais“
-  for(let k=0;k<3;k++){const rr=(330+k*34),a0=r()*6.28,a1=a0+1+r()*2.2;ctx.globalAlpha=.55;ctx.strokeStyle=C2;ctx.lineWidth=(k==1?5:2)*K;ctx.beginPath();ctx.arc(SUN.x*K,SUN.y*K,rr*K,a0,a1);ctx.stroke();
+  for(let k=0;k<3;k++){const rr=(404+k*42),a0=r()*6.28,a1=a0+1+r()*2.2;ctx.globalAlpha=.55;ctx.strokeStyle=C2;ctx.lineWidth=(k==1?5:2)*K;ctx.beginPath();ctx.arc(SUN.x*K,SUN.y*K,rr*K,a0,a1);ctx.stroke();
     ctx.globalAlpha=1;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc((SUN.x+Math.cos(a1)*rr)*K,(SUN.y+Math.sin(a1)*rr)*K,4*K,0,7);ctx.fill()}
   ctx.restore()}
 function dust(){ // šviečiančios dalelės ir šviesos ruožai – visiems vienodi
   const r=rng('dust');ctx.save();ctx.globalCompositeOperation='screen';
-  for(let i=0;i<110;i++){const x=r()*1080,y=r()*1080,z=r();ctx.globalAlpha=.25+z*.6;ctx.fillStyle=z>.8?'#fff':C2;ctx.shadowColor=C2;ctx.shadowBlur=(4+z*10)*K;ctx.beginPath();ctx.arc(x*K,y*K,(.8+z*2.2)*K,0,7);ctx.fill()}
-  for(const [x,y,w,al] of [[640,96,520,.5],[700,112,300,.35],[-40,330,300,.35],[760,842,360,.4],[-20,818,240,.3]]){const g=ctx.createLinearGradient(x*K,0,(x+w)*K,0);g.addColorStop(0,'rgba(79,168,255,0)');g.addColorStop(.5,'rgba(190,225,255,'+al+')');g.addColorStop(1,'rgba(79,168,255,0)');ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.fillStyle=g;ctx.fillRect(x*K,y*K,w*K,2*K)}
+  for(let i=0;i<160;i++){const x=r()*1080,y=r()*HL,z=r();ctx.globalAlpha=.25+z*.6;ctx.fillStyle=z>.8?'#fff':C2;ctx.shadowColor=C2;ctx.shadowBlur=(4+z*10)*K;ctx.beginPath();ctx.arc(x*K,y*K,(.8+z*2.2)*K,0,7);ctx.fill()}
+  for(const [x,y,w,al] of [[640,96,520,.5],[700,112,300,.35],[-40,440,300,.35],[760,1180,360,.4],[-20,1150,240,.3],[300,1460,480,.3]]){const g=ctx.createLinearGradient(x*K,0,(x+w)*K,0);g.addColorStop(0,'rgba(79,168,255,0)');g.addColorStop(.5,'rgba(190,225,255,'+al+')');g.addColorStop(1,'rgba(79,168,255,0)');ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.fillStyle=g;ctx.fillRect(x*K,y*K,w*K,2*K)}
   ctx.restore()}
 function binaryColumns(){ // vardas dvejetainiu kodu – stulpeliai abipus žmogaus
   const bits=[...$('name').value].map(c=>c.codePointAt(0).toString(2).padStart(8,'0')).join('');ctx.save();ctx.textAlign='center';setFont(400,11,'JetBrains Mono',0);
-  [[228,.5],[246,.28],[834,.5],[816,.28]].forEach(([x,al],ci)=>{for(let j=0;j<34;j++){const b=bits[(j+ci*9)%bits.length],y=330+j*13;ctx.globalAlpha=al*(b=='1'?1:.55)*(1-Math.abs(j-17)/24);ctx.fillStyle=b=='1'?'#EAF5FF':C2;ctx.fillText(b,x*K,y*K)}});ctx.restore()}
+  [[228,.5],[246,.28],[834,.5],[816,.28]].forEach(([x,al],ci)=>{for(let j=0;j<46;j++){const b=bits[(j+ci*9)%bits.length],y=452+j*14;ctx.globalAlpha=al*(b=='1'?1:.55)*(1-Math.abs(j-23)/32);ctx.fillStyle=b=='1'?'#EAF5FF':C2;ctx.fillText(b,x*K,y*K)}});ctx.restore()}
 function disperse(){ // skaitmeninė pusė „byra“ pikseliais į dešinę
-  if(!LM)return;const r=rng('px'),R=P(454),T=P(10),B=P(152),x0=Math.round(R.x-30),y0=Math.round(T.y-90),w=170,h=Math.round(B.y-T.y+230);
-  let d;try{d=pcx.getImageData(x0*K,y0*K,w*K,h*K).data}catch(e){return}
+  if(!LM)return;const r=rng('px'),R=P(454),T=P(10),B=P(152),x0=Math.round(R.x-30),y0=Math.round(T.y-90),w=210,h=Math.round(B.y-T.y+290);
+  let d;try{d=pcx.getImageData(Math.round(x0*K),Math.round(y0*K),Math.round(w*K),Math.round(h*K)).data}catch(e){return}
   ctx.save();ctx.shadowColor=C1;ctx.shadowBlur=6*K;
-  for(let i=0;i<1100;i++){const sx=r()*w,sy=r()*h,idx=((Math.floor(sy*K)*w*K)+Math.floor(sx*K))*4;if(d[idx+3]<140)continue;
+  for(let i=0;i<1100;i++){const sx=r()*w,sy=r()*h,idx=((Math.floor(sy*K)*Math.round(w*K))+Math.floor(sx*K))*4;if(d[idx+3]<140)continue;
     const t=r(),dx=30+t*t*210,sz=(3+r()*8)*(1-t*.5),mix=.35+t*.5;
     const cr=Math.round(d[idx]*(1-mix)+60*mix),cg=Math.round(d[idx+1]*(1-mix)+150*mix),cb=Math.round(d[idx+2]*(1-mix)+255*mix);
     ctx.globalAlpha=(1-t)*.9;ctx.fillStyle=`rgb(${cr},${cg},${cb})`;ctx.fillRect((x0+sx+dx)*K,(y0+sy+(r()-.5)*10)*K,sz*K,sz*K)}
   ctx.restore()}
 function signature(){ // unikalus kodas MAZGAS kortelėje + bangos parašas po role
   const r=rng('sig'+$('name').value);ctx.save();
-  for(let y=0;y<7;y++)for(let x=0;x<7;x++){const edge=(x<2&&y<2)||(x>4&&y<2)||(x<2&&y>4);if(edge||r()>.48){ctx.fillStyle=edge?'#fff':C2;ctx.globalAlpha=edge?.95:.85;ctx.fillRect((968+x*8.5)*K,(703+y*8.5)*K,7*K,7*K)}}
-  ctx.globalAlpha=1;ctx.shadowColor=C1;ctx.shadowBlur=8*K;const n=84;for(let i=0;i<n;i++){const t=i/(n-1),env=Math.sin(t*Math.PI),hh=(2+r()*20*env),x=252+t*576;ctx.fillStyle=i%7==0?'#fff':C2;ctx.globalAlpha=.35+env*.6;ctx.fillRect(x*K,(962-hh/2)*K,3.4*K,hh*K)}
+  for(let y=0;y<7;y++)for(let x=0;x<7;x++){const edge=(x<2&&y<2)||(x>4&&y<2)||(x<2&&y>4);if(edge||r()>.48){ctx.fillStyle=edge?'#fff':C2;ctx.globalAlpha=edge?.95:.85;ctx.fillRect((966+x*9)*K,(886+y*9)*K,7.5*K,7.5*K)}}
+  ctx.globalAlpha=1;ctx.shadowColor=C1;ctx.shadowBlur=8*K;const n=84;for(let i=0;i<n;i++){const t=i/(n-1),env=Math.sin(t*Math.PI),hh=(2+r()*24*env),x=232+t*616;ctx.fillStyle=i%7==0?'#fff':C2;ctx.globalAlpha=.35+env*.6;ctx.fillRect(x*K,(1396-hh/2)*K,3.6*K,hh*K)}
   // žyma prie akies
   if(LM){const e=P(263),nr=String(Math.max(0,+$('nr').value||0)).padStart(3,'0');ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.strokeStyle=C3;ctx.lineWidth=1.2*K;ctx.beginPath();ctx.moveTo((e.x+6)*K,(e.y-10)*K);ctx.lineTo((e.x+40)*K,(e.y-64)*K);ctx.lineTo((e.x+120)*K,(e.y-64)*K);ctx.stroke();
     ctx.textAlign='left';setFont(600,11,'JetBrains Mono',.12);ctx.fillStyle='#EAF5FF';ctx.fillText('SOL-ID '+nr,(e.x+44)*K,(e.y-70)*K);setFont(400,9.5,'JetBrains Mono',.1);ctx.fillStyle=C2;ctx.fillText('478 TAŠKAI · SUTAPO',(e.x+44)*K,(e.y-50)*K)}
   ctx.restore();if('letterSpacing' in ctx)ctx.letterSpacing='0px'}
 function leftLinks(){ // plonesnės jungtys į kairę panelę
-  if(!LM)return;const ST=[109,67,103,54,21,162,127,234],EY=[372,398,452,486,540,574,640,700];ctx.save();ctx.lineJoin='round';ctx.shadowColor=C1;ctx.shadowBlur=8*K;
+  if(!LM)return;const ST=[109,67,103,54,21,162,127,234],EY=[500,540,610,660,740,800,890,970];ctx.save();ctx.lineJoin='round';ctx.shadowColor=C1;ctx.shadowBlur=8*K;
   ST.forEach((id,k)=>{const s=P(id),ex=208,ey=EY[k],x1=s.x-16-((k*31)%4)*12,xe=ex+24+((k*17)%3)*12,dg=Math.max(0,Math.min(Math.abs(ey-s.y),x1-xe)),sg=Math.sign(ey-s.y)||1;
     ctx.strokeStyle=C2;ctx.globalAlpha=.6;ctx.lineWidth=1.3*K;ctx.beginPath();ctx.moveTo(s.x*K,s.y*K);ctx.lineTo(x1*K,s.y*K);ctx.lineTo((x1-dg)*K,(s.y+sg*dg)*K);ctx.lineTo(xe*K,(s.y+sg*dg)*K);ctx.lineTo(xe*K,ey*K);ctx.lineTo(ex*K,ey*K);ctx.stroke();
     ctx.globalAlpha=1;ctx.fillStyle='#EAF5FF';ctx.beginPath();ctx.arc(ex*K,ey*K,3.4*K,0,7);ctx.fill();ctx.beginPath();ctx.arc(s.x*K,s.y*K,2.6*K,0,7);ctx.fill()});ctx.restore()}
 // ---- žmogus: vienodas švytėjimas ir apšvietimas visiems
-const tmp=document.createElement('canvas');tmp.width=tmp.height=2160;const tx=tmp.getContext('2d');
-function tinted(fill){tx.globalCompositeOperation='source-over';tx.clearRect(0,0,2160,2160);drawPerson(tx);tx.globalCompositeOperation='source-in';tx.fillStyle=fill;tx.fillRect(0,0,2160,2160);return tmp}
-const pc=document.createElement('canvas');pc.width=pc.height=2160;const pcx=pc.getContext('2d');
+const tmp=document.createElement('canvas');tmp.width=CW;tmp.height=CH;const tx=tmp.getContext('2d');
+function tinted(fill){tx.globalCompositeOperation='source-over';tx.clearRect(0,0,CW,CH);drawPerson(tx);tx.globalCompositeOperation='source-in';tx.fillStyle=fill;tx.fillRect(0,0,CW,CH);return tmp}
+const pc=document.createElement('canvas');pc.width=CW;pc.height=CH;const pcx=pc.getContext('2d');
 // žmogus su vienodu apatiniu išnykimu (kad nesimatytų nuotraukos apačios krašto)
-function bakePerson(){pcx.setTransform(1,0,0,1,0,0);pcx.globalCompositeOperation='source-over';pcx.filter='none';pcx.clearRect(0,0,2160,2160);
+function bakePerson(){pcx.setTransform(1,0,0,1,0,0);pcx.globalCompositeOperation='source-over';pcx.filter='none';pcx.clearRect(0,0,CW,CH);
   pcx.translate(px*K,py*K);pcx.rotate(-ang);pcx.scale(scale*K,scale*K);pcx.drawImage(person,-fcx,-fcy);pcx.setTransform(1,0,0,1,0,0);
-  tx.globalCompositeOperation='source-over';tx.clearRect(0,0,2160,2160);tx.filter='blur(3px)';tx.drawImage(pc,0,0);tx.filter='none';
+  tx.globalCompositeOperation='source-over';tx.clearRect(0,0,CW,CH);tx.filter='blur(3px)';tx.drawImage(pc,0,0);tx.filter='none';
   pcx.globalCompositeOperation='destination-in';pcx.drawImage(tmp,0,0);
-  const g=pcx.createLinearGradient(0,690*K,0,810*K);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');pcx.globalCompositeOperation='destination-out';pcx.fillStyle=g;pcx.fillRect(0,690*K,2160,2160)}
+  const bot=py+(person.height-fcy)*scale*Math.cos(ang)-Math.abs(Math.sin(ang))*person.width*scale*.5,fe=Math.min(1170,bot-6),fs=fe-190;
+  const g=pcx.createLinearGradient(0,fs*K,0,fe*K);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');pcx.globalCompositeOperation='destination-out';pcx.fillStyle=g;pcx.fillRect(0,fs*K,CW,CH)}
 // ekspozicijos suvienodinimas: veido šviesumas visiems pritraukiamas prie to paties lygio
-function measure(){gain=1;if(!LM)return;bakePerson();try{const d=pcx.getImageData((px-70)*K,(py-60)*K,140*K,150*K).data;let sum=0,n=0;for(let i=0;i<d.length;i+=64)if(d[i+3]>200){sum+=.299*d[i]+.587*d[i+1]+.114*d[i+2];n++}
+function measure(){gain=1;if(!LM)return;bakePerson();try{const d=pcx.getImageData(Math.round((px-86)*K),Math.round((py-74)*K),Math.round(172*K),Math.round(184*K)).data;let sum=0,n=0;for(let i=0;i<d.length;i+=64)if(d[i+3]>200){sum+=.299*d[i]+.587*d[i+1]+.114*d[i+2];n++}
   if(n>50)gain=Math.max(.85,Math.min(1.4,152/(sum/n)))}catch(e){}}
 function drawPerson(c){c.drawImage(pc,0,0)}
 function personLayer(){bakePerson();
   ctx.save();ctx.filter=`brightness(${gain.toFixed(3)}) contrast(1.08) saturate(.86)`;ctx.shadowColor=C1;ctx.shadowBlur=34*K;drawPerson(ctx);ctx.restore();
-  const w=520*K,x0=px*K-w/2,g=ctx.createLinearGradient(x0,0,x0+w,0);
+  const w=640*K,x0=px*K-w/2,g=ctx.createLinearGradient(x0,0,x0+w,0);
   g.addColorStop(0,C1);g.addColorStop(.24,'rgba(30,107,255,0)');g.addColorStop(.76,'rgba(30,107,255,0)');g.addColorStop(1,C1);
   ctx.save();ctx.globalAlpha=.55;ctx.globalCompositeOperation='screen';ctx.drawImage(tinted(g),0,0);
   ctx.globalCompositeOperation='soft-light';ctx.globalAlpha=.62;ctx.drawImage(tinted('#0A2A6B'),0,0);
-  const gb=ctx.createLinearGradient(0,540*K,0,800*K);gb.addColorStop(0,'rgba(2,10,40,0)');gb.addColorStop(1,'rgba(2,10,40,.8)');ctx.globalCompositeOperation='multiply';ctx.globalAlpha=1;ctx.drawImage(tinted(gb),0,0);ctx.restore();
+  const gb=ctx.createLinearGradient(0,770*K,0,1150*K);gb.addColorStop(0,'rgba(2,10,40,0)');gb.addColorStop(1,'rgba(2,10,40,.8)');ctx.globalCompositeOperation='multiply';ctx.globalAlpha=1;ctx.drawImage(tinted(gb),0,0);ctx.restore();
 }
 function guideOval(){ctx.save();ctx.strokeStyle='#fff';ctx.setLineDash([14,12]);ctx.lineWidth=3;ctx.globalAlpha=.85;
   ctx.beginPath();ctx.ellipse(540*K,425*K,122*K,165*K,0,0,Math.PI*2);ctx.stroke();
   ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(470*K,400*K);ctx.lineTo(610*K,400*K);ctx.stroke();ctx.restore()}
-function draw(){ctx.clearRect(0,0,2160,2160);ctx.drawImage(BG,0,0,2160,2160);sunSignature();dust();binaryColumns();if(person){personLayer();disperse();halfFace();leftLinks()}ctx.drawImage(FR,0,0,2160,2160);texts();signature();if(guide&&person&&document.querySelector('details').open)guideOval()}
+function draw(){ctx.clearRect(0,0,CW,CH);ctx.drawImage(BG,0,0,CW,CH);sunSignature();dust();binaryColumns();if(person){personLayer();disperse();halfFace();leftLinks()}ctx.drawImage(FR,0,0,CW,CH);texts();signature();if(guide&&person&&document.querySelector('details').open)guideOval()}
 document.querySelector('details').ontoggle=()=>draw();
 
 // veido taškai (MediaPipe FaceLandmarker, naršyklėje): vienodas veido dydis/vieta + skaitmeninė veido pusė
-let lmk=null,LM=null,TESS=null;const FACE_H=268,FACE_CY=462;
+let lmk=null,LM=null,TESS=null;const FACE_H=330,FACE_CY=650;
 async function facePlace(file){try{
   if(!lmk){const v=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/+esm');
     const fs=await v.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
@@ -200,11 +201,11 @@ function halfPath(c){c.beginPath();OVAL_R.forEach((i,k)=>{const p=P(i);k?c.lineT
 function halfFace(){if(!LM)return;const A=P(10),B=P(152),R=P(454),side=p=>(B.x-A.x)*(p.y-A.y)-(B.y-A.y)*(p.x-A.x),sg=Math.sign(side(R));
   ctx.save();halfPath(ctx);ctx.clip();
   const g=ctx.createLinearGradient(A.x*K,0,R.x*K,0);g.addColorStop(0,'rgba(12,48,140,.10)');g.addColorStop(1,'rgba(3,16,70,.45)');
-  ctx.globalCompositeOperation='multiply';ctx.fillStyle=g;ctx.fillRect(0,0,2160,2160);
-  ctx.globalCompositeOperation='screen';ctx.fillStyle='rgba(30,107,255,.20)';ctx.fillRect(0,0,2160,2160);
+  ctx.globalCompositeOperation='multiply';ctx.fillStyle=g;ctx.fillRect(0,0,CW,CH);
+  ctx.globalCompositeOperation='screen';ctx.fillStyle='rgba(30,107,255,.20)';ctx.fillRect(0,0,CW,CH);
   ctx.globalCompositeOperation='source-over';
   // skenavimo linijos
-  ctx.fillStyle='rgba(160,210,255,.07)';for(let y=A.y-40;y<B.y+20;y+=6)ctx.fillRect(0,y*K,2160,2*K);
+  ctx.fillStyle='rgba(160,210,255,.07)';for(let y=A.y-40;y<B.y+20;y+=6)ctx.fillRect(0,y*K,CW,2*K);
   // tinklelis
   ctx.strokeStyle='rgba(150,205,255,.38)';ctx.lineWidth=.7*K;ctx.beginPath();
   for(const e of TESS){const a=P(e.start),b=P(e.end);if(side(a)*sg>-2&&side(b)*sg>-2){ctx.moveTo(a.x*K,a.y*K);ctx.lineTo(b.x*K,b.y*K)}}ctx.stroke();
@@ -223,12 +224,12 @@ function halfFace(){if(!LM)return;const A=P(10),B=P(152),R=P(454),side=p=>(B.x-A
   seam().forEach((p,k)=>k?ctx.lineTo(p.x*K,p.y*K):ctx.moveTo(p.x*K,p.y*K));ctx.stroke();ctx.restore();
   links()}
 // jungtys iš skaitmeninės veido pusės į dešinę: galai visiems tie patys (fiksuoti), pradžia – veido kontūras
-const ENDS=[[1080,318,0],[1004,340,1],[1080,362,0],[984,384,1],[854,432,2],[854,462,2],[854,492,2],[854,522,2],[854,552,2],[854,630,2],[854,660,2],[854,716,2],[854,746,2],[1080,792,0]];
+const ENDS=[[1080,430,0],[1004,458,1],[1080,486,0],[984,508,1],[854,552,2],[854,592,2],[854,632,2],[854,672,2],[854,712,2],[854,796,2],[854,828,2],[854,900,2],[854,936,2],[854,1036,2]];
 const GLITCH=[[236,430,70,5],[262,452,40,3],[228,560,90,4],[300,584,36,3],[250,690,60,5],[742,318,80,4],[790,340,44,3],[760,640,70,5],[806,662,30,3],[716,742,96,4],[330,300,48,3],[690,250,60,3]];
 function links(){const ST=[338,297,332,284,251,389,356,454,323,361,288,397,365,379];
   ctx.save();ctx.lineJoin='round';ctx.lineCap='round';
   // horizontalūs „glitch“ brūkšniai aplink žmogų – visiems tose pačiose vietose
-  ctx.globalCompositeOperation='screen';GLITCH.forEach(([x,y,w,h],i)=>{ctx.fillStyle=i%3?'rgba(79,168,255,.55)':'rgba(220,238,255,.8)';ctx.shadowColor=C1;ctx.shadowBlur=10*K;ctx.fillRect(x*K,y*K,w*K,h*K)});
+  ctx.globalCompositeOperation='screen';GLITCH.map(([x,y,w,h])=>[540+(x-540)*1.2,650+(y-462)*1.3,w*1.15,h]).forEach(([x,y,w,h],i)=>{ctx.fillStyle=i%3?'rgba(79,168,255,.55)':'rgba(220,238,255,.8)';ctx.shadowColor=C1;ctx.shadowBlur=10*K;ctx.fillRect(x*K,y*K,w*K,h*K)});
   ctx.globalCompositeOperation='source-over';
   ST.forEach((id,k)=>{const s=P(id),[ex,ey,kind]=ENDS[k],dy=ey-s.y,sg=Math.sign(dy)||1,lead=18+((k*37)%5)*12;
     const x1=s.x+lead,xe=ex-(kind==2?26+((k*29)%4)*14:30),diag=Math.max(0,Math.min(Math.abs(dy),xe-x1)),x2=x1+diag,y2=s.y+sg*diag;
