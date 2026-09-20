@@ -63,7 +63,7 @@ const C1='#1E6BFF',C2='#4FA8FF',C3='#BFE1FF',K=2480/1080,CW=2480,CH=3508,HL=CH/K
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const $=id=>document.getElementById(id);
 const load=src=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=src});
-const [BG,FR,T]=await Promise.all([load('fonas.jpg'),load('remas.png'),fetch('teachers.json').then(r=>r.json())]);
+const [BG,FR,T]=await Promise.all([load('fonas.jpg?v=a4'),load('remas.png?v=a4'),fetch('teachers.json?v=a4').then(r=>r.json())]);
 await Promise.all(['700 66px "Space Grotesk"','500 18px "Space Grotesk"','400 16px "JetBrains Mono"'].map(f=>document.fonts.load(f)));
 
 let person=null,px=540,py=650,scale=1,fcx=0,fcy=0,ang=0,gain=1,skipCut=false,guide=true;
