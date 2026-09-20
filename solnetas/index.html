@@ -66,7 +66,7 @@ const load=src=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.o
 const [BG,FR,T]=await Promise.all([load('fonas.jpg'),load('remas.png'),fetch('teachers.json').then(r=>r.json())]);
 await Promise.all(['700 66px "Space Grotesk"','500 18px "Space Grotesk"','400 16px "JetBrains Mono"'].map(f=>document.fonts.load(f)));
 
-let person=null,px=540,py=440,scale=1,skipCut=false,guide=true;
+let person=null,px=540,py=462,scale=1,fcx=0,fcy=0,ang=0,gain=1,skipCut=false,guide=true;
 
 // ---- sąrašas
 T.forEach((t,i)=>{const o=document.createElement('option');o.value=i;o.textContent=String(i+1).padStart(3,'0')+' · '+t.name;$('who').append(o)});
@@ -88,16 +88,19 @@ function texts(){
   let sz=64;for(;sz>30;sz--){setFont(700,sz,'Space Grotesk',.04);if(Math.max(...nl.map(l=>ctx.measureText(l).width))<=440*K)break}
   ctx.textAlign='right';ctx.save();const g=ctx.createLinearGradient(0,60*K,0,220*K);g.addColorStop(0,'#fff');g.addColorStop(.5,'#CFE3FF');g.addColorStop(1,'#fff');
   ctx.fillStyle=g;ctx.shadowColor=C1;ctx.shadowBlur=24*K;nl.forEach((l,i)=>ctx.fillText(l,1028*K,(218-(nl.length-1-i)*sz*1.04)*K));ctx.restore();
-  // rolė EN po pabraukimu
-  let t=wrap('// '+$('en').value.toUpperCase(),430,2,14,10,600,'JetBrains Mono',.14);ctx.fillStyle=C3;ctx.globalAlpha=.92;t.lines.forEach((l,i)=>ctx.fillText(l,1028*K,(266+i*t.sz*1.5)*K));ctx.globalAlpha=1;
   // PAREIGOS – dešinė panelė
-  ctx.textAlign='left';t=wrap($('pos').value.toUpperCase(),160,6,18,10,700,'Space Grotesk',.06);ctx.fillStyle='#fff';
+  ctx.textAlign='left';let t=wrap($('pos').value.toUpperCase(),160,6,18,10,700,'Space Grotesk',.06);ctx.fillStyle='#fff';
   t.lines.forEach((l,i)=>ctx.fillText(l,870*K,(478+i*t.sz*1.32)*K));
   // numeris
   const nr=Math.max(0,+$('nr').value||0);setFont(700,30,'Space Grotesk',.02);ctx.fillStyle='#fff';ctx.fillText('#'+String(nr).padStart(3,'0'),870*K,752*K);
-  // ROLĖ – apačioje, stambiai
-  ctx.textAlign='center';t=wrap($('role').value.toUpperCase(),620,2,40,29,700,'Space Grotesk',.07);if(t.lines.length>2||t.lines.some(l=>ctx.measureText(l).width>620*K))t=wrap($('role').value.toUpperCase(),620,3,30,18,700,'Space Grotesk',.07);const lh=t.sz*1.16,cy=893;
-  ctx.save();ctx.fillStyle='#EAF4FF';ctx.shadowColor=C1;ctx.shadowBlur=22*K;t.lines.forEach((l,i)=>{const y=(cy+(i-(t.lines.length-1)/2)*lh+t.sz*.35)*K;ctx.fillText(l,540*K,y);ctx.fillText(l,540*K,y)});ctx.restore();
+  // ROLĖ LT + po ja mažesnė EN – apačioje
+  ctx.textAlign='center';const RL=$('role').value.toUpperCase();t=wrap(RL,620,2,34,25,700,'Space Grotesk',.07);
+  if(t.lines.length>2||t.lines.some(l=>ctx.measureText(l).width>620*K))t=wrap(RL,620,3,25,16,700,'Space Grotesk',.07);
+  const e=wrap('// '+$('en').value.toUpperCase(),600,2,15,10,600,'JetBrains Mono',.14);
+  const lh=t.sz*1.16,eh=e.sz*1.5,gap=12,H=t.lines.length*lh+gap+e.lines.length*eh;let y=888-H/2;
+  setFont(700,t.sz,'Space Grotesk',.07);ctx.save();ctx.fillStyle='#EAF4FF';ctx.shadowColor=C1;ctx.shadowBlur=22*K;
+  t.lines.forEach(l=>{y+=lh;ctx.fillText(l,540*K,(y-lh*.2)*K);ctx.fillText(l,540*K,(y-lh*.2)*K)});ctx.restore();
+  y+=gap;setFont(600,e.sz,'JetBrains Mono',.14);ctx.fillStyle=C2;e.lines.forEach(l=>{y+=eh;ctx.fillText(l,540*K,(y-eh*.25)*K)});
   if('letterSpacing' in ctx)ctx.letterSpacing='0px';
 }
 
@@ -149,15 +152,22 @@ const tmp=document.createElement('canvas');tmp.width=tmp.height=2160;const tx=tm
 function tinted(fill){tx.globalCompositeOperation='source-over';tx.clearRect(0,0,2160,2160);drawPerson(tx);tx.globalCompositeOperation='source-in';tx.fillStyle=fill;tx.fillRect(0,0,2160,2160);return tmp}
 const pc=document.createElement('canvas');pc.width=pc.height=2160;const pcx=pc.getContext('2d');
 // žmogus su vienodu apatiniu išnykimu (kad nesimatytų nuotraukos apačios krašto)
-function bakePerson(){pcx.globalCompositeOperation='source-over';pcx.clearRect(0,0,2160,2160);const w=person.width*scale*K,h=person.height*scale*K;pcx.drawImage(person,px*K-w/2,py*K-h/2,w,h);
+function bakePerson(){pcx.setTransform(1,0,0,1,0,0);pcx.globalCompositeOperation='source-over';pcx.filter='none';pcx.clearRect(0,0,2160,2160);
+  pcx.translate(px*K,py*K);pcx.rotate(-ang);pcx.scale(scale*K,scale*K);pcx.drawImage(person,-fcx,-fcy);pcx.setTransform(1,0,0,1,0,0);
+  tx.globalCompositeOperation='source-over';tx.clearRect(0,0,2160,2160);tx.filter='blur(3px)';tx.drawImage(pc,0,0);tx.filter='none';
+  pcx.globalCompositeOperation='destination-in';pcx.drawImage(tmp,0,0);
   const g=pcx.createLinearGradient(0,690*K,0,810*K);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');pcx.globalCompositeOperation='destination-out';pcx.fillStyle=g;pcx.fillRect(0,690*K,2160,2160)}
+// ekspozicijos suvienodinimas: veido šviesumas visiems pritraukiamas prie to paties lygio
+function measure(){gain=1;if(!LM)return;bakePerson();try{const d=pcx.getImageData((px-70)*K,(py-60)*K,140*K,150*K).data;let sum=0,n=0;for(let i=0;i<d.length;i+=64)if(d[i+3]>200){sum+=.299*d[i]+.587*d[i+1]+.114*d[i+2];n++}
+  if(n>50)gain=Math.max(.85,Math.min(1.4,152/(sum/n)))}catch(e){}}
 function drawPerson(c){c.drawImage(pc,0,0)}
 function personLayer(){bakePerson();
-  ctx.save();ctx.filter='contrast(1.06) saturate(.92) brightness(.98)';ctx.shadowColor=C1;ctx.shadowBlur=34*K;drawPerson(ctx);ctx.restore();
-  const w=person.width*scale*K,x0=px*K-w/2,g=ctx.createLinearGradient(x0,0,x0+w,0);
+  ctx.save();ctx.filter=`brightness(${gain.toFixed(3)}) contrast(1.08) saturate(.86)`;ctx.shadowColor=C1;ctx.shadowBlur=34*K;drawPerson(ctx);ctx.restore();
+  const w=520*K,x0=px*K-w/2,g=ctx.createLinearGradient(x0,0,x0+w,0);
   g.addColorStop(0,C1);g.addColorStop(.24,'rgba(30,107,255,0)');g.addColorStop(.76,'rgba(30,107,255,0)');g.addColorStop(1,C1);
   ctx.save();ctx.globalAlpha=.55;ctx.globalCompositeOperation='screen';ctx.drawImage(tinted(g),0,0);
-  ctx.globalCompositeOperation='soft-light';ctx.drawImage(tinted('#0A2A6B'),0,0);ctx.restore();
+  ctx.globalCompositeOperation='soft-light';ctx.globalAlpha=.62;ctx.drawImage(tinted('#0A2A6B'),0,0);
+  const gb=ctx.createLinearGradient(0,540*K,0,800*K);gb.addColorStop(0,'rgba(2,10,40,0)');gb.addColorStop(1,'rgba(2,10,40,.8)');ctx.globalCompositeOperation='multiply';ctx.globalAlpha=1;ctx.drawImage(tinted(gb),0,0);ctx.restore();
 }
 function guideOval(){ctx.save();ctx.strokeStyle='#fff';ctx.setLineDash([14,12]);ctx.lineWidth=3;ctx.globalAlpha=.85;
   ctx.beginPath();ctx.ellipse(540*K,425*K,122*K,165*K,0,0,Math.PI*2);ctx.stroke();
@@ -180,8 +190,9 @@ async function facePlace(file){try{
     const r=lmk.detect(c).faceLandmarks[0];if(r){LM=r.map(p=>({x:x0+p.x*w,y:y0+p.y*h}));break}}
   if(!LM)return false;
   const W=person.width,H=person.height,A=LM[10],B=LM[152],fh=Math.hypot((A.x-B.x)*W,(A.y-B.y)*H);
-  scale=Math.min(3,Math.max(.2,FACE_H/fh));px=540+(.5-(A.x+B.x)/2)*W*scale;py=FACE_CY+(.5-(A.y+B.y)/2)*H*scale;return true}catch(e){console.warn(e);LM=null;return false}}
-const P=i=>({x:px+(LM[i].x-.5)*person.width*scale,y:py+(LM[i].y-.5)*person.height*scale});
+  scale=Math.min(3,Math.max(.2,FACE_H/fh));fcx=(A.x+B.x)/2*W;fcy=(A.y+B.y)/2*H;px=540;py=FACE_CY;
+  ang=Math.atan2((B.x-A.x)*W,(B.y-A.y)*H);if(Math.abs(ang)<.012)ang=0;ang=Math.max(-.21,Math.min(.21,ang));return true}catch(e){console.warn(e);LM=null;return false}}
+const P=i=>{const u=(LM[i].x*person.width-fcx)*scale,v=(LM[i].y*person.height-fcy)*scale,c=Math.cos(ang),n=Math.sin(ang);return{x:px+u*c-v*n,y:py+u*n+v*c}};
 const OVAL_R=[10,338,297,332,284,251,389,356,454,323,361,288,397,365,379,378,400,377,152];
 function seam(){const A=P(10),B=P(152),n=14,nx=-(B.y-A.y),ny=B.x-A.x,l=Math.hypot(nx,ny),pts=[];
   for(let i=0;i<=n;i++){const t=i/n,o=(i%2?5:-5)*(i==0||i==n?0:1);pts.push({x:A.x+(B.x-A.x)*t+nx/l*o,y:A.y+(B.y-A.y)*t+ny/l*o})}return pts}
@@ -234,9 +245,8 @@ function autoPlace(){const H=400,r=H/person.height,W=Math.round(person.width*r),
   let top=-1,best=0,bl=0,br=0;
   for(let y=0;y<H;y++){let l=-1,rr=-1;for(let i=0;i<W;i++)if(d[(y*W+i)*4+3]>128){if(l<0)l=i;rr=i}
     if(l<0)continue;if(top<0)top=y;const w=rr-l;if(w>best){best=w;bl=l;br=rr}else if(w<best*.78&&y-top>H*.08)break}
-  if(top<0||!best){scale=Math.min(900/person.height,760/person.width);px=540;py=150+person.height*scale/2;return}
-  scale=Math.min(3,Math.max(.2,345/(best/r)));const hx=(bl+br)/2/r,ty=top/r;
-  px=540+(person.width/2-hx)*scale;py=150+(person.height/2-ty)*scale}
+  if(top<0||!best){fcx=person.width/2;fcy=person.height/2;ang=0;scale=Math.min(900/person.height,760/person.width);px=540;py=150+person.height*scale/2;return}
+  scale=Math.min(3,Math.max(.2,300/(best/r)));ang=0;fcx=(bl+br)/2/r;fcy=top/r+best/r*.62;px=540;py=FACE_CY}
 // ---- nuotrauka
 let removeBg=null;
 $('nocut').onclick=()=>{skipCut=!skipCut;$('nocut').textContent=skipCut?'✓ Fonas nebus kerpamas (paspausk, jei nori kirpti)':'Nuotrauka jau be fono (PNG) – nekirpti'};
@@ -246,7 +256,7 @@ $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;const msg=$(
       if(!removeBg)removeBg=(await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm')).removeBackground;
       blob=await removeBg(f,{output:{format:'image/png'}})}
     person=await load(URL.createObjectURL(blob));
-    if(!(await facePlace(f)))autoPlace();$('zoom').value=scale;
+    if(!(await facePlace(f)))autoPlace();measure();$('zoom').value=scale;
     msg.textContent=LM?'Paruošta. Gali atsisiųsti.':'Paruošta, bet veido rasti nepavyko – pastatyk ranka (žr. „Jei kažkas ne taip“).';$('dl').disabled=false;draw()
   }catch(err){console.error(err);msg.textContent='Nepavyko iškirpti fono. Iškirpk per remove.bg, paspausk „nekirpti“ ir įkelk PNG.'}};
 $('zoom').oninput=e=>{scale=+e.target.value;draw()};
