@@ -25,6 +25,7 @@ button:disabled{opacity:.4;cursor:default}
 .file input{display:none}
 .ghost{background:transparent;border:1px solid #1E6BFF77;font-weight:500;font-size:14px;padding:9px;margin-top:8px}
 #msg{font-size:14px;min-height:21px;margin-top:8px;color:#BFE1FF}
+summary{cursor:pointer;font-size:14px;opacity:.8}
 .hint{font-size:13px;opacity:.75;margin-top:8px}
 </style>
 </head>
@@ -32,29 +33,28 @@ button:disabled{opacity:.4;cursor:default}
 <div class="wrap">
   <div>
     <h1>SOL<span>netas</span> – plakatų kūrimas</h1>
-    <div class="sub">Visi plakatai daromi tuo pačiu maketu. Keičiasi tik žmogus ir jo tekstai. Nuotrauka niekur nesiunčiama – viskas vyksta tavo naršyklėje.</div>
+    <div class="sub">Pasirink mokytoją, įkelk nuotrauką, atsisiųsk. Visa kita padaroma savaime. Nuotrauka niekur nesiunčiama – viskas vyksta tavo naršyklėje.</div>
     <div class="stage" id="stage"><canvas id="cv" width="2160" height="2160"></canvas></div>
-    <div class="hint">Nuotrauką tempk pele ar pirštu, dydį keisk slankikliu. Veidas turi sutapti su ovalu: smakras ties apatine linija, akys ties brūkšniu. Ovalo galutiniame faile nebus.</div>
   </div>
   <div>
-    <div class="step"><b>1 · MOKYTOJAS</b>
-      <select id="who"></select>
-      <label class="s">Vardas ir pavardė</label><input type="text" id="name">
-      <label class="s">Rolė (LT)</label><input type="text" id="role">
-      <label class="s">Rolė (EN)</label><input type="text" id="en">
-      <label class="s">Pareigos</label><input type="text" id="pos">
-      <label class="s">Numeris (iš sąrašo, nekeisti be reikalo)</label><input type="number" id="nr" min="1" max="999">
-    </div>
+    <div class="step"><b>1 · MOKYTOJAS</b><select id="who"></select></div>
     <div class="step"><b>2 · NUOTRAUKA</b>
       <label class="file">Įkelti nuotrauką<input type="file" id="file" accept="image/*"></label>
       <div id="msg"></div>
-      <label class="s" style="margin-top:10px">Dydis</label><input type="range" id="zoom" min="0.2" max="3" step="0.005" value="1">
-      <button class="ghost" id="nocut">Nuotrauka jau be fono (PNG) – nekirpti</button>
     </div>
     <div class="step"><b>3 · ATSISIŲSTI</b>
-      <button id="dl" disabled>Atsisiųsti PNG (2160×2160)</button>
-      <div class="hint">Failo vardas susidaro pats: SOLnetas_012_Vardas_Pavarde.png</div>
+      <button id="dl" disabled>Atsisiųsti PNG</button>
     </div>
+    <details class="step"><summary>Jei kažkas ne taip (nebūtina)</summary>
+      <div class="hint" style="margin-bottom:10px">Nuotrauką galima patempti pele ir pakeisti dydį. Tekstus galima pataisyti.</div>
+      <label class="s">Dydis</label><input type="range" id="zoom" min="0.2" max="3" step="0.005" value="1">
+      <label class="s" style="margin-top:8px">Vardas ir pavardė</label><input type="text" id="name">
+      <label class="s">Rolė (LT)</label><input type="text" id="role">
+      <label class="s">Rolė (EN)</label><input type="text" id="en">
+      <label class="s">Pareigos</label><input type="text" id="pos">
+      <label class="s">Numeris</label><input type="number" id="nr" min="1" max="999">
+      <button class="ghost" id="nocut">Nuotrauka jau be fono (PNG) – nekirpti</button>
+    </details>
   </div>
 </div>
 
@@ -77,31 +77,39 @@ $('who').onchange=pick;['name','role','en','pos','nr'].forEach(id=>$(id).oninput
 function setFont(w,s,fam,ls){ctx.font=`${w} ${s*K}px "${fam}"`;if('letterSpacing' in ctx)ctx.letterSpacing=(ls*s*K)+'px'}
 function fitLine(txt,w,max,min,fam,ls,maxW){let s=max;for(;;){setFont(w,s,fam,ls);if(ctx.measureText(txt).width<=maxW*K||s<=min)return s;s--}}
 function split2(txt){const w=txt.split(' ');let best=null;for(let i=1;i<w.length;i++){const a=w.slice(0,i).join(' '),b=w.slice(i).join(' ');const d=Math.abs(ctx.measureText(a).width-ctx.measureText(b).width);if(!best||d<best.d)best={d,a,b}}return best?[best.a,best.b]:[txt]}
+function wrap(txt,maxW,maxLines,max,min,w,fam,ls){for(let sz=max;sz>=min;sz--){setFont(w,sz,fam,ls);const words=txt.split(' '),lines=[];let cur='';
+    for(const wd of words){const t=cur?cur+' '+wd:wd;if(ctx.measureText(t).width<=maxW*K||!cur)cur=t;else{lines.push(cur);cur=wd}}lines.push(cur);
+    if(lines.length<=maxLines&&lines.every(l=>ctx.measureText(l).width<=maxW*K)||sz==min){
+      if(lines.length==2){const b=split2(txt);if(Math.max(...b.map(l=>ctx.measureText(l).width))<=maxW*K)return{sz,lines:b}}return{sz,lines}}}}
 function texts(){
-  ctx.textAlign='center';ctx.textBaseline='alphabetic';
-  // vardas
-  const name=$('name').value.toUpperCase();let s=fitLine(name,700,66,34,'Space Grotesk',.02,900);
-  ctx.save();ctx.fillStyle='#fff';ctx.shadowColor=C1;ctx.shadowBlur=26*K;ctx.fillText(name,540*K,(854-(66-s)*.1)*K);ctx.shadowColor='#000';ctx.shadowBlur=10*K;ctx.shadowOffsetY=2*K;ctx.fillText(name,540*K,(854-(66-s)*.1)*K);ctx.restore();
-  // rolė LT (1–2 eil.)
-  const role=$('role').value.toUpperCase();ctx.fillStyle=C2;let lines=[role];s=27;setFont(700,s,'Space Grotesk',.08);
-  if(ctx.measureText(role).width>860*K){for(s=27;s>=17;s--){setFont(700,s,'Space Grotesk',.08);lines=split2(role);if(Math.max(...lines.map(l=>ctx.measureText(l).width))<=860*K)break}}
-  const lh=s*1.18,cy=916;lines.forEach((l,i)=>ctx.fillText(l,540*K,(cy+(i-(lines.length-1)/2)*lh+s*.35)*K));
-  // rolė EN
-  const en='// '+$('en').value;s=fitLine(en,400,16,11,'JetBrains Mono',0,860);ctx.globalAlpha=.9;ctx.fillStyle=C3;ctx.fillText(en,540*K,(964+s*.35)*K);
-  // pareigos
-  const pos=$('pos').value;s=fitLine(pos,500,18,12,'Space Grotesk',0,860);ctx.globalAlpha=.82;ctx.fillStyle='#fff';ctx.fillText(pos,540*K,(995+s*.35)*K);ctx.globalAlpha=1;
+  ctx.textBaseline='alphabetic';
+  // VARDAS – vieną kartą, viršuje dešinėje
+  const nm=$('name').value.toUpperCase().trim(),nw=nm.split(' ');let nl=nw.length>1?[nw.slice(0,Math.ceil(nw.length/2)).join(' '),nw.slice(Math.ceil(nw.length/2)).join(' ')]:[nm];
+  let sz=64;for(;sz>30;sz--){setFont(700,sz,'Space Grotesk',.04);if(Math.max(...nl.map(l=>ctx.measureText(l).width))<=440*K)break}
+  ctx.textAlign='right';ctx.save();const g=ctx.createLinearGradient(0,60*K,0,220*K);g.addColorStop(0,'#fff');g.addColorStop(.5,'#CFE3FF');g.addColorStop(1,'#fff');
+  ctx.fillStyle=g;ctx.shadowColor=C1;ctx.shadowBlur=24*K;nl.forEach((l,i)=>ctx.fillText(l,1028*K,(218-(nl.length-1-i)*sz*1.04)*K));ctx.restore();
+  // rolė EN po pabraukimu
+  let t=wrap('// '+$('en').value.toUpperCase(),430,2,14,10,600,'JetBrains Mono',.14);ctx.fillStyle=C3;ctx.globalAlpha=.92;t.lines.forEach((l,i)=>ctx.fillText(l,1028*K,(266+i*t.sz*1.5)*K));ctx.globalAlpha=1;
+  // PAREIGOS – dešinė panelė
+  ctx.textAlign='left';t=wrap($('pos').value.toUpperCase(),160,6,18,10,700,'Space Grotesk',.06);ctx.fillStyle='#fff';
+  t.lines.forEach((l,i)=>ctx.fillText(l,870*K,(478+i*t.sz*1.32)*K));
   // numeris
-  const nr=Math.max(0,+$('nr').value||0);ctx.textAlign='left';
-  setFont(700,34,'Space Grotesk',0);ctx.fillStyle='#fff';ctx.fillText('#'+String(nr).padStart(3,'0'),54*K,572*K);
-  setFont(400,13,'JetBrains Mono',0);ctx.globalAlpha=.8;ctx.fillStyle=C3;ctx.fillText('10.0.26.'+nr,54*K,616*K);ctx.globalAlpha=1;
+  const nr=Math.max(0,+$('nr').value||0);setFont(700,30,'Space Grotesk',.02);ctx.fillStyle='#fff';ctx.fillText('#'+String(nr).padStart(3,'0'),870*K,752*K);
+  // ROLĖ – apačioje, stambiai
+  ctx.textAlign='center';t=wrap($('role').value.toUpperCase(),620,2,40,29,700,'Space Grotesk',.07);if(t.lines.length>2||t.lines.some(l=>ctx.measureText(l).width>620*K))t=wrap($('role').value.toUpperCase(),620,3,30,18,700,'Space Grotesk',.07);const lh=t.sz*1.16,cy=893;
+  ctx.save();ctx.fillStyle='#EAF4FF';ctx.shadowColor=C1;ctx.shadowBlur=22*K;t.lines.forEach((l,i)=>{const y=(cy+(i-(t.lines.length-1)/2)*lh+t.sz*.35)*K;ctx.fillText(l,540*K,y);ctx.fillText(l,540*K,y)});ctx.restore();
   if('letterSpacing' in ctx)ctx.letterSpacing='0px';
 }
 
 // ---- žmogus: vienodas švytėjimas ir apšvietimas visiems
 const tmp=document.createElement('canvas');tmp.width=tmp.height=2160;const tx=tmp.getContext('2d');
 function tinted(fill){tx.globalCompositeOperation='source-over';tx.clearRect(0,0,2160,2160);drawPerson(tx);tx.globalCompositeOperation='source-in';tx.fillStyle=fill;tx.fillRect(0,0,2160,2160);return tmp}
-function drawPerson(c){const w=person.width*scale*K,h=person.height*scale*K;c.drawImage(person,px*K-w/2,py*K-h/2,w,h)}
-function personLayer(){
+const pc=document.createElement('canvas');pc.width=pc.height=2160;const pcx=pc.getContext('2d');
+// žmogus su vienodu apatiniu išnykimu (kad nesimatytų nuotraukos apačios krašto)
+function bakePerson(){pcx.globalCompositeOperation='source-over';pcx.clearRect(0,0,2160,2160);const w=person.width*scale*K,h=person.height*scale*K;pcx.drawImage(person,px*K-w/2,py*K-h/2,w,h);
+  const g=pcx.createLinearGradient(0,690*K,0,810*K);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');pcx.globalCompositeOperation='destination-out';pcx.fillStyle=g;pcx.fillRect(0,690*K,2160,2160)}
+function drawPerson(c){c.drawImage(pc,0,0)}
+function personLayer(){bakePerson();
   ctx.save();ctx.filter='contrast(1.06) saturate(.92) brightness(.98)';ctx.shadowColor=C1;ctx.shadowBlur=34*K;drawPerson(ctx);ctx.restore();
   const w=person.width*scale*K,x0=px*K-w/2,g=ctx.createLinearGradient(x0,0,x0+w,0);
   g.addColorStop(0,C1);g.addColorStop(.24,'rgba(30,107,255,0)');g.addColorStop(.76,'rgba(30,107,255,0)');g.addColorStop(1,C1);
@@ -111,28 +119,72 @@ function personLayer(){
 function guideOval(){ctx.save();ctx.strokeStyle='#fff';ctx.setLineDash([14,12]);ctx.lineWidth=3;ctx.globalAlpha=.85;
   ctx.beginPath();ctx.ellipse(540*K,425*K,122*K,165*K,0,0,Math.PI*2);ctx.stroke();
   ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(470*K,400*K);ctx.lineTo(610*K,400*K);ctx.stroke();ctx.restore()}
-function draw(){ctx.clearRect(0,0,2160,2160);ctx.drawImage(BG,0,0,2160,2160);if(person)personLayer();ctx.drawImage(FR,0,0,2160,2160);texts();if(guide&&person)guideOval()}
+function draw(){ctx.clearRect(0,0,2160,2160);ctx.drawImage(BG,0,0,2160,2160);if(person){personLayer();halfFace()}ctx.drawImage(FR,0,0,2160,2160);texts();if(guide&&person&&document.querySelector('details').open)guideOval()}
+document.querySelector('details').ontoggle=()=>draw();
 
-// veido aptikimas (MediaPipe, veikia naršyklėje): visiems vienodas veido dydis ir vieta
-let detector=null;const FACE_K=0.96;
+// veido taškai (MediaPipe FaceLandmarker, naršyklėje): vienodas veido dydis/vieta + skaitmeninė veido pusė
+let lmk=null,LM=null,TESS=null;const FACE_H=268,FACE_CY=462;
 async function facePlace(file){try{
-  if(!detector){const v=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/+esm');
+  if(!lmk){const v=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/+esm');
     const fs=await v.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
-    detector=await v.FaceDetector.createFromOptions(fs,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite'},runningMode:'IMAGE'})}
-  const src=await load(URL.createObjectURL(file));
-  // modelis trumpo nuotolio: jei veidas mažas kadre, bandome ir viršutinę kadro dalį
-  let best=null;for(const crop of [1,.6]){const c=document.createElement('canvas');c.width=src.width;c.height=Math.round(src.height*crop);c.getContext('2d').drawImage(src,0,0);
-    const r=detector.detect(c).detections.map(d=>d.boundingBox).sort((a,b)=>b.width-a.width)[0];if(r&&(!best||r.width>best.width))best=r;if(best)break}
-  if(!best)return false;
-  // antras praėjimas normalizuotame kadre -> vienodas rėmelis ir mažiems, ir dideliems veidams
-  {const side=best.width*2.2,cx=best.originX+best.width/2,cy=best.originY+best.height/2,c=document.createElement('canvas');c.width=c.height=512;
-   const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,512,512);g.drawImage(src,cx-side/2,cy-side/2,side,side,0,0,512,512);
-   const r=detector.detect(c).detections.map(d=>d.boundingBox).sort((a,b)=>b.width-a.width)[0];
-   if(r){const q=side/512;best={originX:cx-side/2+r.originX*q,originY:cy-side/2+r.originY*q,width:r.width*q,height:r.height*q}}}
-  window.__face=best;
-  const k=person.width/src.width;scale=Math.min(3,Math.max(.2,300*FACE_K/(best.height*k)));
-  const fx=(best.originX+best.width/2)*k,fy=(best.originY+best.height/2)*k;
-  px=540+(person.width/2-fx)*scale;py=440+(person.height/2-fy)*scale;return true}catch(e){console.warn(e);return false}}
+    lmk=await v.FaceLandmarker.createFromOptions(fs,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task'},runningMode:'IMAGE',numFaces:1});
+    TESS=v.FaceLandmarker.FACE_LANDMARKS_TESSELATION}
+  const src=await load(URL.createObjectURL(file));LM=null;
+  // jei veidas kadre mažas – bandome ir priartintas kadro dalis (x0,y0,plotis,aukštis kadro dalimis)
+  for(const [x0,y0,w,h] of [[0,0,1,1],[0,0,1,.6],[.2,0,.6,.5],[.25,.05,.5,.4]]){
+    const c=document.createElement('canvas'),sw=src.width*w,sh=src.height*h,q=Math.min(1,1400/Math.max(sw,sh));c.width=sw*q;c.height=sh*q;
+    c.getContext('2d').drawImage(src,src.width*x0,src.height*y0,sw,sh,0,0,c.width,c.height);
+    const r=lmk.detect(c).faceLandmarks[0];if(r){LM=r.map(p=>({x:x0+p.x*w,y:y0+p.y*h}));break}}
+  if(!LM)return false;
+  const W=person.width,H=person.height,A=LM[10],B=LM[152],fh=Math.hypot((A.x-B.x)*W,(A.y-B.y)*H);
+  scale=Math.min(3,Math.max(.2,FACE_H/fh));px=540+(.5-(A.x+B.x)/2)*W*scale;py=FACE_CY+(.5-(A.y+B.y)/2)*H*scale;return true}catch(e){console.warn(e);LM=null;return false}}
+const P=i=>({x:px+(LM[i].x-.5)*person.width*scale,y:py+(LM[i].y-.5)*person.height*scale});
+const OVAL_R=[10,338,297,332,284,251,389,356,454,323,361,288,397,365,379,378,400,377,152];
+function seam(){const A=P(10),B=P(152),n=14,nx=-(B.y-A.y),ny=B.x-A.x,l=Math.hypot(nx,ny),pts=[];
+  for(let i=0;i<=n;i++){const t=i/n,o=(i%2?5:-5)*(i==0||i==n?0:1);pts.push({x:A.x+(B.x-A.x)*t+nx/l*o,y:A.y+(B.y-A.y)*t+ny/l*o})}return pts}
+function halfPath(c){c.beginPath();OVAL_R.forEach((i,k)=>{const p=P(i);k?c.lineTo(p.x*K,p.y*K):c.moveTo(p.x*K,p.y*K)});seam().reverse().forEach(p=>c.lineTo(p.x*K,p.y*K));c.closePath()}
+function halfFace(){if(!LM)return;const A=P(10),B=P(152),R=P(454),side=p=>(B.x-A.x)*(p.y-A.y)-(B.y-A.y)*(p.x-A.x),sg=Math.sign(side(R));
+  ctx.save();halfPath(ctx);ctx.clip();
+  const g=ctx.createLinearGradient(A.x*K,0,R.x*K,0);g.addColorStop(0,'rgba(12,48,140,.10)');g.addColorStop(1,'rgba(3,16,70,.45)');
+  ctx.globalCompositeOperation='multiply';ctx.fillStyle=g;ctx.fillRect(0,0,2160,2160);
+  ctx.globalCompositeOperation='screen';ctx.fillStyle='rgba(30,107,255,.20)';ctx.fillRect(0,0,2160,2160);
+  ctx.globalCompositeOperation='source-over';
+  // skenavimo linijos
+  ctx.fillStyle='rgba(160,210,255,.07)';for(let y=A.y-40;y<B.y+20;y+=6)ctx.fillRect(0,y*K,2160,2*K);
+  // tinklelis
+  ctx.strokeStyle='rgba(150,205,255,.38)';ctx.lineWidth=.7*K;ctx.beginPath();
+  for(const e of TESS){const a=P(e.start),b=P(e.end);if(side(a)*sg>-2&&side(b)*sg>-2){ctx.moveTo(a.x*K,a.y*K);ctx.lineTo(b.x*K,b.y*K)}}ctx.stroke();
+  // mazgai
+  ctx.shadowColor=C2;ctx.shadowBlur=8*K;ctx.fillStyle='#EAF5FF';
+  for(let i=0;i<468;i+=5){const p=P(i);if(side(p)*sg>4){ctx.beginPath();ctx.arc(p.x*K,p.y*K,1.7*K,0,7);ctx.fill()}}
+  // akies HUD
+  const e1=P(362),e2=P(263),ec=LM[473]?P(473):{x:(e1.x+e2.x)/2,y:(e1.y+e2.y)/2},er=Math.hypot(e1.x-e2.x,e1.y-e2.y)*.62;
+  ctx.strokeStyle=C3;ctx.lineWidth=1.6*K;ctx.beginPath();ctx.arc(ec.x*K,ec.y*K,er*K,0,7);ctx.stroke();
+  ctx.lineWidth=3*K;ctx.strokeStyle=C2;ctx.setLineDash([er*.9*K,er*.5*K]);ctx.beginPath();ctx.arc(ec.x*K,ec.y*K,er*1.28*K,0,7);ctx.stroke();ctx.setLineDash([]);
+  ctx.lineWidth=1.2*K;for(let a=0;a<360;a+=30){const c=Math.cos(a*Math.PI/180),s2=Math.sin(a*Math.PI/180);ctx.beginPath();ctx.moveTo((ec.x+c*er*1.45)*K,(ec.y+s2*er*1.45)*K);ctx.lineTo((ec.x+c*er*1.62)*K,(ec.y+s2*er*1.62)*K);ctx.stroke()}
+  ctx.fillStyle=C2;ctx.beginPath();ctx.arc(ec.x*K,ec.y*K,er*.22*K,0,7);ctx.fill();
+  ctx.restore();
+  // siūlė
+  ctx.save();ctx.shadowColor=C2;ctx.shadowBlur=14*K;ctx.strokeStyle='#DDF0FF';ctx.lineWidth=2*K;ctx.lineJoin='miter';ctx.beginPath();
+  seam().forEach((p,k)=>k?ctx.lineTo(p.x*K,p.y*K):ctx.moveTo(p.x*K,p.y*K));ctx.stroke();ctx.restore();
+  links()}
+// jungtys iš skaitmeninės veido pusės į dešinę: galai visiems tie patys (fiksuoti), pradžia – veido kontūras
+const ENDS=[[1080,318,0],[1004,340,1],[1080,362,0],[984,384,1],[854,432,2],[854,462,2],[854,492,2],[854,522,2],[854,552,2],[854,630,2],[854,660,2],[854,716,2],[854,746,2],[1080,792,0]];
+const GLITCH=[[236,430,70,5],[262,452,40,3],[228,560,90,4],[300,584,36,3],[250,690,60,5],[742,318,80,4],[790,340,44,3],[760,640,70,5],[806,662,30,3],[716,742,96,4],[330,300,48,3],[690,250,60,3]];
+function links(){const ST=[338,297,332,284,251,389,356,454,323,361,288,397,365,379];
+  ctx.save();ctx.lineJoin='round';ctx.lineCap='round';
+  // horizontalūs „glitch“ brūkšniai aplink žmogų – visiems tose pačiose vietose
+  ctx.globalCompositeOperation='screen';GLITCH.forEach(([x,y,w,h],i)=>{ctx.fillStyle=i%3?'rgba(79,168,255,.55)':'rgba(220,238,255,.8)';ctx.shadowColor=C1;ctx.shadowBlur=10*K;ctx.fillRect(x*K,y*K,w*K,h*K)});
+  ctx.globalCompositeOperation='source-over';
+  ST.forEach((id,k)=>{const s=P(id),[ex,ey,kind]=ENDS[k],dy=ey-s.y,sg=Math.sign(dy)||1,lead=18+((k*37)%5)*12;
+    const x1=s.x+lead,xe=ex-(kind==2?26+((k*29)%4)*14:30),diag=Math.max(0,Math.min(Math.abs(dy),xe-x1)),x2=x1+diag,y2=s.y+sg*diag;
+    const path=()=>{ctx.beginPath();ctx.moveTo(s.x*K,s.y*K);ctx.lineTo(x1*K,s.y*K);ctx.lineTo(x2*K,y2*K);if(x2<xe)ctx.lineTo(xe*K,y2*K);ctx.lineTo(xe*K,ey*K);ctx.lineTo(ex*K,ey*K)};
+    const hot=k%3==0;ctx.shadowColor=C1;ctx.shadowBlur=12*K;ctx.strokeStyle=hot?'#CFE8FF':C2;ctx.globalAlpha=hot?.95:.85;ctx.lineWidth=(hot?2.4:1.7)*K;path();ctx.stroke();
+    ctx.globalAlpha=1;ctx.strokeStyle='#fff';ctx.lineWidth=3*K;ctx.beginPath();ctx.moveTo((s.x+4)*K,s.y*K);ctx.lineTo((s.x+Math.min(lead,14))*K,s.y*K);ctx.stroke();
+    ctx.fillStyle='#01040C';ctx.strokeStyle='#EAF5FF';ctx.lineWidth=1.8*K;ctx.beginPath();ctx.arc(s.x*K,s.y*K,4.2*K,0,7);ctx.fill();ctx.stroke();
+    if(kind==1){ctx.fillStyle='#01040C';ctx.strokeStyle=C3;ctx.beginPath();ctx.rect((ex-1)*K,(ey-7)*K,14*K,14*K);ctx.fill();ctx.stroke();ctx.fillStyle=C2;ctx.fillRect((ex+3)*K,(ey-3)*K,6*K,6*K)}
+    if(kind==2){ctx.fillStyle='#EAF5FF';ctx.beginPath();ctx.arc(ex*K,ey*K,4.5*K,0,7);ctx.fill();ctx.fillStyle=C2;ctx.fillRect((ex-10)*K,(ey-2)*K,8*K,4*K)}});
+  ctx.restore()}
 // atsarginis pastatymas: randa galvą pagal siluetą (plotis iki kaklo susiaurėjimo)
 function autoPlace(){const H=400,r=H/person.height,W=Math.round(person.width*r),c=document.createElement('canvas');c.width=W;c.height=H;
   const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(person,0,0,W,H);const d=x.getImageData(0,0,W,H).data;
@@ -152,7 +204,7 @@ $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;const msg=$(
       blob=await removeBg(f,{output:{format:'image/png'}})}
     person=await load(URL.createObjectURL(blob));
     if(!(await facePlace(f)))autoPlace();$('zoom').value=scale;
-    msg.textContent='Paruošta. Sutapdink veidą su ovalu.';$('dl').disabled=false;draw()
+    msg.textContent=LM?'Paruošta. Gali atsisiųsti.':'Paruošta, bet veido rasti nepavyko – pastatyk ranka (žr. „Jei kažkas ne taip“).';$('dl').disabled=false;draw()
   }catch(err){console.error(err);msg.textContent='Nepavyko iškirpti fono. Iškirpk per remove.bg, paspausk „nekirpti“ ir įkelk PNG.'}};
 $('zoom').oninput=e=>{scale=+e.target.value;draw()};
 
