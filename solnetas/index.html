@@ -101,6 +101,49 @@ function texts(){
   if('letterSpacing' in ctx)ctx.letterSpacing='0px';
 }
 
+// ---- UNIKALŪS kiekvieno žmogaus elementai: viskas skaičiuojama iš vardo, tad kartojant išeina tas pats
+function rng(str){let h=2166136261;for(const c of str){h^=c.codePointAt(0);h=Math.imul(h,16777619)}let a=h>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const SUN={x:540,y:462};
+function sunSignature(){ // „skaitmeninė saulė“ už galvos – spindulių raštas unikalus kiekvienam
+  const r=rng('sun'+$('name').value),N=96;ctx.save();ctx.lineCap='round';ctx.shadowColor=C1;ctx.shadowBlur=10*K;
+  for(let i=0;i<N;i++){const a=i/N*Math.PI*2-Math.PI/2,v=r(),long=i%8==0,len=long?70+v*70:14+v*v*60,r0=292,c=Math.cos(a),sn=Math.sin(a);
+    ctx.strokeStyle=long?'#DDEEFF':C2;ctx.globalAlpha=long?.9:.35+v*.5;ctx.lineWidth=(long?3:1.6)*K;ctx.beginPath();ctx.moveTo((SUN.x+c*r0)*K,(SUN.y+sn*r0)*K);ctx.lineTo((SUN.x+c*(r0+len))*K,(SUN.y+sn*(r0+len))*K);ctx.stroke();
+    if(long){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc((SUN.x+c*(r0+len+8))*K,(SUN.y+sn*(r0+len+8))*K,2.6*K,0,7);ctx.fill()}}
+  ctx.globalAlpha=.9;ctx.strokeStyle=C3;ctx.lineWidth=1.4*K;ctx.beginPath();ctx.arc(SUN.x*K,SUN.y*K,284*K,0,7);ctx.stroke();
+  // orbitos su „palydovais“
+  for(let k=0;k<3;k++){const rr=(330+k*34),a0=r()*6.28,a1=a0+1+r()*2.2;ctx.globalAlpha=.55;ctx.strokeStyle=C2;ctx.lineWidth=(k==1?5:2)*K;ctx.beginPath();ctx.arc(SUN.x*K,SUN.y*K,rr*K,a0,a1);ctx.stroke();
+    ctx.globalAlpha=1;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc((SUN.x+Math.cos(a1)*rr)*K,(SUN.y+Math.sin(a1)*rr)*K,4*K,0,7);ctx.fill()}
+  ctx.restore()}
+function dust(){ // šviečiančios dalelės ir šviesos ruožai – visiems vienodi
+  const r=rng('dust');ctx.save();ctx.globalCompositeOperation='screen';
+  for(let i=0;i<110;i++){const x=r()*1080,y=r()*1080,z=r();ctx.globalAlpha=.25+z*.6;ctx.fillStyle=z>.8?'#fff':C2;ctx.shadowColor=C2;ctx.shadowBlur=(4+z*10)*K;ctx.beginPath();ctx.arc(x*K,y*K,(.8+z*2.2)*K,0,7);ctx.fill()}
+  for(const [x,y,w,al] of [[640,96,520,.5],[700,112,300,.35],[-40,330,300,.35],[760,842,360,.4],[-20,818,240,.3]]){const g=ctx.createLinearGradient(x*K,0,(x+w)*K,0);g.addColorStop(0,'rgba(79,168,255,0)');g.addColorStop(.5,'rgba(190,225,255,'+al+')');g.addColorStop(1,'rgba(79,168,255,0)');ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.fillStyle=g;ctx.fillRect(x*K,y*K,w*K,2*K)}
+  ctx.restore()}
+function binaryColumns(){ // vardas dvejetainiu kodu – stulpeliai abipus žmogaus
+  const bits=[...$('name').value].map(c=>c.codePointAt(0).toString(2).padStart(8,'0')).join('');ctx.save();ctx.textAlign='center';setFont(400,11,'JetBrains Mono',0);
+  [[228,.5],[246,.28],[834,.5],[816,.28]].forEach(([x,al],ci)=>{for(let j=0;j<34;j++){const b=bits[(j+ci*9)%bits.length],y=330+j*13;ctx.globalAlpha=al*(b=='1'?1:.55)*(1-Math.abs(j-17)/24);ctx.fillStyle=b=='1'?'#EAF5FF':C2;ctx.fillText(b,x*K,y*K)}});ctx.restore()}
+function disperse(){ // skaitmeninė pusė „byra“ pikseliais į dešinę
+  if(!LM)return;const r=rng('px'),R=P(454),T=P(10),B=P(152),x0=Math.round(R.x-30),y0=Math.round(T.y-90),w=170,h=Math.round(B.y-T.y+230);
+  let d;try{d=pcx.getImageData(x0*K,y0*K,w*K,h*K).data}catch(e){return}
+  ctx.save();ctx.shadowColor=C1;ctx.shadowBlur=6*K;
+  for(let i=0;i<1100;i++){const sx=r()*w,sy=r()*h,idx=((Math.floor(sy*K)*w*K)+Math.floor(sx*K))*4;if(d[idx+3]<140)continue;
+    const t=r(),dx=30+t*t*210,sz=(3+r()*8)*(1-t*.5),mix=.35+t*.5;
+    const cr=Math.round(d[idx]*(1-mix)+60*mix),cg=Math.round(d[idx+1]*(1-mix)+150*mix),cb=Math.round(d[idx+2]*(1-mix)+255*mix);
+    ctx.globalAlpha=(1-t)*.9;ctx.fillStyle=`rgb(${cr},${cg},${cb})`;ctx.fillRect((x0+sx+dx)*K,(y0+sy+(r()-.5)*10)*K,sz*K,sz*K)}
+  ctx.restore()}
+function signature(){ // unikalus kodas MAZGAS kortelėje + bangos parašas po role
+  const r=rng('sig'+$('name').value);ctx.save();
+  for(let y=0;y<7;y++)for(let x=0;x<7;x++){const edge=(x<2&&y<2)||(x>4&&y<2)||(x<2&&y>4);if(edge||r()>.48){ctx.fillStyle=edge?'#fff':C2;ctx.globalAlpha=edge?.95:.85;ctx.fillRect((968+x*8.5)*K,(703+y*8.5)*K,7*K,7*K)}}
+  ctx.globalAlpha=1;ctx.shadowColor=C1;ctx.shadowBlur=8*K;const n=84;for(let i=0;i<n;i++){const t=i/(n-1),env=Math.sin(t*Math.PI),hh=(2+r()*20*env),x=252+t*576;ctx.fillStyle=i%7==0?'#fff':C2;ctx.globalAlpha=.35+env*.6;ctx.fillRect(x*K,(962-hh/2)*K,3.4*K,hh*K)}
+  // žyma prie akies
+  if(LM){const e=P(263),nr=String(Math.max(0,+$('nr').value||0)).padStart(3,'0');ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.strokeStyle=C3;ctx.lineWidth=1.2*K;ctx.beginPath();ctx.moveTo((e.x+6)*K,(e.y-10)*K);ctx.lineTo((e.x+40)*K,(e.y-64)*K);ctx.lineTo((e.x+120)*K,(e.y-64)*K);ctx.stroke();
+    ctx.textAlign='left';setFont(600,11,'JetBrains Mono',.12);ctx.fillStyle='#EAF5FF';ctx.fillText('SOL-ID '+nr,(e.x+44)*K,(e.y-70)*K);setFont(400,9.5,'JetBrains Mono',.1);ctx.fillStyle=C2;ctx.fillText('478 TAŠKAI · SUTAPO',(e.x+44)*K,(e.y-50)*K)}
+  ctx.restore();if('letterSpacing' in ctx)ctx.letterSpacing='0px'}
+function leftLinks(){ // plonesnės jungtys į kairę panelę
+  if(!LM)return;const ST=[109,67,103,54,21,162,127,234],EY=[372,398,452,486,540,574,640,700];ctx.save();ctx.lineJoin='round';ctx.shadowColor=C1;ctx.shadowBlur=8*K;
+  ST.forEach((id,k)=>{const s=P(id),ex=208,ey=EY[k],x1=s.x-16-((k*31)%4)*12,xe=ex+24+((k*17)%3)*12,dg=Math.max(0,Math.min(Math.abs(ey-s.y),x1-xe)),sg=Math.sign(ey-s.y)||1;
+    ctx.strokeStyle=C2;ctx.globalAlpha=.6;ctx.lineWidth=1.3*K;ctx.beginPath();ctx.moveTo(s.x*K,s.y*K);ctx.lineTo(x1*K,s.y*K);ctx.lineTo((x1-dg)*K,(s.y+sg*dg)*K);ctx.lineTo(xe*K,(s.y+sg*dg)*K);ctx.lineTo(xe*K,ey*K);ctx.lineTo(ex*K,ey*K);ctx.stroke();
+    ctx.globalAlpha=1;ctx.fillStyle='#EAF5FF';ctx.beginPath();ctx.arc(ex*K,ey*K,3.4*K,0,7);ctx.fill();ctx.beginPath();ctx.arc(s.x*K,s.y*K,2.6*K,0,7);ctx.fill()});ctx.restore()}
 // ---- žmogus: vienodas švytėjimas ir apšvietimas visiems
 const tmp=document.createElement('canvas');tmp.width=tmp.height=2160;const tx=tmp.getContext('2d');
 function tinted(fill){tx.globalCompositeOperation='source-over';tx.clearRect(0,0,2160,2160);drawPerson(tx);tx.globalCompositeOperation='source-in';tx.fillStyle=fill;tx.fillRect(0,0,2160,2160);return tmp}
@@ -119,7 +162,7 @@ function personLayer(){bakePerson();
 function guideOval(){ctx.save();ctx.strokeStyle='#fff';ctx.setLineDash([14,12]);ctx.lineWidth=3;ctx.globalAlpha=.85;
   ctx.beginPath();ctx.ellipse(540*K,425*K,122*K,165*K,0,0,Math.PI*2);ctx.stroke();
   ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(470*K,400*K);ctx.lineTo(610*K,400*K);ctx.stroke();ctx.restore()}
-function draw(){ctx.clearRect(0,0,2160,2160);ctx.drawImage(BG,0,0,2160,2160);if(person){personLayer();halfFace()}ctx.drawImage(FR,0,0,2160,2160);texts();if(guide&&person&&document.querySelector('details').open)guideOval()}
+function draw(){ctx.clearRect(0,0,2160,2160);ctx.drawImage(BG,0,0,2160,2160);sunSignature();dust();binaryColumns();if(person){personLayer();disperse();halfFace();leftLinks()}ctx.drawImage(FR,0,0,2160,2160);texts();signature();if(guide&&person&&document.querySelector('details').open)guideOval()}
 document.querySelector('details').ontoggle=()=>draw();
 
 // veido taškai (MediaPipe FaceLandmarker, naršyklėje): vienodas veido dydis/vieta + skaitmeninė veido pusė
