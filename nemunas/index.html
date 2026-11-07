@@ -5,67 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nemunas Studio · Web development, fixed price, one developer</title>
 <meta name="description" content="Websites, online stores and web apps built by one developer in Kaunas, Lithuania. Fixed price agreed before work starts. Pages start from 99 EUR. Book a call.">
-<meta name="theme-color" content="#EFEEEA">
+<meta name="theme-color" content="#EDECE8">
 <meta property="og:title" content="Nemunas Studio · Web development">
 <meta property="og:description" content="One developer. Fixed price. Pages start from 99 EUR.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111214'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FF5A1F'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121315'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0501E'/%3E%3C/svg%3E">
 <!--
-  DESIGN READ: web-development studio landing for small-business owners (UK / IE / EU), trust-first,
-  minimalist with tactile patterns and a few strong effects. Mobile must look right, desktop extends it.
-  DIALS: variance 7 / motion 6 / density 3.  THEME LOCK: light.
-  SYSTEM: paper #EFEEEA, card #F7F6F3, ink #111214, one accent #FF5A1F (<8% of surface).
-  TYPE: Bricolage Grotesque (display) + Geist (body) + IBM Plex Mono (labels).
-  EFFECTS: pointer-reactive dot field (canvas) in hero and contact, word-by-word hero entrance,
-  sticky stacking process cards, count-up, magnetic buttons (hover devices only), accordion FAQ,
-  scroll progress hairline. All behind prefers-reduced-motion.
+  v3 · 2026-11-08
+  DESIGN READ: web-development studio landing for small-business owners (UK / IE / EU). Quiet, tactile,
+  print-like. Reference feel: webvibe.lt restraint (halftone edges, rounded panels, mono labels), not its content.
+  DIALS: variance 6 / motion 5 / density 3.  THEME LOCK: light.
+  SYSTEM: paper #EDECE8, panel #F6F5F2, ink #121315, one accent #F0501E (<6% of surface).
+  TYPE: Schibsted Grotesk (display) + Geist (body) + Geist Mono (labels).
+  EFFECTS: static halftone fields drawn once on canvas (dense at the edges, clear in the middle), cursor
+  spotlight that sharpens the halftone (hover devices), inertial wheel scroll on desktop (touch stays native),
+  scroll-linked parallax on the hero field, line reveal, count-up, sticky stack (mobile) / timeline (desktop),
+  accordion FAQ. Everything behind prefers-reduced-motion.
+  LAYOUT: desktop hero centred with halftone columns; mobile hero left-aligned, full height, halftone at the foot.
+  Services: desktop rows, mobile horizontal snap cards. Process: desktop 4-up timeline, mobile sticky stack.
   GUARDRAILS: no portfolio, no gradients, no fake logos / ratings, no em-dashes, one CTA intent: Book a call.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&family=Geist:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EFEEEA;--card:#F7F6F3;--card-2:#E6E4DE;--ink:#111214;--ink-2:#4B4D52;--ink-3:#8A8C91;
-  --line:rgba(17,18,20,.14);--line-soft:rgba(17,18,20,.07);--acc:#FF5A1F;
-  --display:"Bricolage Grotesque",system-ui,sans-serif;--sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --gut:18px;--r:22px;--r-sm:14px;--maxw:1200px;
+  --paper:#EDECE8;--panel:#F6F5F2;--panel-2:#E4E2DC;--ink:#121315;--ink-2:#4A4C51;--ink-3:#7E8086;
+  --line:rgba(18,19,21,.14);--line-soft:rgba(18,19,21,.07);--acc:#F0501E;
+  --display:"Schibsted Grotesk",system-ui,sans-serif;--sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  --gut:16px;--r:24px;--r-sm:14px;--maxw:1240px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img,video,canvas{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
-.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
-h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.03em;line-height:1}
-h1{font-size:clamp(42px,11.5vw,112px);font-weight:500}
-h2{font-size:clamp(34px,8vw,68px)}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.035em;line-height:1.02}
+h1{font-size:clamp(44px,12vw,120px)}
+h2{font-size:clamp(34px,8.4vw,66px)}
 h3{font-size:22px;letter-spacing:-.02em;line-height:1.15}
-.lead{font-size:17px;color:var(--ink-2);max-width:40ch}
+.lead{font-size:17px;color:var(--ink-2);max-width:42ch}
 
-/* grain */
-body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.045;mix-blend-mode:multiply;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 #prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:70;pointer-events:none}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:500;font-size:15.5px;transition:background .25s,color .25s,border-color .25s,transform .35s cubic-bezier(.16,1,.3,1);will-change:transform;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:500;font-size:15.5px;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;position:relative;overflow:hidden}
 .btn-ink{background:var(--ink);color:var(--paper)}
-.btn-ink:hover{background:#000}
+.btn-ink::before{content:"";position:absolute;inset:0;background:var(--acc);transform:translateY(101%);transition:transform .45s cubic-bezier(.16,1,.3,1);border-radius:inherit}
+.btn-ink:hover::before{transform:none}
+.btn-ink > *{position:relative}
 .btn-line{border:1px solid var(--line);color:var(--ink);background:transparent}
-.btn-line:hover{border-color:var(--ink)}
+.btn-line:hover{border-color:var(--ink);background:var(--panel)}
 .btn svg{width:15px;height:15px;flex:none}
-.btn-ink .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex:none}
+.btn .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex:none;transition:background .25s}
+.btn-ink:hover .dot{background:#fff}
 
 /* nav */
-.nav{position:sticky;top:0;z-index:40;background:rgba(239,238,234,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.nav{position:sticky;top:0;z-index:40;background:rgba(237,236,232,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
 .brand i{width:8px;height:8px;border-radius:50%;background:var(--acc);display:inline-block}
-.nav-links{display:none;gap:26px;font-size:14.5px;color:var(--ink-2)}
-.nav-links a:hover{color:var(--ink)}
+.nav-links{display:none;gap:4px;font-size:14px;color:var(--ink-2)}
+.nav-links a{padding:8px 12px;border-radius:999px;transition:background .2s,color .2s}
+.nav-links a:hover{color:var(--ink);background:var(--panel-2)}
 .nav-cta{display:none;min-height:42px;padding:0 18px;font-size:14.5px}
 .burger{width:44px;height:44px;display:grid;place-items:center;margin-right:-10px}
 .burger span{display:block;width:22px;height:1.5px;background:var(--ink);position:relative;transition:background .2s}
@@ -74,124 +81,133 @@ body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opa
 body.menu-open .burger span{background:transparent}
 body.menu-open .burger span::before{top:0;transform:rotate(45deg)}
 body.menu-open .burger span::after{top:0;transform:rotate(-45deg)}
-.menu{position:fixed;inset:64px 0 0 0;background:var(--paper);z-index:39;padding:20px var(--gut) 40px;display:none;flex-direction:column}
+.menu{position:fixed;inset:62px 0 0 0;background:var(--paper);z-index:39;padding:16px var(--gut) 40px;display:none;flex-direction:column}
 body.menu-open .menu{display:flex}
 body.menu-open{overflow:hidden}
-.menu a{font-family:var(--display);font-size:40px;font-weight:500;letter-spacing:-.03em;padding:14px 0;border-bottom:1px solid var(--line-soft)}
+.menu a{font-family:var(--display);font-size:38px;font-weight:500;letter-spacing:-.03em;padding:14px 0;border-bottom:1px solid var(--line-soft)}
 .menu a.btn{font-family:var(--sans);font-size:16px;letter-spacing:0;border:0;margin-top:28px;align-self:stretch;padding:0 22px}
 @media (min-width:900px){.nav-links,.nav-cta{display:inline-flex}.burger,.menu{display:none!important}}
 
-/* hero */
-.hero{padding:10px 0 0}
-.hero-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--card);min-height:calc(100svh - 84px);display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px 26px;box-shadow:0 0 0 1px var(--line-soft)}
-.hero-card canvas{position:absolute;inset:0;width:100%;height:100%}
-.hero-card::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 50% 60%,rgba(247,246,243,0) 30%,rgba(247,246,243,.9) 100%);pointer-events:none}
-.hero-in{position:relative;z-index:2;display:grid;gap:20px}
+/* ---------- HERO ---------- */
+.hero{padding:8px 0 0}
+.hero-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);box-shadow:0 0 0 1px var(--line-soft);min-height:calc(100svh - 78px);display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px 28px}
+.hero-card canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform}
+.hero-card .spot{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
+.hero-in{position:relative;z-index:2;display:grid;gap:22px}
 .hero h1{max-width:9ch}
-.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em;margin-bottom:-.06em}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
 .hero h1 .w span{display:inline-block;transform:translateY(110%);animation:up .9s cubic-bezier(.16,1,.3,1) forwards;animation-delay:var(--d,0s)}
 @keyframes up{to{transform:none}}
 .hero .lead{opacity:0;animation:fade .8s ease .55s forwards}
 .hero .actions{display:flex;flex-direction:column;gap:10px;opacity:0;animation:fade .8s ease .7s forwards}
 .hero .actions .btn{width:100%}
-.hero .meta{display:flex;flex-wrap:wrap;gap:8px 18px;opacity:0;animation:fade .8s ease .9s forwards}
+.chips{display:flex;flex-wrap:wrap;gap:8px;opacity:0;animation:fade .8s ease .9s forwards}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:rgba(246,245,242,.85);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.chip i{width:6px;height:6px;border-radius:50%;background:var(--acc)}
 @keyframes fade{to{opacity:1}}
 @media (min-width:900px){
-  .hero-card{min-height:calc(100vh - 90px);padding:56px 60px 52px;justify-content:center}
-  .hero-in{max-width:880px}
-  .hero h1{font-size:clamp(72px,8vw,118px);max-width:10ch}
+  .hero-card{min-height:calc(100vh - 86px);padding:72px 60px 64px;justify-content:center;align-items:center;text-align:center}
+  .hero-in{max-width:980px;justify-items:center}
+  .hero h1{font-size:clamp(76px,8.6vw,132px);max-width:11ch}
+  .hero .lead{max-width:52ch;font-size:19px}
   .hero .actions{flex-direction:row}.hero .actions .btn{width:auto}
+  .chips{justify-content:center;margin-top:8px}
 }
 
-/* sections */
+/* ---------- sections ---------- */
 section{padding:84px 0}
-.sec-head{display:grid;gap:14px;margin-bottom:38px}
+.sec-head{display:grid;gap:14px;margin-bottom:34px}
 .sec-head .lead{max-width:48ch}
-@media (min-width:900px){section{padding:130px 0}.sec-head{margin-bottom:56px;grid-template-columns:1fr 1fr;align-items:end}.sec-head .lead{justify-self:end;max-width:44ch}}
+@media (min-width:900px){section{padding:128px 0}.sec-head{margin-bottom:56px;grid-template-columns:1fr 1fr;align-items:end}.sec-head .lead{justify-self:end;max-width:44ch}}
 
-/* services rows */
-.rows{border-top:1px solid var(--line)}
-.row{display:grid;grid-template-columns:1fr;gap:8px;padding:22px 0;border-bottom:1px solid var(--line);position:relative;transition:padding .3s}
-.row .t{font-family:var(--display);font-size:clamp(26px,6.5vw,44px);letter-spacing:-.03em;line-height:1.05;font-weight:500;display:flex;align-items:baseline;gap:14px}
-.row .t small{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-3);font-weight:400}
-.row p{color:var(--ink-2);max-width:52ch}
-.row .arrow{display:none}
+/* services: mobile = snap cards, desktop = rows */
+.svc-m{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px var(--gut) 18px;margin:0 calc(-1*var(--gut));-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.svc-m::-webkit-scrollbar{display:none}
+.svc-card{flex:0 0 84%;scroll-snap-align:start;background:var(--panel);border-radius:var(--r);box-shadow:0 0 0 1px var(--line-soft);padding:24px 22px 22px;min-height:290px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.svc-card .num{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--ink-3)}
+.svc-card h3{font-size:27px;margin-top:auto}
+.svc-card p{color:var(--ink-2);font-size:15.5px}
+.svc-card .hf{position:absolute;right:-10px;top:-10px;width:150px;height:150px;opacity:.9;pointer-events:none}
+.svc-dots{display:flex;gap:6px;justify-content:center;margin-top:4px}
+.svc-dots i{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .2s,transform .2s}
+.svc-dots i.on{background:var(--ink);transform:scale(1.2)}
+.svc-d{display:none}
 @media (min-width:900px){
-  .row{grid-template-columns:5fr 5fr 1fr;align-items:center;gap:40px;padding:30px 0}
+  .svc-m,.svc-dots{display:none}
+  .svc-d{display:block;border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:5fr 5fr 1fr;align-items:center;gap:40px;padding:30px 0;border-bottom:1px solid var(--line);transition:padding .35s cubic-bezier(.16,1,.3,1)}
+  .row .t{font-family:var(--display);font-size:42px;letter-spacing:-.03em;line-height:1.05;font-weight:500;display:flex;align-items:baseline;gap:14px}
+  .row .t small{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--ink-3);font-weight:400}
+  .row p{color:var(--ink-2);max-width:52ch}
   .row .arrow{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);justify-self:end;transition:background .3s,color .3s,transform .5s cubic-bezier(.16,1,.3,1)}
   .row .arrow svg{width:16px;height:16px}
   .row:hover .arrow{background:var(--ink);color:var(--paper);transform:rotate(-45deg)}
-  .row:hover{padding-left:12px}
+  .row:hover{padding-left:14px}
 }
 .rows-note{margin-top:22px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
 .rows-note b{font-weight:500;color:var(--ink)}
 
-/* process: sticky stack */
+/* process: mobile sticky stack, desktop timeline */
 .stack{display:grid;gap:14px}
-.card{position:sticky;top:84px;background:var(--card);border-radius:var(--r);padding:28px 22px;box-shadow:0 0 0 1px var(--line-soft);transform-origin:50% 0;will-change:transform;display:grid;gap:18px;min-height:300px;overflow:hidden}
-.card .n{font-family:var(--display);font-size:60px;line-height:.9;letter-spacing:-.04em;color:var(--acc);font-weight:500}
-.card h3{font-size:28px;margin-top:12px}
-.card p{color:var(--ink-2);max-width:46ch;margin-top:10px}
-.card:nth-child(2){background:var(--card-2)}
+.card{position:sticky;top:78px;background:var(--panel);border-radius:var(--r);padding:26px 22px;box-shadow:0 0 0 1px var(--line-soft);transform-origin:50% 0;display:grid;gap:14px;min-height:280px;overflow:hidden}
+.card .n{font-family:var(--display);font-size:56px;line-height:.9;letter-spacing:-.04em;color:var(--acc);font-weight:500}
+.card h3{font-size:27px;margin-top:10px}
+.card p{color:var(--ink-2);max-width:46ch;margin-top:8px}
+.card:nth-child(2){background:var(--panel-2)}
 .card:nth-child(3){background:var(--ink);color:var(--paper)}
-.card:nth-child(3) p{color:rgba(239,238,234,.7)}
-.card:nth-child(3) .mono{color:rgba(239,238,234,.55)}
-.card .pat{position:absolute;right:-20px;bottom:-20px;width:46%;max-width:260px;aspect-ratio:1;opacity:.5;pointer-events:none;border-radius:var(--r)}
-.pat-dots{background-image:radial-gradient(circle,rgba(17,18,20,.35) 1px,transparent 1.4px);background-size:14px 14px;-webkit-mask-image:radial-gradient(circle at 70% 70%,#000 20%,transparent 72%);mask-image:radial-gradient(circle at 70% 70%,#000 20%,transparent 72%)}
-.pat-lines{background-image:repeating-linear-gradient(-45deg,rgba(17,18,20,.28) 0 1px,transparent 1px 9px);-webkit-mask-image:radial-gradient(circle at 70% 70%,#000 20%,transparent 72%);mask-image:radial-gradient(circle at 70% 70%,#000 20%,transparent 72%)}
-.pat-rings{background:repeating-radial-gradient(circle at 80% 80%,transparent 0 10px,rgba(239,238,234,.28) 10px 11px);-webkit-mask-image:radial-gradient(circle at 80% 80%,#000 30%,transparent 72%);mask-image:radial-gradient(circle at 80% 80%,#000 30%,transparent 72%)}
-.pat-grid{background-image:linear-gradient(rgba(17,18,20,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(17,18,20,.22) 1px,transparent 1px);background-size:16px 16px;-webkit-mask-image:radial-gradient(circle at 70% 70%,#000 20%,transparent 72%);mask-image:radial-gradient(circle at 70% 70%,#000 20%,transparent 72%)}
+.card:nth-child(3) p{color:rgba(237,236,232,.72)}
+.card:nth-child(3) .mono{color:rgba(237,236,232,.6)}
+.card .hf{position:absolute;right:-16px;bottom:-16px;width:46%;max-width:240px;aspect-ratio:1;pointer-events:none}
 @media (min-width:900px){
-  .card{grid-template-columns:120px 1fr;align-items:start;padding:44px 48px;min-height:340px;top:96px}
-  .card .n{font-size:84px}
-  .card h3{font-size:36px}
-  .card .pat{width:30%}
+  .stack{grid-template-columns:repeat(4,1fr);gap:16px;position:relative;padding-top:34px}
+  .stack::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line)}
+  .stack::after{content:"";position:absolute;left:0;top:0;height:1px;width:var(--tl,0%);background:var(--acc);transition:width 1.4s cubic-bezier(.16,1,.3,1)}
+  .card{position:relative;top:auto;min-height:360px;padding:30px 28px;transform:none!important;filter:none!important}
+  .card .n{font-size:64px}
+  .card h3{font-size:26px}
+  .card .hf{width:52%}
 }
 
 /* bento */
 .bento{display:grid;gap:12px}
-.cell{position:relative;overflow:hidden;border-radius:var(--r);background:var(--card);box-shadow:0 0 0 1px var(--line-soft);padding:24px 22px;min-height:190px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}
+.cell{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);box-shadow:0 0 0 1px var(--line-soft);padding:24px 22px;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}
 .cell h3{font-size:24px}
-.cell p{color:var(--ink-2);max-width:36ch;font-size:15.5px}
-.cell .big{font-family:var(--display);font-size:clamp(56px,16vw,120px);letter-spacing:-.05em;line-height:.9;font-weight:500}
+.cell p{color:var(--ink-2);max-width:38ch;font-size:15.5px}
+.cell .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:auto;padding-bottom:26px}
+.cell .big{font-family:var(--display);font-size:clamp(64px,17vw,110px);letter-spacing:-.05em;line-height:.85;font-weight:500}
 .cell.dark{background:var(--ink);color:var(--paper)}
-.cell.dark p{color:rgba(239,238,234,.68)}
+.cell.dark p{color:rgba(237,236,232,.7)}
 .cell.orange{background:var(--acc);color:#fff}
-.cell.orange p{color:rgba(255,255,255,.85)}
-.cell .bg{position:absolute;inset:0;pointer-events:none}
-.bg-dots{background-image:radial-gradient(circle,rgba(17,18,20,.3) 1px,transparent 1.4px);background-size:16px 16px;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 75%);mask-image:linear-gradient(to bottom,#000,transparent 75%)}
-.bg-dots.light{background-image:radial-gradient(circle,rgba(239,238,234,.35) 1px,transparent 1.4px)}
-.bg-lines{background-image:repeating-linear-gradient(90deg,rgba(17,18,20,.14) 0 1px,transparent 1px 14px);-webkit-mask-image:linear-gradient(to left,#000,transparent 80%);mask-image:linear-gradient(to left,#000,transparent 80%)}
-.bg-rings{background:repeating-radial-gradient(circle at 100% 0%,transparent 0 14px,rgba(255,255,255,.35) 14px 15px);-webkit-mask-image:radial-gradient(circle at 100% 0%,#000 10%,transparent 70%);mask-image:radial-gradient(circle at 100% 0%,#000 10%,transparent 70%)}
-.meter{position:absolute;top:22px;right:22px;width:64px;height:64px}
+.cell.orange p{color:rgba(255,255,255,.86)}
+.cell .hf{position:absolute;inset:0;pointer-events:none}
+.meter{width:64px;height:64px;flex:none}
 .meter circle{fill:none;stroke-width:3}
-.meter .bgc{stroke:rgba(239,238,234,.18)}
+.meter .bgc{stroke:rgba(237,236,232,.18)}
 .meter .fg{stroke:var(--acc);stroke-linecap:round;stroke-dasharray:176;stroke-dashoffset:176;transition:stroke-dashoffset 1.6s cubic-bezier(.16,1,.3,1)}
 .in .meter .fg{stroke-dashoffset:0}
 @media (min-width:900px){
-  .bento{grid-template-columns:repeat(6,1fr);grid-auto-rows:240px;gap:14px}
+  .bento{grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(270px,auto);gap:14px}
   .c1{grid-column:1/4}.c2{grid-column:4/7}.c3{grid-column:1/3}.c4{grid-column:3/5}.c5{grid-column:5/7}
   .cell{padding:30px 32px}
+  .cell .big{font-size:104px}
 }
 
 /* pricing */
-.price-card{border-radius:var(--r);background:var(--card);box-shadow:0 0 0 1px var(--line-soft);padding:30px 22px;display:grid;gap:22px;position:relative;overflow:hidden}
+.price-card{border-radius:var(--r);background:var(--panel);box-shadow:0 0 0 1px var(--line-soft);padding:30px 22px;display:grid;gap:22px;position:relative;overflow:hidden}
+.price-card .hf{position:absolute;inset:0;pointer-events:none}
+.price-card > *{position:relative}
 .price-card .from{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.price-card .from .num{font-family:var(--display);font-size:clamp(72px,20vw,150px);letter-spacing:-.05em;line-height:.9;font-weight:500}
+.price-card .from .num{font-family:var(--display);font-size:clamp(76px,21vw,150px);letter-spacing:-.05em;line-height:.9;font-weight:500}
 .price-card .from .cur{font-family:var(--display);font-size:clamp(28px,7vw,52px);letter-spacing:-.03em;color:var(--ink-3)}
 .checks{list-style:none;display:grid;gap:10px;color:var(--ink-2)}
 .checks li{padding-left:26px;position:relative}
-.checks li::before{content:"";position:absolute;left:0;top:.45em;width:14px;height:14px;border-radius:50%;background:var(--ink);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") center/contain no-repeat}
+.checks li::before{content:"";position:absolute;left:0;top:.42em;width:14px;height:14px;border-radius:50%;background:var(--ink);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") center/contain no-repeat}
 .price-card .btn{justify-self:start}
 .price-side{display:grid;gap:16px;margin-top:16px}
 .price-side .f{border-top:1px solid var(--line);padding:16px 0 0;display:grid;gap:4px}
 .price-side .f b{font-weight:500}
 .price-side .f span{color:var(--ink-2);font-size:15px}
-@media (min-width:900px){
-  .pricing-grid{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:start}
-  .price-card{padding:48px 52px}
-  .price-side{margin-top:0}
-}
+@media (min-width:900px){.pricing-grid{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:start}.price-card{padding:48px 52px}.price-side{margin-top:0}}
 
 /* faq */
 .faq{border-top:1px solid var(--line)}
@@ -210,38 +226,34 @@ section{padding:84px 0}
 .contact{padding-bottom:16px}
 .contact-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--ink);color:var(--paper);padding:34px 22px;display:grid;gap:28px}
 .contact-card canvas{position:absolute;inset:0;width:100%;height:100%}
+.contact-card .spot{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
 .contact-card > *{position:relative;z-index:2}
 .contact-card h2{max-width:10ch}
-.contact-card .lead{color:rgba(239,238,234,.7)}
-.form{display:grid;gap:14px;background:var(--card);color:var(--ink);border-radius:var(--r-sm);padding:22px 18px}
+.contact-card .lead{color:rgba(237,236,232,.72)}
+.form{display:grid;gap:14px;background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:22px 18px}
 .field{display:grid;gap:6px}
 .field label{font-size:13.5px;color:var(--ink-2)}
 .field input,.field textarea,.field select{width:100%;min-height:50px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:16px;color:var(--ink);appearance:none;-webkit-appearance:none}
 .field textarea{min-height:104px;resize:vertical}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' stroke='%23111214' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' stroke='%23121315' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
 .field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--ink);outline-offset:1px}
 .form .btn{width:100%}
 .form .hint{font-size:13.5px;color:var(--ink-3)}
-.contact-card .alt{display:grid;gap:6px;color:rgba(239,238,234,.7);font-size:15px;margin-top:28px}
+.contact-card .alt{display:grid;gap:6px;color:rgba(237,236,232,.72);font-size:15px;margin-top:28px}
 .contact-card .alt b{color:var(--paper);font-weight:500;font-family:var(--display);font-size:22px;letter-spacing:-.02em}
-.contact-card .alt .mono{color:rgba(239,238,234,.5)}
-@media (min-width:900px){
-  .contact-card{grid-template-columns:1fr 1fr;padding:60px;gap:60px;align-items:center}
-  .form{padding:28px}
-  .form .btn{width:auto;justify-self:start}
-}
+.contact-card .alt .mono{color:rgba(237,236,232,.55)}
+@media (min-width:900px){.contact-card{grid-template-columns:1fr 1fr;padding:64px;gap:60px;align-items:center}.form{padding:28px}.form .btn{width:auto;justify-self:start}}
 
 footer{padding:34px 0 calc(26px + env(safe-area-inset-bottom));font-size:13.5px;color:var(--ink-3)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:8px 26px;justify-content:space-between}
 footer a:hover{color:var(--ink)}
 
 /* reveal */
-.ri{opacity:0;transform:translateY(16px);transition:opacity .7s ease var(--d,0s),transform .9s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.ri{opacity:0;transform:translateY(18px);transition:opacity .7s ease var(--d,0s),transform 1s cubic-bezier(.16,1,.3,1) var(--d,0s)}
 .ri.in,.no-motion .ri{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
-  .hero h1 .w span,.hero .lead,.hero .actions,.hero .meta{animation:none;transform:none;opacity:1}
+  .hero h1 .w span,.hero .lead,.hero .actions,.chips{animation:none;transform:none;opacity:1}
   .ri{opacity:1;transform:none;transition:none}
-  html{scroll-behavior:auto}
 }
 </style>
 </head>
@@ -252,27 +264,28 @@ footer a:hover{color:var(--ink)}
   <div class="wrap">
     <a class="brand" href="/" id="logo"><i></i>Nemunas</a>
     <div class="nav-links"><a href="#services">Services</a><a href="#process">Process</a><a href="#why">Why us</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div>
-    <a class="btn btn-ink nav-cta magnet" href="#contact"><span class="dot"></span>Book a call</a>
+    <a class="btn btn-ink nav-cta" href="#contact"><span class="dot"></span><span>Book a call</span></a>
     <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-open')"><span></span></button>
   </div>
 </nav>
 <div class="menu" onclick="document.body.classList.remove('menu-open')">
   <a href="#services">Services</a><a href="#process">Process</a><a href="#why">Why us</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-  <a class="btn btn-ink" href="#contact"><span class="dot"></span>Book a call</a>
+  <a class="btn btn-ink" href="#contact"><span class="dot"></span><span>Book a call</span></a>
 </div>
 
 <header class="hero">
   <div class="wrap">
-    <div class="hero-card">
-      <canvas id="dots-hero" aria-hidden="true"></canvas>
+    <div class="hero-card" id="heroCard">
+      <canvas class="hf-field" data-ink="18,19,21" data-mode="edges" data-mode-m="top" aria-hidden="true"></canvas>
+      <canvas class="spot hf-field" data-ink="18,19,21" data-mode="edges" data-mode-m="top" data-strong="1" aria-hidden="true"></canvas>
       <div class="hero-in">
         <h1 id="h1">A website that brings you work.</h1>
         <p class="lead">Design, build, launch and care by one developer. Fixed price agreed before we start. Pages start from 99 EUR.</p>
         <div class="actions">
-          <a class="btn btn-ink magnet" href="#contact"><span class="dot"></span>Book a call <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          <a class="btn btn-line magnet" href="#services">What I build</a>
+          <a class="btn btn-ink" href="#contact"><span class="dot"></span><span>Book a call</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="btn btn-line" href="#services">What I build</a>
         </div>
-        <div class="meta mono"><span>Fixed price</span><span>Design approved before code</span><span>Kaunas, Lithuania · remote everywhere</span></div>
+        <div class="chips"><span class="chip"><i></i>Fixed price</span><span class="chip"><i></i>Design approved before code</span><span class="chip"><i></i>Kaunas, Lithuania · remote everywhere</span></div>
       </div>
     </div>
   </div>
@@ -284,7 +297,17 @@ footer a:hover{color:var(--ink)}
       <h2 class="ri">What I build</h2>
       <p class="lead ri">One developer, one quality. Every project comes with a fixed price and a date before any work starts.</p>
     </div>
-    <div class="rows">
+
+    <div class="svc-m ri" id="svcm">
+      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">01</span><h3>Business websites</h3><p>A company or single-page site that presents your services and collects enquiries. Booking and appointments if you need them.</p></a>
+      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">02</span><h3>Landing pages</h3><p>One page, one offer, one button. Built to turn ad clicks and Instagram visits into calls and bookings.</p></a>
+      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">03</span><h3>Online stores</h3><p>A shop with card payments, shipping integrations and a product catalogue you can manage yourself.</p></a>
+      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">04</span><h3>Web apps and portals</h3><p>Client portals, internal tools and small systems built around how your business actually runs.</p></a>
+      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">05</span><h3>Rebuilds and speed</h3><p>Your current site made fast, mobile-ready and findable on Google. Moving off WordPress or a page builder included.</p></a>
+    </div>
+    <div class="svc-dots" id="svcdots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+
+    <div class="svc-d">
       <a class="row ri" href="#contact"><div class="t">Business websites <small>01</small></div><p>A company or single-page site that presents your services and collects enquiries. Booking and online appointments if you need them.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
       <a class="row ri" href="#contact"><div class="t">Landing pages <small>02</small></div><p>One page, one offer, one button. Built to turn ad clicks and Instagram visits into calls and bookings.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
       <a class="row ri" href="#contact"><div class="t">Online stores <small>03</small></div><p>A shop with card payments, shipping integrations and a product catalogue you can manage yourself.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
@@ -301,11 +324,11 @@ footer a:hover{color:var(--ink)}
       <h2 class="ri">From a call to launch</h2>
       <p class="lead ri">Clear steps and dates. You always know what is happening with your project.</p>
     </div>
-    <div class="stack">
-      <div class="card"><div class="n">1</div><div><span class="mono">20 min · free</span><h3>Call</h3><p>We work out what your business needs. Phone or video, no commitment.</p></div><div class="pat pat-dots"></div></div>
-      <div class="card"><div class="n">2</div><div><span class="mono">Within 1 working day</span><h3>Proposal</h3><p>You get a fixed price, a launch date and a clear list of what is included.</p></div><div class="pat pat-lines"></div></div>
-      <div class="card"><div class="n">3</div><div><span class="mono">1 to 6 weeks</span><h3>Design, then build</h3><p>You approve the design first. Only then does the code start. No surprises at the end.</p></div><div class="pat pat-rings"></div></div>
-      <div class="card"><div class="n">4</div><div><span class="mono">First month included</span><h3>Launch and care</h3><p>Domain, hosting and analytics connected. The first month of care is on me.</p></div><div class="pat pat-grid"></div></div>
+    <div class="stack" id="stack">
+      <div class="card"><div class="n">1</div><div><span class="mono">20 min · free</span><h3>Call</h3><p>We work out what your business needs. Phone or video, no commitment.</p></div><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas></div>
+      <div class="card"><div class="n">2</div><div><span class="mono">Within 1 working day</span><h3>Proposal</h3><p>You get a fixed price, a launch date and a clear list of what is included.</p></div><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas></div>
+      <div class="card"><div class="n">3</div><div><span class="mono">1 to 6 weeks</span><h3>Design, then build</h3><p>You approve the design first. Only then does the code start. No surprises at the end.</p></div><canvas class="hf hf-field" data-ink="237,236,232" data-mode="corner" aria-hidden="true"></canvas></div>
+      <div class="card"><div class="n">4</div><div><span class="mono">First month included</span><h3>Launch and care</h3><p>Domain, hosting and analytics connected. The first month of care is on me.</p></div><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas></div>
     </div>
   </div>
 </section>
@@ -317,10 +340,10 @@ footer a:hover{color:var(--ink)}
       <p class="lead ri">Design, code, Google and launch in one pair of hands. No agency layers, no three contractors to coordinate.</p>
     </div>
     <div class="bento">
-      <div class="cell c1 dark ri"><div class="bg bg-dots light"></div><svg class="meter" viewBox="0 0 64 64"><circle class="bgc" cx="32" cy="32" r="28"/><circle class="fg" cx="32" cy="32" r="28" transform="rotate(-90 32 32)"/></svg><div class="big"><span data-count="100">0</span></div><h3>Built for speed</h3><p>Hand-written code, no page-builder bloat. Every site is checked against Google's performance score before launch.</p></div>
-      <div class="cell c2 ri" style="--d:.08s"><div class="bg bg-lines"></div><h3>Fixed price, in writing</h3><p>The price in the proposal is the price on the invoice. Extra work is agreed before it happens, never after.</p></div>
-      <div class="cell c3 orange ri" style="--d:.16s"><div class="bg bg-rings"></div><h3>Looks right on every screen</h3><p>Checked on real phones, not just a resized browser window.</p></div>
-      <div class="cell c4 ri" style="--d:.24s"><div class="bg bg-dots"></div><h3>You own everything</h3><p>Domain, hosting account and code are registered to you. Leave any time with all of it.</p></div>
+      <div class="cell c1 dark ri"><canvas class="hf hf-field" data-ink="237,236,232" data-mode="top" aria-hidden="true"></canvas><div class="top" style="position:relative"><div class="big"><span data-count="100">0</span></div><svg class="meter" viewBox="0 0 64 64"><circle class="bgc" cx="32" cy="32" r="28"/><circle class="fg" cx="32" cy="32" r="28" transform="rotate(-90 32 32)"/></svg></div><h3 style="position:relative">Built for speed</h3><p style="position:relative">Hand-written code, no page-builder bloat. Every site is checked against Google's performance score before launch.</p></div>
+      <div class="cell c2 ri" style="--d:.08s"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="right" aria-hidden="true"></canvas><h3 style="position:relative">Fixed price, in writing</h3><p style="position:relative">The price in the proposal is the price on the invoice. Extra work is agreed before it happens, never after.</p></div>
+      <div class="cell c3 orange ri" style="--d:.16s"><canvas class="hf hf-field" data-ink="255,255,255" data-mode="top" aria-hidden="true"></canvas><h3 style="position:relative">Looks right on every screen</h3><p style="position:relative">Checked on real phones, not just a resized browser window.</p></div>
+      <div class="cell c4 ri" style="--d:.24s"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><h3 style="position:relative">You own everything</h3><p style="position:relative">Domain, hosting account and code are registered to you. Leave any time with all of it.</p></div>
       <div class="cell c5 ri" style="--d:.32s"><h3>Replies within one working day</h3><p>You write to Matas and Matas answers. During the build and after launch.</p></div>
     </div>
   </div>
@@ -334,6 +357,7 @@ footer a:hover{color:var(--ink)}
     </div>
     <div class="pricing-grid">
       <div class="price-card ri">
+        <canvas class="hf hf-field" data-ink="18,19,21" data-mode="right" aria-hidden="true"></canvas>
         <span class="mono">Websites start from</span>
         <div class="from"><span class="num" data-count="99">0</span><span class="cur">EUR</span></div>
         <ul class="checks">
@@ -343,7 +367,7 @@ footer a:hover{color:var(--ink)}
           <li>Google-ready structure and speed</li>
           <li>First month of care included</li>
         </ul>
-        <a class="btn btn-ink magnet" href="#contact"><span class="dot"></span>Book a call for a fixed quote</a>
+        <a class="btn btn-ink" href="#contact"><span class="dot"></span><span>Book a call for a fixed quote</span></a>
       </div>
       <div class="price-side ri" style="--d:.1s">
         <div class="f"><b>Online stores and web apps</b><span>Priced per project after the call. You get the exact number and date in writing within one working day.</span></div>
@@ -375,8 +399,9 @@ footer a:hover{color:var(--ink)}
 
 <section id="contact" class="contact">
   <div class="wrap">
-    <div class="contact-card">
-      <canvas id="dots-contact" aria-hidden="true"></canvas>
+    <div class="contact-card" id="contactCard">
+      <canvas class="hf-field" data-ink="237,236,232" data-mode="edges" data-mode-m="bottom" aria-hidden="true"></canvas>
+      <canvas class="spot hf-field" data-ink="237,236,232" data-mode="edges" data-mode-m="bottom" data-strong="1" aria-hidden="true"></canvas>
       <div>
         <h2>Let's talk about your project.</h2>
         <p class="lead" style="margin-top:16px">Leave your details and a good time to call. You hear back within one working day.</p>
@@ -389,7 +414,7 @@ footer a:hover{color:var(--ink)}
           <select id="f-need" name="need"><option>A website</option><option>A landing page</option><option>An online store</option><option>A web app or portal</option><option>A rebuild of my current site</option><option>Not sure yet</option></select></div>
         <div class="field"><label for="f-time">Best time to call</label><input id="f-time" name="time" placeholder="Weekdays after 3pm"></div>
         <div class="field"><label for="f-note">A few words about the project</label><textarea id="f-note" name="note"></textarea></div>
-        <button class="btn btn-ink magnet" type="submit"><span class="dot"></span>Book a call</button>
+        <button class="btn btn-ink" type="submit"><span class="dot"></span><span>Book a call</span></button>
         <p class="hint">Opens in your mail app. First call is free, reply within one working day.</p>
       </form>
     </div>
@@ -407,12 +432,51 @@ footer a:hover{color:var(--ink)}
 <script>
 (function(){
   var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var hover=matchMedia('(hover:hover)').matches;
+  var hover=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var desktop=function(){return innerWidth>=900;};
   if(rm)document.documentElement.classList.add('no-motion');
 
+  /* ---------- halftone fields (drawn once, static) ---------- */
+  function halftone(c){
+    var ctx=c.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
+    var r=c.getBoundingClientRect(),W=Math.max(1,r.width),H=Math.max(1,r.height);
+    c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+    var ink=c.getAttribute('data-ink'),mode=c.getAttribute('data-mode'),strong=c.hasAttribute('data-strong');
+    if(!desktop()&&c.hasAttribute('data-mode-m'))mode=c.getAttribute('data-mode-m');
+    var gap=desktop()?13:11,maxR=strong?gap*.4:gap*.27,alpha=strong?.7:.3;
+    for(var x=gap/2;x<W;x+=gap)for(var y=gap/2;y<H;y+=gap){
+      var k;
+      if(mode==='edges'){var ex=Math.min(x,W-x)/W,ey=Math.min(y,H-y)/H;k=1-Math.min(ex*5.5,ey*3.2,1);}
+      else if(mode==='corner'){var dx=(W-x)/W,dy=(H-y)/H;k=1-Math.min(1,Math.sqrt(dx*dx+dy*dy)*2.1);}
+      else if(mode==='top'){k=1-y/H*2.4;}
+      else if(mode==='bottom'){k=1-(H-y)/H*2.4;}
+      else {k=1-(W-x)/W*2.6;}
+      k=Math.max(0,Math.min(1,k));k=k*k;
+      if(k<0.03)continue;
+      ctx.fillStyle='rgba('+ink+','+alpha+')';
+      ctx.beginPath();ctx.arc(x,y,maxR*k+0.15,0,6.283);ctx.fill();
+    }
+  }
+  var fields=[].slice.call(document.querySelectorAll('.hf-field'));
+  function drawAll(){fields.forEach(halftone);}
+  drawAll();
+  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(drawAll,150);});
+
+  /* cursor spotlight: strong layer revealed through a soft circular mask */
+  if(hover&&!rm){
+    [document.getElementById('heroCard'),document.getElementById('contactCard')].forEach(function(card){
+      var spot=card.querySelector('.spot'),tx=0,ty=0,cx=0,cy=0,raf;
+      function tick(){cx+=(tx-cx)*.12;cy+=(ty-cy)*.12;var m='radial-gradient(260px circle at '+cx+'px '+cy+'px, #000 0%, rgba(0,0,0,.55) 45%, transparent 72%)';spot.style.webkitMaskImage=m;spot.style.maskImage=m;if(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3)raf=requestAnimationFrame(tick);else raf=null;}
+      card.addEventListener('pointermove',function(e){var r=card.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;spot.style.opacity=1;if(!raf)raf=requestAnimationFrame(tick);});
+      card.addEventListener('pointerleave',function(){spot.style.opacity=0;});
+    });
+  }
+
+  /* hero words */
   var h1=document.getElementById('h1');
   if(!rm){h1.innerHTML=h1.textContent.split(' ').map(function(w,i){return '<span class="w"><span style="--d:'+(0.08+i*0.07)+'s">'+w+'</span></span>';}).join(' ');}
 
+  /* reveal */
   var els=document.querySelectorAll('.ri');
   if(!rm){
     els.forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*.95)el.classList.add('in');});
@@ -423,61 +487,58 @@ footer a:hover{color:var(--ink)}
     setTimeout(function(){els.forEach(function(el){el.classList.add('in');});},1400);
   }
 
-  var counters=document.querySelectorAll('[data-count]');
+  /* count-up */
+  var counters=[].slice.call(document.querySelectorAll('[data-count]'));
   function runCount(el){var end=+el.getAttribute('data-count'),t0=null;function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400);p=1-Math.pow(1-p,3);el.textContent=Math.round(end*p);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
-  function startCount(c){if(c.dataset.done)return;c.dataset.done=1;runCount(c);}
-  if(rm||!('IntersectionObserver' in window)){counters.forEach(function(c){c.dataset.done=1;c.textContent=c.getAttribute('data-count');});}
-  else{var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){startCount(e.target);cio.unobserve(e.target);}});},{threshold:.2});counters.forEach(function(c){cio.observe(c);});}
+  function startCount(c){if(c.dataset.done)return;c.dataset.done=1;if(rm)c.textContent=c.getAttribute('data-count');else runCount(c);}
 
-  var prog=document.getElementById('prog'),cards=[].slice.call(document.querySelectorAll('.stack .card')),ticking=false;
+  /* process timeline (desktop) */
+  var stack=document.getElementById('stack'),cards=[].slice.call(stack.querySelectorAll('.card')),tlDone=false;
+
+  /* scroll work: progress, counters, stack scale (mobile), timeline, hero parallax */
+  var prog=document.getElementById('prog'),heroCard=document.getElementById('heroCard'),heroField=heroCard.querySelector('canvas'),ticking=false;
   function onScroll(){
     if(ticking)return;ticking=true;
     requestAnimationFrame(function(){
-      var max=document.documentElement.scrollHeight-innerHeight;prog.style.width=(max>0?scrollY/max*100:0)+'%';
-      counters.forEach(function(c){if(!c.dataset.done&&c.getBoundingClientRect().top<innerHeight)startCount(c);});
+      var y=scrollY,max=document.documentElement.scrollHeight-innerHeight;prog.style.width=(max>0?y/max*100:0)+'%';
+      counters.forEach(function(c){if(!c.dataset.done&&c.getBoundingClientRect().top<innerHeight*.9)startCount(c);});
       if(!rm){
-        cards.forEach(function(c,i){
-          var next=cards[i+1];if(!next){c.style.transform='';c.style.filter='';return;}
-          var r=c.getBoundingClientRect(),nr=next.getBoundingClientRect();
-          var p=Math.min(1,Math.max(0,(r.bottom-nr.top)/r.height));
-          c.style.transform='scale('+(1-p*.06)+') translateY('+(-p*10)+'px)';
-          c.style.filter='brightness('+(1-p*.08)+')';
-        });
+        if(y<innerHeight*1.2)heroField.style.transform='translateY('+(y*.18)+'px)';
+        if(!desktop()){
+          cards.forEach(function(c,i){var next=cards[i+1];if(!next){c.style.transform='';return;}var r=c.getBoundingClientRect(),nr=next.getBoundingClientRect();var p=Math.min(1,Math.max(0,(r.bottom-nr.top)/r.height));c.style.transform='scale('+(1-p*.05)+') translateY('+(-p*8)+'px)';});
+        }else if(!tlDone&&stack.getBoundingClientRect().top<innerHeight*.7){tlDone=true;stack.style.setProperty('--tl','100%');}
       }
       ticking=false;
     });
   }
   addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-  if(hover&&!rm){document.querySelectorAll('.magnet').forEach(function(el){
-    el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect();el.style.transform='translate('+((e.clientX-r.left-r.width/2)*.22)+'px,'+((e.clientY-r.top-r.height/2)*.3)+'px)';});
-    el.addEventListener('pointerleave',function(){el.style.transform='';});
-  });}
-
-  function dotField(canvas,color){
-    var ctx=canvas.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2),W,H,cols,rows,gap=22,mx=-9999,my=-9999,t=0,visible=true;
-    function size(){var r=canvas.getBoundingClientRect();W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);cols=Math.ceil(W/gap)+1;rows=Math.ceil(H/gap)+1;}
-    size();addEventListener('resize',size);
-    canvas.parentNode.addEventListener('pointermove',function(e){var r=canvas.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;});
-    canvas.parentNode.addEventListener('pointerleave',function(){mx=my=-9999;});
-    if('IntersectionObserver' in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting;}).observe(canvas);}
-    function draw(){
-      ctx.clearRect(0,0,W,H);ctx.fillStyle=color;
-      for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
-        var x=i*gap+gap/2,y=j*gap+gap/2,r=1;
-        if(!rm){
-          var dx=x-mx,dy=y-my,d=Math.sqrt(dx*dx+dy*dy);
-          if(d<170)r+=(1-d/170)*2.6;
-          var w=Math.sin((x+y)*.02-t*1.6);r+=Math.max(0,w)*.9;
-        }
-        ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.fill();
-      }
+  /* inertial wheel scroll on desktop (touch stays native) */
+  if(hover&&!rm){
+    var sm={t:scrollY,c:scrollY,last:scrollY,active:false};
+    addEventListener('wheel',function(e){
+      if(e.ctrlKey||document.body.classList.contains('menu-open'))return;
+      e.preventDefault();
+      var d=e.deltaY*(e.deltaMode===1?16:1);
+      sm.t=Math.max(0,Math.min(document.documentElement.scrollHeight-innerHeight,sm.t+d));
+      if(!sm.active){sm.active=true;requestAnimationFrame(smLoop);}
+    },{passive:false});
+    function smLoop(){
+      if(Math.abs(scrollY-sm.last)>1.5){sm.t=sm.c=scrollY;}
+      sm.c+=(sm.t-sm.c)*.12;
+      if(Math.abs(sm.t-sm.c)<.4){sm.c=sm.t;}
+      window.scrollTo({top:sm.c,behavior:'instant'});sm.last=scrollY;
+      if(sm.c!==sm.t)requestAnimationFrame(smLoop);else sm.active=false;
     }
-    function loop(){if(visible)draw();t+=.016;requestAnimationFrame(loop);}
-    if(rm)draw();else loop();
+    /* anchors: animate via the same engine */
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(!el)return;e.preventDefault();sm.t=sm.c=scrollY;sm.t=el.getBoundingClientRect().top+scrollY-70;if(!sm.active){sm.active=true;requestAnimationFrame(smLoop);}});});
+  }else{
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var el=document.getElementById(a.getAttribute('href').slice(1));if(!el)return;e.preventDefault();el.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'});});});
   }
-  dotField(document.getElementById('dots-hero'),'rgba(17,18,20,.28)');
-  dotField(document.getElementById('dots-contact'),'rgba(239,238,234,.3)');
+
+  /* services snap dots (mobile) */
+  var svcm=document.getElementById('svcm'),dots=[].slice.call(document.querySelectorAll('#svcdots i'));
+  svcm.addEventListener('scroll',function(){var w=svcm.firstElementChild.getBoundingClientRect().width+12,i=Math.round(svcm.scrollLeft/w);dots.forEach(function(d,k){d.classList.toggle('on',k===i);});},{passive:true});
 
   document.getElementById('logo').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:rm?'auto':'smooth'});});
 })();
