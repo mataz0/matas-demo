@@ -3,376 +3,389 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nemunas Studio · Web development, fixed price, one developer</title>
-<meta name="description" content="Websites, online stores and web apps built by one developer in Kaunas, Lithuania. Fixed price agreed before work starts. Pages start from 99 EUR. Book a call.">
-<meta name="theme-color" content="#EDECE8">
-<meta property="og:title" content="Nemunas Studio · Web development">
+<title>Nemunas Studio · Websites that bring customers</title>
+<meta name="description" content="Websites, online stores and web apps built by one developer in Kaunas, Lithuania. Fixed price, clear deadline, pages start from 99 EUR. Book a call.">
+<meta name="theme-color" content="#F2F2F1">
+<meta property="og:title" content="Nemunas Studio · Websites that bring customers">
 <meta property="og:description" content="One developer. Fixed price. Pages start from 99 EUR.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121315'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0501E'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231B1B1B'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0501E'/%3E%3C/svg%3E">
 <!--
-  v3 · 2026-11-08
-  DESIGN READ: web-development studio landing for small-business owners (UK / IE / EU). Quiet, tactile,
-  print-like. Reference feel: webvibe.lt restraint (halftone edges, rounded panels, mono labels), not its content.
-  DIALS: variance 6 / motion 5 / density 3.  THEME LOCK: light.
-  SYSTEM: paper #EDECE8, panel #F6F5F2, ink #121315, one accent #F0501E (<6% of surface).
-  TYPE: Schibsted Grotesk (display) + Geist (body) + Geist Mono (labels).
-  EFFECTS: static halftone fields drawn once on canvas (dense at the edges, clear in the middle), cursor
-  spotlight that sharpens the halftone (hover devices), inertial wheel scroll on desktop (touch stays native),
-  scroll-linked parallax on the hero field, line reveal, count-up, sticky stack (mobile) / timeline (desktop),
-  accordion FAQ. Everything behind prefers-reduced-motion.
-  LAYOUT: desktop hero centred with halftone columns; mobile hero left-aligned, full height, halftone at the foot.
-  Services: desktop rows, mobile horizontal snap cards. Process: desktop 4-up timeline, mobile sticky stack.
-  GUARDRAILS: no portfolio, no gradients, no fake logos / ratings, no em-dashes, one CTA intent: Book a call.
+  v5 · 2026-11-08 · structure and feel copied from the reference (webvibe.lt) on request, content is ours.
+  SYSTEM: bg #F2F2F1, panel #E9E9E7, white #FBFBFA, ink #1B1B1B, accent #F0501E (dot + small marks only).
+  TYPE: Urbanist (display, light) + Geist (body) + Geist Mono (labels, buttons).
+  EFFECTS: halftone columns in hero / contact (canvas, static), cursor-reveal area, steps line, inertial wheel
+  scroll on desktop, reveal on scroll, accordion. No portfolio, no testimonials, no full prices, no em-dashes.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EDECE8;--panel:#F6F5F2;--panel-2:#E4E2DC;--ink:#121315;--ink-2:#4A4C51;--ink-3:#7E8086;
-  --line:rgba(18,19,21,.14);--line-soft:rgba(18,19,21,.07);--acc:#F0501E;
-  --display:"Schibsted Grotesk",system-ui,sans-serif;--sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  --bg:#F2F2F1;--panel:#E9E9E7;--panel-2:#DFDFDC;--white:#FBFBFA;--ink:#1B1B1B;--ink-2:#4F4F4F;--ink-3:#8A8A8A;
+  --line:rgba(27,27,27,.12);--line-soft:rgba(27,27,27,.06);--acc:#F0501E;
+  --display:"Urbanist",system-ui,sans-serif;--sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;
   --gut:16px;--r:24px;--r-sm:14px;--maxw:1240px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-img,video,canvas{display:block;max-width:100%;height:auto}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,canvas{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
-.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
-h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.035em;line-height:1.02}
-h1{font-size:clamp(44px,12vw,120px)}
-h2{font-size:clamp(34px,8.4vw,66px)}
-h3{font-size:22px;letter-spacing:-.02em;line-height:1.15}
-.lead{font-size:17px;color:var(--ink-2);max-width:42ch}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+h1,h2,h3{font-family:var(--display);font-weight:300;letter-spacing:-.035em;line-height:1}
+h1{font-size:clamp(46px,12vw,118px)}
+h2{font-size:clamp(38px,9vw,78px)}
+h3{font-size:24px;font-weight:400;letter-spacing:-.02em;line-height:1.15}
+.lead{font-size:16px;color:var(--ink-2);max-width:44ch}
+.acc{color:var(--acc)}
 
-body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.045;mix-blend-mode:multiply;
- background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-#prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:70;pointer-events:none}
-
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:500;font-size:15.5px;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;position:relative;overflow:hidden}
-.btn-ink{background:var(--ink);color:var(--paper)}
-.btn-ink::before{content:"";position:absolute;inset:0;background:var(--acc);transform:translateY(101%);transition:transform .45s cubic-bezier(.16,1,.3,1);border-radius:inherit}
-.btn-ink:hover::before{transform:none}
-.btn-ink > *{position:relative}
+/* buttons (mono caps, like the reference) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 20px;border-radius:999px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;transition:background .25s,color .25s,border-color .25s,transform .25s;white-space:nowrap}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:#000}
 .btn-line{border:1px solid var(--line);color:var(--ink);background:transparent}
-.btn-line:hover{border-color:var(--ink);background:var(--panel)}
-.btn svg{width:15px;height:15px;flex:none}
-.btn .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex:none;transition:background .25s}
-.btn-ink:hover .dot{background:#fff}
+.btn-line:hover{border-color:var(--ink)}
+.btn-white{background:var(--white);color:var(--ink);box-shadow:0 0 0 1px var(--line-soft)}
+.btn-white:hover{background:#fff}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:14px;height:14px;flex:none}
+.pill{display:inline-flex;align-items:center;gap:8px;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--white);white-space:nowrap}
+.pill svg{width:12px;height:12px}
 
 /* nav */
-.nav{position:sticky;top:0;z-index:40;background:rgba(237,236,232,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-.brand{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
-.brand i{width:8px;height:8px;border-radius:50%;background:var(--acc);display:inline-block}
-.nav-links{display:none;gap:4px;font-size:14px;color:var(--ink-2)}
-.nav-links a{padding:8px 12px;border-radius:999px;transition:background .2s,color .2s}
-.nav-links a:hover{color:var(--ink);background:var(--panel-2)}
-.nav-cta{display:none;min-height:42px;padding:0 18px;font-size:14.5px}
-.burger{width:44px;height:44px;display:grid;place-items:center;margin-right:-10px}
-.burger span{display:block;width:22px;height:1.5px;background:var(--ink);position:relative;transition:background .2s}
-.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:22px;height:1.5px;background:var(--ink);transition:transform .25s,top .25s}
-.burger span::before{top:-7px}.burger span::after{top:7px}
-body.menu-open .burger span{background:transparent}
-body.menu-open .burger span::before{top:0;transform:rotate(45deg)}
-body.menu-open .burger span::after{top:0;transform:rotate(-45deg)}
-.menu{position:fixed;inset:62px 0 0 0;background:var(--paper);z-index:39;padding:16px var(--gut) 40px;display:none;flex-direction:column}
-body.menu-open .menu{display:flex}
-body.menu-open{overflow:hidden}
-.menu a{font-family:var(--display);font-size:38px;font-weight:500;letter-spacing:-.03em;padding:14px 0;border-bottom:1px solid var(--line-soft)}
-.menu a.btn{font-family:var(--sans);font-size:16px;letter-spacing:0;border:0;margin-top:28px;align-self:stretch;padding:0 22px}
-@media (min-width:900px){.nav-links,.nav-cta{display:inline-flex}.burger,.menu{display:none!important}}
+.nav{position:sticky;top:0;z-index:40;background:rgba(242,242,241,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
+.brand{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
+.brand i{width:7px;height:7px;border-radius:50%;background:var(--acc);display:inline-block}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-right .pill{display:none}
+.nav-right .btn{min-height:38px;padding:0 16px}
+@media (min-width:900px){.nav-right .pill{display:inline-flex;min-height:38px}}
 
-/* ---------- HERO ---------- */
-.hero{padding:8px 0 0}
-.hero-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);box-shadow:0 0 0 1px var(--line-soft);min-height:calc(100svh - 78px);display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px 28px}
-.hero-card canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform}
-.hero-card .spot{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
-.hero-in{position:relative;z-index:2;display:grid;gap:22px}
-.hero h1{max-width:9ch}
-.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+/* hero */
+.hero{padding:6px 0 0}
+.hero-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);min-height:calc(100svh - 76px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 64px}
+.hero-card canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-in{position:relative;z-index:2;display:grid;justify-items:center;gap:22px;max-width:880px}
+.hero .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.hero .tags i{color:var(--acc);font-style:normal}
+.hero h1{max-width:11ch}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em;margin-bottom:-.1em}
 .hero h1 .w span{display:inline-block;transform:translateY(110%);animation:up .9s cubic-bezier(.16,1,.3,1) forwards;animation-delay:var(--d,0s)}
 @keyframes up{to{transform:none}}
-.hero .lead{opacity:0;animation:fade .8s ease .55s forwards}
-.hero .actions{display:flex;flex-direction:column;gap:10px;opacity:0;animation:fade .8s ease .7s forwards}
+.hero .lead{text-align:center;max-width:46ch;opacity:0;animation:fade .8s ease .5s forwards}
+.hero .actions{display:flex;flex-direction:column;gap:10px;width:100%;max-width:380px;opacity:0;animation:fade .8s ease .65s forwards}
 .hero .actions .btn{width:100%}
-.chips{display:flex;flex-wrap:wrap;gap:8px;opacity:0;animation:fade .8s ease .9s forwards}
-.chip{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:rgba(246,245,242,.85);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
-.chip i{width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.hero .with{display:grid;gap:10px;justify-items:center;margin-top:14px;opacity:0;animation:fade .8s ease .8s forwards}
+.hero .with .list{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-family:var(--display);font-weight:400;font-size:17px;color:var(--ink-2)}
 @keyframes fade{to{opacity:1}}
 @media (min-width:900px){
-  .hero-card{min-height:calc(100vh - 86px);padding:72px 60px 64px;justify-content:center;align-items:center;text-align:center}
-  .hero-in{max-width:980px;justify-items:center}
-  .hero h1{font-size:clamp(76px,8.6vw,132px);max-width:11ch}
-  .hero .lead{max-width:52ch;font-size:19px}
-  .hero .actions{flex-direction:row}.hero .actions .btn{width:auto}
-  .chips{justify-content:center;margin-top:8px}
+  .hero-card{min-height:calc(100vh - 84px);padding:96px 60px}
+  .hero h1{font-size:clamp(80px,8.6vw,124px)}
+  .hero .lead{font-size:17px}
+  .hero .actions{flex-direction:row;width:auto;max-width:none}.hero .actions .btn{width:auto}
 }
 
-/* ---------- sections ---------- */
-section{padding:84px 0}
-.sec-head{display:grid;gap:14px;margin-bottom:34px}
-.sec-head .lead{max-width:48ch}
-@media (min-width:900px){section{padding:128px 0}.sec-head{margin-bottom:56px;grid-template-columns:1fr 1fr;align-items:end}.sec-head .lead{justify-self:end;max-width:44ch}}
+section{padding:76px 0}
+@media (min-width:900px){section{padding:120px 0}}
+.sec-head{display:grid;gap:12px;margin-bottom:30px}
+.sec-head .lead{max-width:50ch}
+@media (min-width:900px){.sec-head{grid-template-columns:1fr 1fr;align-items:end;margin-bottom:48px}.sec-head .lead{justify-self:end;max-width:42ch}}
 
-/* services: mobile = snap cards, desktop = rows */
-.svc-m{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px var(--gut) 18px;margin:0 calc(-1*var(--gut));-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.svc-m::-webkit-scrollbar{display:none}
-.svc-card{flex:0 0 84%;scroll-snap-align:start;background:var(--panel);border-radius:var(--r);box-shadow:0 0 0 1px var(--line-soft);padding:24px 22px 22px;min-height:290px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
-.svc-card .num{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--ink-3)}
-.svc-card h3{font-size:27px;margin-top:auto}
-.svc-card p{color:var(--ink-2);font-size:15.5px}
-.svc-card .hf{position:absolute;right:-10px;top:-10px;width:150px;height:150px;opacity:.9;pointer-events:none}
-.svc-dots{display:flex;gap:6px;justify-content:center;margin-top:4px}
-.svc-dots i{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .2s,transform .2s}
-.svc-dots i.on{background:var(--ink);transform:scale(1.2)}
-.svc-d{display:none}
+/* trust tiles */
+.tiles{display:grid;gap:10px}
+.tile{background:var(--white);border-radius:var(--r-sm);box-shadow:0 0 0 1px var(--line-soft);padding:22px 20px;display:grid;gap:14px;min-height:170px;align-content:space-between}
+.tile .ic{width:40px;height:40px;border-radius:12px;background:var(--panel);display:grid;place-items:center}
+.tile .ic svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tile h3{font-size:19px}
+.tile p{color:var(--ink-2);font-size:14.5px}
+@media (min-width:900px){.tiles{grid-template-columns:repeat(4,1fr);gap:12px}.tile{padding:26px 24px;min-height:220px}}
+
+/* services rows */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;gap:10px;padding:22px 0;border-bottom:1px solid var(--line);align-items:center}
+.row .t{font-family:var(--display);font-weight:300;font-size:clamp(28px,7vw,44px);letter-spacing:-.03em;line-height:1.05}
+.row p{color:var(--ink-2);font-size:14.5px;max-width:48ch}
+.row .pill{justify-self:start}
+.rows-note{margin-top:18px;color:var(--ink-2);font-size:14.5px;text-align:center}
+.center{display:flex;justify-content:center;margin-top:26px}
 @media (min-width:900px){
-  .svc-m,.svc-dots{display:none}
-  .svc-d{display:block;border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:5fr 5fr 1fr;align-items:center;gap:40px;padding:30px 0;border-bottom:1px solid var(--line);transition:padding .35s cubic-bezier(.16,1,.3,1)}
-  .row .t{font-family:var(--display);font-size:42px;letter-spacing:-.03em;line-height:1.05;font-weight:500;display:flex;align-items:baseline;gap:14px}
-  .row .t small{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--ink-3);font-weight:400}
-  .row p{color:var(--ink-2);max-width:52ch}
-  .row .arrow{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);justify-self:end;transition:background .3s,color .3s,transform .5s cubic-bezier(.16,1,.3,1)}
-  .row .arrow svg{width:16px;height:16px}
-  .row:hover .arrow{background:var(--ink);color:var(--paper);transform:rotate(-45deg)}
-  .row:hover{padding-left:14px}
-}
-.rows-note{margin-top:22px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
-.rows-note b{font-weight:500;color:var(--ink)}
-
-/* process: mobile sticky stack, desktop timeline */
-.stack{display:grid;gap:14px}
-.card{position:sticky;top:78px;background:var(--panel);border-radius:var(--r);padding:26px 22px;box-shadow:0 0 0 1px var(--line-soft);transform-origin:50% 0;display:grid;gap:14px;min-height:280px;overflow:hidden}
-.card .n{font-family:var(--display);font-size:56px;line-height:.9;letter-spacing:-.04em;color:var(--acc);font-weight:500}
-.card h3{font-size:27px;margin-top:10px}
-.card p{color:var(--ink-2);max-width:46ch;margin-top:8px}
-.card:nth-child(2){background:var(--panel-2)}
-.card:nth-child(3){background:var(--ink);color:var(--paper)}
-.card:nth-child(3) p{color:rgba(237,236,232,.72)}
-.card:nth-child(3) .mono{color:rgba(237,236,232,.6)}
-.card .hf{position:absolute;right:-16px;bottom:-16px;width:46%;max-width:240px;aspect-ratio:1;pointer-events:none}
-@media (min-width:900px){
-  .stack{grid-template-columns:repeat(4,1fr);gap:16px;position:relative;padding-top:34px}
-  .stack::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line)}
-  .stack::after{content:"";position:absolute;left:0;top:0;height:1px;width:var(--tl,0%);background:var(--acc);transition:width 1.4s cubic-bezier(.16,1,.3,1)}
-  .card{position:relative;top:auto;min-height:360px;padding:30px 28px;transform:none!important;filter:none!important}
-  .card .n{font-size:64px}
-  .card h3{font-size:26px}
-  .card .hf{width:52%}
+  .row{grid-template-columns:5fr 5fr 2fr;gap:40px;padding:28px 10px;transition:background .25s,padding .3s;border-radius:0}
+  .row:hover{background:var(--panel)}
+  .row .pill{justify-self:end}
 }
 
-/* bento */
-.bento{display:grid;gap:12px}
-.cell{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);box-shadow:0 0 0 1px var(--line-soft);padding:24px 22px;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}
-.cell h3{font-size:24px}
-.cell p{color:var(--ink-2);max-width:38ch;font-size:15.5px}
-.cell .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:auto;padding-bottom:26px}
-.cell .big{font-family:var(--display);font-size:clamp(64px,17vw,110px);letter-spacing:-.05em;line-height:.85;font-weight:500}
-.cell.dark{background:var(--ink);color:var(--paper)}
-.cell.dark p{color:rgba(237,236,232,.7)}
-.cell.orange{background:var(--acc);color:#fff}
-.cell.orange p{color:rgba(255,255,255,.86)}
-.cell .hf{position:absolute;inset:0;pointer-events:none}
-.meter{width:64px;height:64px;flex:none}
-.meter circle{fill:none;stroke-width:3}
-.meter .bgc{stroke:rgba(237,236,232,.18)}
-.meter .fg{stroke:var(--acc);stroke-linecap:round;stroke-dasharray:176;stroke-dashoffset:176;transition:stroke-dashoffset 1.6s cubic-bezier(.16,1,.3,1)}
-.in .meter .fg{stroke-dashoffset:0}
-@media (min-width:900px){
-  .bento{grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(270px,auto);gap:14px}
-  .c1{grid-column:1/4}.c2{grid-column:4/7}.c3{grid-column:1/3}.c4{grid-column:3/5}.c5{grid-column:5/7}
-  .cell{padding:30px 32px}
-  .cell .big{font-size:104px}
-}
+/* proof split */
+.split{display:grid;gap:12px}
+.panel{position:relative;overflow:hidden;border-radius:var(--r);background:var(--white);box-shadow:0 0 0 1px var(--line-soft);padding:30px 22px;min-height:380px;display:flex;flex-direction:column}
+.panel h2{font-size:clamp(38px,9vw,64px)}
+.panel .lead{margin-top:12px}
+.panel .hint{margin-top:auto;padding-top:40px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.panel canvas{position:absolute;inset:0;width:100%;height:100%}
+.panel .reveal{position:absolute;inset:0;background:var(--ink);color:var(--white);padding:30px 22px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;-webkit-mask-image:radial-gradient(0px circle at -100px -100px,#000 0,transparent 0);mask-image:radial-gradient(0px circle at -100px -100px,#000 0,transparent 0);pointer-events:none}
+.panel .reveal .big{font-family:var(--display);font-weight:300;font-size:clamp(34px,8vw,56px);letter-spacing:-.03em;line-height:1}
+.panel .reveal p{color:rgba(251,251,250,.75);max-width:40ch;font-size:14.5px}
+.panel.dark{background:var(--ink);color:var(--white)}
+.panel.dark .q{font-family:var(--display);font-weight:300;font-size:clamp(28px,7vw,44px);letter-spacing:-.03em;line-height:1.05;max-width:16ch}
+.panel.dark .q b{color:var(--acc);font-weight:300}
+.panel.dark .who{margin-top:14px;color:rgba(251,251,250,.6);font-size:13.5px}
+.panel.dark .stat{margin-top:auto;padding-top:40px;display:grid;gap:6px}
+.panel.dark .stat .n{font-family:var(--display);font-weight:300;font-size:64px;letter-spacing:-.04em;line-height:.9}
+.panel.dark .stat .mono{color:rgba(251,251,250,.55)}
+.panel.dark .btn{margin-top:22px;justify-self:start;align-self:flex-start}
+@media (min-width:900px){.split{grid-template-columns:1.25fr 1fr;gap:14px}.panel{padding:44px 44px;min-height:520px}.panel .reveal{padding:44px}}
+
+/* steps */
+.steps{display:grid;gap:10px}
+.step{background:var(--white);border-radius:var(--r-sm);box-shadow:0 0 0 1px var(--line-soft);padding:22px 20px;display:grid;gap:14px}
+.step .top{display:flex;align-items:center;gap:12px}
+.step .num{width:26px;height:26px;border-radius:7px;background:var(--panel);display:grid;place-items:center;font-family:var(--mono);font-size:11px}
+.step .ln{flex:1;height:1px;background:var(--line);position:relative;overflow:hidden}
+.step .ln::after{content:"";position:absolute;inset:0;background:var(--acc);transform:translateX(-101%);transition:transform 1s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.in .step .ln::after{transform:none}
+.step .top .mono{color:var(--ink-3);font-size:10.5px}
+.step h3{font-size:20px}
+.step p{color:var(--ink-2);font-size:14.5px}
+.step:first-child .num{background:var(--acc);color:#fff}
+@media (min-width:900px){.steps{grid-template-columns:repeat(4,1fr);gap:12px}.step{padding:26px 24px;min-height:220px;align-content:start}}
 
 /* pricing */
-.price-card{border-radius:var(--r);background:var(--panel);box-shadow:0 0 0 1px var(--line-soft);padding:30px 22px;display:grid;gap:22px;position:relative;overflow:hidden}
-.price-card .hf{position:absolute;inset:0;pointer-events:none}
-.price-card > *{position:relative}
-.price-card .from{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.price-card .from .num{font-family:var(--display);font-size:clamp(76px,21vw,150px);letter-spacing:-.05em;line-height:.9;font-weight:500}
-.price-card .from .cur{font-family:var(--display);font-size:clamp(28px,7vw,52px);letter-spacing:-.03em;color:var(--ink-3)}
-.checks{list-style:none;display:grid;gap:10px;color:var(--ink-2)}
-.checks li{padding-left:26px;position:relative}
-.checks li::before{content:"";position:absolute;left:0;top:.42em;width:14px;height:14px;border-radius:50%;background:var(--ink);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23000'/%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") center/contain no-repeat}
-.price-card .btn{justify-self:start}
-.price-side{display:grid;gap:16px;margin-top:16px}
-.price-side .f{border-top:1px solid var(--line);padding:16px 0 0;display:grid;gap:4px}
-.price-side .f b{font-weight:500}
-.price-side .f span{color:var(--ink-2);font-size:15px}
-@media (min-width:900px){.pricing-grid{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:start}.price-card{padding:48px 52px}.price-side{margin-top:0}}
+.price{display:grid;gap:22px}
+.price .copy{display:grid;gap:14px}
+.price .copy p{color:var(--ink-2);font-size:14.5px;max-width:40ch}
+.tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--white);box-shadow:0 0 0 1px var(--line-soft);justify-self:start}
+.tabs button{padding:9px 16px;border-radius:999px;font-size:13.5px;color:var(--ink-2);transition:background .2s,color .2s}
+.tabs button.on{background:var(--panel);color:var(--ink)}
+.calc{background:var(--white);border-radius:var(--r);box-shadow:0 0 0 1px var(--line-soft);padding:24px 20px;display:grid;gap:18px}
+.calc h3{font-size:24px}
+.calc > p{color:var(--ink-2);font-size:14.5px;max-width:44ch}
+.qrow{display:grid;gap:8px;transition:opacity .3s}
+.qrow.off{opacity:.38;pointer-events:none}
+.qrow .lbl{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.qrow .lbl .num{width:22px;height:22px;border-radius:6px;background:var(--panel);display:grid;place-items:center;font-family:var(--mono);font-size:10.5px}
+.qrow .lbl .ln{flex:1;height:1px;background:var(--line)}
+.qrow .lbl .mono{font-size:10.5px;color:var(--ink-3)}
+.qrow select{width:100%;min-height:48px;padding:0 42px 0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' stroke='%231B1B1B' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") no-repeat right 14px center;font:inherit;font-size:15px;color:var(--ink);appearance:none;-webkit-appearance:none}
+.qrow select:focus{outline:2px solid var(--ink);outline-offset:1px}
+.result{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:12px}
+.result .hint{color:var(--ink-3);font-size:13.5px;text-align:center}
+.result .out{display:none;gap:12px}
+.result.ready .hint{display:none}
+.result.ready .out{display:grid}
+.result .out .big{font-family:var(--display);font-weight:300;font-size:44px;letter-spacing:-.03em;line-height:1}
+.result .out .big small{font-size:16px;letter-spacing:0;color:var(--ink-3);font-family:var(--sans)}
+.result .out p{color:var(--ink-2);font-size:14.5px}
+.result .out .btn{justify-self:start}
+.care{display:none;gap:14px}
+.care.on{display:grid}
+.care .c{display:grid;gap:4px;padding:14px 0;border-top:1px solid var(--line)}
+.care .c b{font-weight:500}
+.care .c span{color:var(--ink-2);font-size:14.5px}
+.calc .body.off{display:none}
+@media (min-width:900px){.price{grid-template-columns:4fr 8fr;gap:48px;align-items:start}.calc{padding:32px 36px}}
 
 /* faq */
+.faq-grid{display:grid;gap:26px}
+.faq-grid .copy{display:grid;gap:12px}
+.faq-grid .copy p{color:var(--ink-2);font-size:14.5px;max-width:34ch}
+.faq-grid .copy .btn{justify-self:start}
 .faq{border-top:1px solid var(--line)}
 .q{border-bottom:1px solid var(--line)}
-.q button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;text-align:left;font-family:var(--display);font-size:20px;font-weight:500;letter-spacing:-.02em}
-.q button i{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s,color .3s}
-.q button i::before{content:"+";font-family:var(--sans);font-weight:400;font-size:18px;line-height:1}
-.q.open button i{transform:rotate(45deg);background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.q button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;text-align:left;font-size:16.5px;font-weight:400}
+.q button i{flex:none;width:26px;height:26px;display:grid;place-items:center;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.q button i::before{content:"+";font-size:20px;font-weight:300;line-height:1}
+.q.open button i{transform:rotate(45deg)}
 .q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.16,1,.3,1)}
 .q.open .a{grid-template-rows:1fr}
 .q .a > div{overflow:hidden}
-.q .a p{color:var(--ink-2);padding:0 0 22px;max-width:60ch}
-@media (min-width:900px){.faq-grid{display:grid;grid-template-columns:5fr 7fr;gap:48px;align-items:start}.q button{font-size:23px;padding:24px 0}}
+.q .a p{color:var(--ink-2);padding:0 0 20px;max-width:60ch;font-size:14.5px}
+@media (min-width:900px){.faq-grid{grid-template-columns:4fr 8fr;gap:48px;align-items:start}.q button{font-size:18px;padding:22px 0}}
 
 /* contact */
-.contact{padding-bottom:16px}
-.contact-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--ink);color:var(--paper);padding:34px 22px;display:grid;gap:28px}
+.contact{padding-bottom:10px}
+.contact-card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);padding:30px 18px 22px;display:grid;gap:26px}
 .contact-card canvas{position:absolute;inset:0;width:100%;height:100%}
-.contact-card .spot{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
 .contact-card > *{position:relative;z-index:2}
-.contact-card h2{max-width:10ch}
-.contact-card .lead{color:rgba(237,236,232,.72)}
-.form{display:grid;gap:14px;background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:22px 18px}
+.contact-card h2{max-width:10ch;font-size:clamp(44px,11vw,88px)}
+.contact-card .ways{display:grid;gap:10px;margin-top:22px}
+.contact-card .ways .big{font-family:var(--display);font-weight:300;font-size:26px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.contact-card .ways .mono{color:var(--ink-3);font-size:10.5px}
+.form{display:grid;gap:14px;background:var(--white);border-radius:var(--r-sm);padding:22px 18px;box-shadow:0 0 0 1px var(--line-soft)}
 .field{display:grid;gap:6px}
-.field label{font-size:13.5px;color:var(--ink-2)}
-.field input,.field textarea,.field select{width:100%;min-height:50px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-size:16px;color:var(--ink);appearance:none;-webkit-appearance:none}
-.field textarea{min-height:104px;resize:vertical}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' stroke='%23121315' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--ink);outline-offset:1px}
+.field label{font-size:12.5px;color:var(--ink-2)}
+.field input,.field textarea{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font:inherit;font-size:16px;color:var(--ink);appearance:none;-webkit-appearance:none}
+.field textarea{min-height:100px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:2px solid var(--ink);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips label{position:relative}
+.chips input{position:absolute;opacity:0;width:0;height:0}
+.chips span{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);font-size:13.5px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;background:var(--bg)}
+.chips input:checked + span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink-2)}
+.consent input{margin-top:3px;width:16px;height:16px;flex:none;accent-color:var(--ink)}
 .form .btn{width:100%}
-.form .hint{font-size:13.5px;color:var(--ink-3)}
-.contact-card .alt{display:grid;gap:6px;color:rgba(237,236,232,.72);font-size:15px;margin-top:28px}
-.contact-card .alt b{color:var(--paper);font-weight:500;font-family:var(--display);font-size:22px;letter-spacing:-.02em}
-.contact-card .alt .mono{color:rgba(237,236,232,.55)}
-@media (min-width:900px){.contact-card{grid-template-columns:1fr 1fr;padding:64px;gap:60px;align-items:center}.form{padding:28px}.form .btn{width:auto;justify-self:start}}
+.form .hint{font-size:12.5px;color:var(--ink-3);text-align:center}
+@media (min-width:900px){.contact-card{grid-template-columns:1.1fr 1fr;padding:56px 56px 48px;gap:60px;align-items:end}.form{padding:28px}}
 
-footer{padding:34px 0 calc(26px + env(safe-area-inset-bottom));font-size:13.5px;color:var(--ink-3)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 26px;justify-content:space-between}
-footer a:hover{color:var(--ink)}
+footer{padding:40px 0 calc(28px + env(safe-area-inset-bottom));font-size:13.5px;color:var(--ink-2)}
+footer .cols{display:grid;gap:26px}
+footer .col{display:grid;gap:8px;align-content:start}
+footer .col .mono{font-size:10.5px;color:var(--ink-3);margin-bottom:4px}
+footer .col a:hover{color:var(--ink)}
+footer .about{max-width:34ch}
+footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+@media (min-width:900px){footer .cols{grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}}
 
 /* reveal */
-.ri{opacity:0;transform:translateY(18px);transition:opacity .7s ease var(--d,0s),transform 1s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.ri{opacity:0;transform:translateY(16px);transition:opacity .7s ease var(--d,0s),transform 1s cubic-bezier(.16,1,.3,1) var(--d,0s)}
 .ri.in,.no-motion .ri{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  .hero h1 .w span,.hero .lead,.hero .actions,.chips{animation:none;transform:none;opacity:1}
-  .ri{opacity:1;transform:none;transition:none}
-}
+@media (prefers-reduced-motion:reduce){.hero h1 .w span,.hero .lead,.hero .actions,.hero .with{animation:none;transform:none;opacity:1}.ri{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
-<div id="prog"></div>
 
 <nav class="nav">
   <div class="wrap">
-    <a class="brand" href="/" id="logo"><i></i>Nemunas</a>
-    <div class="nav-links"><a href="#services">Services</a><a href="#process">Process</a><a href="#why">Why us</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div>
-    <a class="btn btn-ink nav-cta" href="#contact"><span class="dot"></span><span>Book a call</span></a>
-    <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('menu-open')"><span></span></button>
+    <a class="brand" href="/" id="logo"><i></i>nemunas</a>
+    <div class="nav-right">
+      <a class="pill" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2.5h3l1.2 3-1.6 1a8 8 0 0 0 3.9 3.9l1-1.6 3 1.2v3A1.5 1.5 0 0 1 12 14 11.5 11.5 0 0 1 2 4a1.5 1.5 0 0 1 1-1.5z"/></svg>Book a call</a>
+      <a class="btn btn-ink" href="#contact">Get a quote</a>
+    </div>
   </div>
 </nav>
-<div class="menu" onclick="document.body.classList.remove('menu-open')">
-  <a href="#services">Services</a><a href="#process">Process</a><a href="#why">Why us</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-  <a class="btn btn-ink" href="#contact"><span class="dot"></span><span>Book a call</span></a>
-</div>
 
 <header class="hero">
   <div class="wrap">
     <div class="hero-card" id="heroCard">
-      <canvas class="hf-field" data-ink="18,19,21" data-mode="edges" data-mode-m="top" aria-hidden="true"></canvas>
-      <canvas class="spot hf-field" data-ink="18,19,21" data-mode="edges" data-mode-m="top" data-strong="1" aria-hidden="true"></canvas>
+      <canvas class="hf" data-ink="27,27,27" data-mode="sides" data-mode-m="top" aria-hidden="true"></canvas>
       <div class="hero-in">
-        <h1 id="h1">A website that brings you work.</h1>
-        <p class="lead">Design, build, launch and care by one developer. Fixed price agreed before we start. Pages start from 99 EUR.</p>
+        <div class="tags"><span>One developer</span><i>·</i><span>Fixed price</span><i>·</i><span>Pages from 99 EUR</span></div>
+        <h1 id="h1">Websites that bring customers.</h1>
+        <p class="lead">Websites, online stores and web apps for small businesses in the UK, Ireland and Europe. Fast, found on Google, with a clear price and one person responsible.</p>
         <div class="actions">
-          <a class="btn btn-ink" href="#contact"><span class="dot"></span><span>Book a call</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          <a class="btn btn-line" href="#services">What I build</a>
+          <a class="btn btn-ink" href="#contact">Get a quote within 1 working day</a>
+          <a class="btn btn-line" href="#services">See what I build</a>
         </div>
-        <div class="chips"><span class="chip"><i></i>Fixed price</span><span class="chip"><i></i>Design approved before code</span><span class="chip"><i></i>Kaunas, Lithuania · remote everywhere</span></div>
+        <div class="with">
+          <span class="mono">Built for</span>
+          <div class="list"><span>Barbers</span><span>Clinics</span><span>Car services</span><span>Trades</span><span>Studios</span><span>Small shops</span></div>
+        </div>
       </div>
     </div>
   </div>
 </header>
 
+<section id="trust">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="ri">A developer you can rely on.</h2>
+      <p class="lead ri">One person answers for design, code, Google and launch. No need to coordinate three contractors.</p>
+    </div>
+    <div class="tiles">
+      <div class="tile ri"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div><div><h3>Fixed price</h3><p>The number in the proposal is the number on the invoice.</p></div></div>
+      <div class="tile ri" style="--d:.06s"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div><div><h3>Design first</h3><p>You approve the design before a line of code is written.</p></div></div>
+      <div class="tile ri" style="--d:.12s"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><h3>Clear deadline</h3><p>A launch date in writing, and a short list of what is included.</p></div></div>
+      <div class="tile ri" style="--d:.18s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div><div><h3>Care after launch</h3><p>First month included. Then a fixed monthly fee, cancel any time.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="wrap">
     <div class="sec-head">
-      <h2 class="ri">What I build</h2>
-      <p class="lead ri">One developer, one quality. Every project comes with a fixed price and a date before any work starts.</p>
+      <h2 class="ri">What I build for your business</h2>
+      <p class="lead ri">Four directions, one quality. Every project comes with a fixed price and a deadline.</p>
     </div>
+    <div class="rows">
+      <a class="row ri" href="#contact"><div class="t">Websites</div><p>A company or single-page site to present your services and collect enquiries. Online booking or appointment registration if you need it.</p><span class="pill">From 99 EUR <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+      <a class="row ri" href="#contact"><div class="t">Online stores</div><p>A shop with Stripe or PayPal payments, shipping integrations and simple product management.</p><span class="pill">Quote in 1 day <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+      <a class="row ri" href="#contact"><div class="t">Business systems and portals</div><p>Client portals, CRM and internal tools built around your processes.</p><span class="pill">Quote in 1 day <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+      <a class="row ri" href="#contact"><div class="t">Automation</div><p>Enquiry and document handling, booking confirmations, integrations with your CRM or accounting. Less manual work for the team.</p><span class="pill">By task <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+    </div>
+    <p class="rows-note ri">Also: care for a fixed monthly fee and moving sites off WordPress.</p>
+    <div class="center ri"><a class="btn btn-ink" href="#contact">Get a quote</a></div>
+  </div>
+</section>
 
-    <div class="svc-m ri" id="svcm">
-      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">01</span><h3>Business websites</h3><p>A company or single-page site that presents your services and collects enquiries. Booking and appointments if you need them.</p></a>
-      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">02</span><h3>Landing pages</h3><p>One page, one offer, one button. Built to turn ad clicks and Instagram visits into calls and bookings.</p></a>
-      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">03</span><h3>Online stores</h3><p>A shop with card payments, shipping integrations and a product catalogue you can manage yourself.</p></a>
-      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">04</span><h3>Web apps and portals</h3><p>Client portals, internal tools and small systems built around how your business actually runs.</p></a>
-      <a class="svc-card" href="#contact"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><span class="num">05</span><h3>Rebuilds and speed</h3><p>Your current site made fast, mobile-ready and findable on Google. Moving off WordPress or a page builder included.</p></a>
+<section id="proof">
+  <div class="wrap">
+    <div class="split">
+      <div class="panel ri" id="revealPanel">
+        <canvas class="hf" data-ink="27,27,27" data-mode="corner" aria-hidden="true"></canvas>
+        <h2 style="position:relative">See for yourself.</h2>
+        <p class="lead" style="position:relative">No technical details to learn. You get a clear proposal, a date and a site that works on every phone.</p>
+        <span class="hint" style="position:relative">Move your mouse over this area</span>
+        <div class="reveal" id="reveal"><div class="big">One price. One date. One person.</div><p>That is the whole method. The rest is the work.</p></div>
+      </div>
+      <div class="panel dark ri" style="--d:.1s">
+        <canvas class="hf" data-ink="251,251,250" data-mode="corner" aria-hidden="true"></canvas>
+        <div class="q" style="position:relative">You do not need to understand the tech. <b>You get a clear proposal.</b></div>
+        <div class="who" style="position:relative">How every project starts: one call, one document, one number.</div>
+        <div class="stat" style="position:relative"><div class="n">1 day</div><span class="mono">From call to written proposal</span></div>
+        <a class="btn btn-white" href="#contact" style="position:relative">Get a quote</a>
+      </div>
     </div>
-    <div class="svc-dots" id="svcdots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-
-    <div class="svc-d">
-      <a class="row ri" href="#contact"><div class="t">Business websites <small>01</small></div><p>A company or single-page site that presents your services and collects enquiries. Booking and online appointments if you need them.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
-      <a class="row ri" href="#contact"><div class="t">Landing pages <small>02</small></div><p>One page, one offer, one button. Built to turn ad clicks and Instagram visits into calls and bookings.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
-      <a class="row ri" href="#contact"><div class="t">Online stores <small>03</small></div><p>A shop with card payments, shipping integrations and a product catalogue you can manage yourself.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
-      <a class="row ri" href="#contact"><div class="t">Web apps and portals <small>04</small></div><p>Client portals, internal tools and small systems built around how your business actually runs.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
-      <a class="row ri" href="#contact"><div class="t">Rebuilds and speed <small>05</small></div><p>Your current site made fast, mobile-ready and findable on Google. Moving off WordPress or a page builder included.</p><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
-    </div>
-    <div class="rows-note ri"><span>Also: ongoing care for a fixed monthly fee.</span><span>Pages start from <b>99 EUR</b>.</span></div>
   </div>
 </section>
 
 <section id="process">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head" style="text-align:center;display:block">
       <h2 class="ri">From a call to launch</h2>
-      <p class="lead ri">Clear steps and dates. You always know what is happening with your project.</p>
+      <p class="lead ri" style="margin:12px auto 0">Clear steps and dates. You always know what is happening with your project.</p>
     </div>
-    <div class="stack" id="stack">
-      <div class="card"><div class="n">1</div><div><span class="mono">20 min · free</span><h3>Call</h3><p>We work out what your business needs. Phone or video, no commitment.</p></div><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas></div>
-      <div class="card"><div class="n">2</div><div><span class="mono">Within 1 working day</span><h3>Proposal</h3><p>You get a fixed price, a launch date and a clear list of what is included.</p></div><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas></div>
-      <div class="card"><div class="n">3</div><div><span class="mono">1 to 6 weeks</span><h3>Design, then build</h3><p>You approve the design first. Only then does the code start. No surprises at the end.</p></div><canvas class="hf hf-field" data-ink="237,236,232" data-mode="corner" aria-hidden="true"></canvas></div>
-      <div class="card"><div class="n">4</div><div><span class="mono">First month included</span><h3>Launch and care</h3><p>Domain, hosting and analytics connected. The first month of care is on me.</p></div><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas></div>
+    <div class="steps ri" id="steps">
+      <div class="step"><div class="top"><span class="num">1</span><span class="ln"></span><span class="mono">20 min · free</span></div><div><h3>Free call</h3><p>We work out what your business needs. Phone or video, no commitment.</p></div></div>
+      <div class="step" style="--d:.15s"><div class="top"><span class="num">2</span><span class="ln"></span><span class="mono">Within 1 working day</span></div><div><h3>Proposal</h3><p>A fixed price, a deadline and a clear list of what is included.</p></div></div>
+      <div class="step" style="--d:.3s"><div class="top"><span class="num">3</span><span class="ln"></span><span class="mono">2 to 8 weeks</span></div><div><h3>Design and build</h3><p>You approve the design first. Only then does the coding start.</p></div></div>
+      <div class="step" style="--d:.45s"><div class="top"><span class="num">4</span><span class="ln"></span><span class="mono">1 month included</span></div><div><h3>Launch and care</h3><p>Site goes live, analytics connected. The first month of care is included.</p></div></div>
     </div>
-  </div>
-</section>
-
-<section id="why">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 class="ri">One person answers for all of it</h2>
-      <p class="lead ri">Design, code, Google and launch in one pair of hands. No agency layers, no three contractors to coordinate.</p>
-    </div>
-    <div class="bento">
-      <div class="cell c1 dark ri"><canvas class="hf hf-field" data-ink="237,236,232" data-mode="top" aria-hidden="true"></canvas><div class="top" style="position:relative"><div class="big"><span data-count="100">0</span></div><svg class="meter" viewBox="0 0 64 64"><circle class="bgc" cx="32" cy="32" r="28"/><circle class="fg" cx="32" cy="32" r="28" transform="rotate(-90 32 32)"/></svg></div><h3 style="position:relative">Built for speed</h3><p style="position:relative">Hand-written code, no page-builder bloat. Every site is checked against Google's performance score before launch.</p></div>
-      <div class="cell c2 ri" style="--d:.08s"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="right" aria-hidden="true"></canvas><h3 style="position:relative">Fixed price, in writing</h3><p style="position:relative">The price in the proposal is the price on the invoice. Extra work is agreed before it happens, never after.</p></div>
-      <div class="cell c3 orange ri" style="--d:.16s"><canvas class="hf hf-field" data-ink="255,255,255" data-mode="top" aria-hidden="true"></canvas><h3 style="position:relative">Looks right on every screen</h3><p style="position:relative">Checked on real phones, not just a resized browser window.</p></div>
-      <div class="cell c4 ri" style="--d:.24s"><canvas class="hf hf-field" data-ink="18,19,21" data-mode="corner" aria-hidden="true"></canvas><h3 style="position:relative">You own everything</h3><p style="position:relative">Domain, hosting account and code are registered to you. Leave any time with all of it.</p></div>
-      <div class="cell c5 ri" style="--d:.32s"><h3>Replies within one working day</h3><p>You write to Matas and Matas answers. During the build and after launch.</p></div>
-    </div>
+    <div class="center ri"><a class="btn btn-ink" href="#contact">Get a quote</a></div>
   </div>
 </section>
 
 <section id="pricing">
   <div class="wrap">
-    <div class="sec-head">
-      <h2 class="ri">Clear pricing</h2>
-      <p class="lead ri">Every project is priced by what it needs. The number is fixed after one call and does not move.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card ri">
-        <canvas class="hf hf-field" data-ink="18,19,21" data-mode="right" aria-hidden="true"></canvas>
-        <span class="mono">Websites start from</span>
-        <div class="from"><span class="num" data-count="99">0</span><span class="cur">EUR</span></div>
-        <ul class="checks">
-          <li>Design approved by you before code</li>
-          <li>Works on phone, tablet and desktop</li>
-          <li>Domain, hosting and analytics set up</li>
-          <li>Google-ready structure and speed</li>
-          <li>First month of care included</li>
-        </ul>
-        <a class="btn btn-ink" href="#contact"><span class="dot"></span><span>Book a call for a fixed quote</span></a>
+    <div class="price">
+      <div class="copy ri">
+        <h2>Clear price</h2>
+        <p>Every project is priced by what it needs, but you can see how it is put together right now.</p>
+        <p>After launch I can look after the site for a fixed monthly fee.</p>
+        <div class="tabs"><button type="button" class="on" onclick="tab(this,'one')">One project</button><button type="button" onclick="tab(this,'care')">Care</button></div>
       </div>
-      <div class="price-side ri" style="--d:.1s">
-        <div class="f"><b>Online stores and web apps</b><span>Priced per project after the call. You get the exact number and date in writing within one working day.</span></div>
-        <div class="f"><b>Ongoing care</b><span>Updates, backups, small changes and monitoring for a fixed monthly fee. Cancel any month.</span></div>
-        <div class="f"><b>Payment</b><span>Half at the start, half at launch. Bank transfer or card.</span></div>
+      <div class="calc ri" style="--d:.1s">
+        <div class="body" id="body-one">
+          <h3>One project</h3>
+          <p style="margin-top:6px">For a clearly defined job: fixed scope, deadline and price.</p>
+          <div style="display:grid;gap:16px;margin-top:18px">
+            <div class="qrow"><div class="lbl"><span class="num">1</span><span class="ln"></span><span class="mono">Project type</span></div><select id="q1" onchange="calc()"><option value="">Choose the project type*</option><option>Single-page website</option><option>Company website</option><option>Online store</option><option>Business system or portal</option><option>Automation</option></select></div>
+            <div class="qrow off" id="r2"><div class="lbl"><span class="num">2</span><span class="ln"></span><span class="mono">Project size</span></div><select id="q2" onchange="calc()"><option value="">Choose the project size*</option><option>Small, the essentials</option><option>Medium, a few extras</option><option>Large, lots of content or features</option></select></div>
+            <div class="qrow off" id="r3"><div class="lbl"><span class="num">3</span><span class="ln"></span><span class="mono">Design</span></div><select id="q3" onchange="calc()"><option value="">Choose the design level*</option><option>Standard, clean and functional</option><option>Enhanced, subtle animations and details</option><option>Creative, bold and expressive</option></select></div>
+            <div class="qrow off" id="r4"><div class="lbl"><span class="num">4</span><span class="ln"></span><span class="mono">Deadline</span></div><select id="q4" onchange="calc()"><option value="">Choose the deadline*</option><option>Urgent, short deadline</option><option>Flexible, normal deadline</option></select></div>
+          </div>
+          <div class="result" id="result" style="margin-top:18px">
+            <p class="hint">Fill in the fields to see an estimated timeline and starting price.</p>
+            <div class="out">
+              <div class="big" id="outPrice">From 99 EUR</div>
+              <p id="outText"></p>
+              <a class="btn btn-ink" href="#contact">Get the fixed quote</a>
+            </div>
+          </div>
+        </div>
+        <div class="body off" id="body-care">
+          <h3>Care</h3>
+          <p style="margin-top:6px">For sites that are already live. A fixed monthly fee, cancel any month.</p>
+          <div class="care on" style="margin-top:16px">
+            <div class="c"><b>Updates and backups</b><span>Software, security and backups handled every month.</span></div>
+            <div class="c"><b>Small changes</b><span>Texts, photos, prices and new sections within the monthly hours.</span></div>
+            <div class="c"><b>Monitoring</b><span>Uptime and speed watched, problems fixed before you notice.</span></div>
+            <div class="c"><b>Priority reply</b><span>Within one working day, usually faster.</span></div>
+          </div>
+          <a class="btn btn-ink" href="#contact" style="margin-top:18px">Ask about care</a>
+        </div>
       </div>
     </div>
   </div>
@@ -381,17 +394,18 @@ footer a:hover{color:var(--ink)}
 <section id="faq">
   <div class="wrap">
     <div class="faq-grid">
-      <div class="sec-head" style="margin-bottom:28px;display:block">
-        <h2 class="ri">Questions people ask</h2>
-        <p class="lead ri" style="margin-top:14px">Not here? Book a call and ask directly.</p>
+      <div class="copy ri">
+        <h2>Frequently asked</h2>
+        <p>Did not find your answer? Write or book a call. Reply within one working day.</p>
+        <a class="btn btn-line" href="#contact">Book a call</a>
       </div>
       <div class="faq ri">
-        <div class="q"><button type="button" onclick="toggleQ(this)">Is the first call paid?<i></i></button><div class="a"><div><p>No. The first call is free and takes about 20 minutes. You leave it with a clear idea of what you need, whether we work together or not.</p></div></div></div>
-        <div class="q"><button type="button" onclick="toggleQ(this)">How much does a website cost?<i></i></button><div class="a"><div><p>Pages start from 99 EUR. The final price depends on the number of pages, booking or shop features and the design level you want. You get the exact number after the call, and it stays fixed.</p></div></div></div>
-        <div class="q"><button type="button" onclick="toggleQ(this)">How long does it take?<i></i></button><div class="a"><div><p>A single page in about a week, a company site in two to four, an online store or app in four to six. The date is in the proposal.</p></div></div></div>
-        <div class="q"><button type="button" onclick="toggleQ(this)">Can I edit the content myself?<i></i></button><div class="a"><div><p>Yes. Texts, photos, prices and products are editable without touching code. You get a short walkthrough at launch.</p></div></div></div>
-        <div class="q"><button type="button" onclick="toggleQ(this)">Do you work with businesses outside Lithuania?<i></i></button><div class="a"><div><p>Most of the work is remote. Calls are in English, in your time zone, and everything is delivered online.</p></div></div></div>
-        <div class="q"><button type="button" onclick="toggleQ(this)">What happens after launch?<i></i></button><div class="a"><div><p>The first month of care is included. After that you can keep a monthly care plan or just write when something is needed.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">Is the consultation paid?<i></i></button><div class="a"><div><p>No. The first call is free and takes about 20 minutes. You leave it with a clear picture of what you need, whether we work together or not.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">How much does a website cost?<i></i></button><div class="a"><div><p>Pages start from 99 EUR. The final price depends on the number of pages, booking or shop features and the design level. You get the exact number after the call, and it stays fixed.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">How long does it take?<i></i></button><div class="a"><div><p>A single page in about a week, a company site in two to four, an online store or a system in four to eight. The date is written into the proposal.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">Can I edit the content myself?<i></i></button><div class="a"><div><p>Yes. Texts, photos, prices and products can be changed without touching code. You get a short walkthrough at launch.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">Do you move sites off WordPress?<i></i></button><div class="a"><div><p>Yes. The content stays, the page builder goes. The result is faster, safer and easier to edit.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">What happens after launch?<i></i></button><div class="a"><div><p>The first month of care is included. After that you can keep the monthly care plan or simply write when something is needed.</p></div></div></div>
       </div>
     </div>
   </div>
@@ -400,22 +414,30 @@ footer a:hover{color:var(--ink)}
 <section id="contact" class="contact">
   <div class="wrap">
     <div class="contact-card" id="contactCard">
-      <canvas class="hf-field" data-ink="237,236,232" data-mode="edges" data-mode-m="bottom" aria-hidden="true"></canvas>
-      <canvas class="spot hf-field" data-ink="237,236,232" data-mode="edges" data-mode-m="bottom" data-strong="1" aria-hidden="true"></canvas>
+      <canvas class="hf" data-ink="27,27,27" data-mode="sides" data-mode-m="bottom" aria-hidden="true"></canvas>
       <div>
-        <h2>Let's talk about your project.</h2>
-        <p class="lead" style="margin-top:16px">Leave your details and a good time to call. You hear back within one working day.</p>
-        <div class="alt"><span class="mono">Prefer to write?</span><b>Use the form and say so.</b></div>
+        <h2>Let's discuss your project.</h2>
+        <div class="ways">
+          <div class="big">Book a free call <span class="pill">20 min</span></div>
+          <span class="mono">First call is free · Kaunas, Lithuania · remote everywhere</span>
+        </div>
       </div>
       <form class="form" id="form" onsubmit="return sendForm(event)">
-        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" required autocomplete="name"></div>
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required autocomplete="name"></div>
         <div class="field"><label for="f-contact">Phone or email</label><input id="f-contact" name="contact" required autocomplete="tel"></div>
-        <div class="field"><label for="f-need">What do you need?</label>
-          <select id="f-need" name="need"><option>A website</option><option>A landing page</option><option>An online store</option><option>A web app or portal</option><option>A rebuild of my current site</option><option>Not sure yet</option></select></div>
-        <div class="field"><label for="f-time">Best time to call</label><input id="f-time" name="time" placeholder="Weekdays after 3pm"></div>
+        <div class="field"><label>What you need</label>
+          <div class="chips">
+            <label><input type="radio" name="need" value="Website" checked><span>Website</span></label>
+            <label><input type="radio" name="need" value="Online store"><span>Online store</span></label>
+            <label><input type="radio" name="need" value="System or portal"><span>System</span></label>
+            <label><input type="radio" name="need" value="Automation"><span>Automation</span></label>
+            <label><input type="radio" name="need" value="Other"><span>Other</span></label>
+          </div>
+        </div>
         <div class="field"><label for="f-note">A few words about the project</label><textarea id="f-note" name="note"></textarea></div>
-        <button class="btn btn-ink" type="submit"><span class="dot"></span><span>Book a call</span></button>
-        <p class="hint">Opens in your mail app. First call is free, reply within one working day.</p>
+        <label class="consent"><input type="checkbox" required><span>I agree that my details are used to reply to this enquiry.</span></label>
+        <button class="btn btn-ink" type="submit">Send enquiry</button>
+        <p class="hint">Free consultation · reply within 1 working day</p>
       </form>
     </div>
   </div>
@@ -423,9 +445,13 @@ footer a:hover{color:var(--ink)}
 
 <footer>
   <div class="wrap">
-    <span>Nemunas Studio · Kaunas, Lithuania</span>
-    <span><a href="#services">Services</a> · <a href="#pricing">Pricing</a> · <a href="#contact">Book a call</a></span>
-    <span>2026</span>
+    <div class="cols">
+      <div class="col"><a class="brand" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><i></i>nemunas</a><p class="about" style="margin-top:8px">Websites, online stores and business systems for small businesses. Built in Kaunas, Lithuania, delivered anywhere.</p></div>
+      <div class="col"><span class="mono">Services</span><a href="#services">Websites</a><a href="#services">Online stores</a><a href="#services">Business systems</a><a href="#services">Automation</a></div>
+      <div class="col"><span class="mono">Information</span><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
+      <div class="col"><span class="mono">Contact</span><a href="#contact">Book a call</a><a href="#contact">Send an enquiry</a><span>Kaunas, Lithuania</span></div>
+    </div>
+    <div class="bottom"><span>© 2026 Nemunas Studio</span><span>EN</span></div>
   </div>
 </footer>
 
@@ -436,117 +462,99 @@ footer a:hover{color:var(--ink)}
   var desktop=function(){return innerWidth>=900;};
   if(rm)document.documentElement.classList.add('no-motion');
 
-  /* ---------- halftone fields (drawn once, static) ---------- */
+  /* halftone fields: dense at the sides, clear in the middle (reference style) */
   function halftone(c){
     var ctx=c.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
     var r=c.getBoundingClientRect(),W=Math.max(1,r.width),H=Math.max(1,r.height);
     c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
-    var ink=c.getAttribute('data-ink'),mode=c.getAttribute('data-mode'),strong=c.hasAttribute('data-strong');
+    var ink=c.getAttribute('data-ink'),mode=c.getAttribute('data-mode');
     if(!desktop()&&c.hasAttribute('data-mode-m'))mode=c.getAttribute('data-mode-m');
-    var gap=desktop()?13:11,maxR=strong?gap*.4:gap*.27,alpha=strong?.7:.3;
+    var gap=desktop()?12:10,maxR=gap*.3;
     for(var x=gap/2;x<W;x+=gap)for(var y=gap/2;y<H;y+=gap){
       var k;
-      if(mode==='edges'){var ex=Math.min(x,W-x)/W,ey=Math.min(y,H-y)/H;k=1-Math.min(ex*5.5,ey*3.2,1);}
-      else if(mode==='corner'){var dx=(W-x)/W,dy=(H-y)/H;k=1-Math.min(1,Math.sqrt(dx*dx+dy*dy)*2.1);}
-      else if(mode==='top'){k=1-y/H*2.4;}
-      else if(mode==='bottom'){k=1-(H-y)/H*2.4;}
-      else {k=1-(W-x)/W*2.6;}
+      if(mode==='sides'){var ex=Math.min(x,W-x)/W;k=1-Math.min(1,ex*5.4);}
+      else if(mode==='corner'){var dx=(W-x)/W,dy=(H-y)/H;k=1-Math.min(1,Math.sqrt(dx*dx+dy*dy)*2.2);}
+      else if(mode==='top'){k=1-y/H*3.6;}
+      else {k=1-(H-y)/H*3.4;}
       k=Math.max(0,Math.min(1,k));k=k*k;
       if(k<0.03)continue;
-      ctx.fillStyle='rgba('+ink+','+alpha+')';
+      ctx.fillStyle='rgba('+ink+',.24)';
       ctx.beginPath();ctx.arc(x,y,maxR*k+0.15,0,6.283);ctx.fill();
     }
   }
-  var fields=[].slice.call(document.querySelectorAll('.hf-field'));
+  var fields=[].slice.call(document.querySelectorAll('canvas.hf'));
   function drawAll(){fields.forEach(halftone);}
-  drawAll();
-  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(drawAll,150);});
+  drawAll();var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(drawAll,150);});
 
-  /* cursor spotlight: strong layer revealed through a soft circular mask */
+  /* cursor-reveal panel */
+  var rp=document.getElementById('revealPanel'),rv=document.getElementById('reveal');
   if(hover&&!rm){
-    [document.getElementById('heroCard'),document.getElementById('contactCard')].forEach(function(card){
-      var spot=card.querySelector('.spot'),tx=0,ty=0,cx=0,cy=0,raf;
-      function tick(){cx+=(tx-cx)*.12;cy+=(ty-cy)*.12;var m='radial-gradient(260px circle at '+cx+'px '+cy+'px, #000 0%, rgba(0,0,0,.55) 45%, transparent 72%)';spot.style.webkitMaskImage=m;spot.style.maskImage=m;if(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3)raf=requestAnimationFrame(tick);else raf=null;}
-      card.addEventListener('pointermove',function(e){var r=card.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;spot.style.opacity=1;if(!raf)raf=requestAnimationFrame(tick);});
-      card.addEventListener('pointerleave',function(){spot.style.opacity=0;});
-    });
+    var tx=0,ty=0,cx=0,cy=0,raf=null,on=false;
+    function tick(){cx+=(tx-cx)*.14;cy+=(ty-cy)*.14;var m='radial-gradient(210px circle at '+cx+'px '+cy+'px, #000 0%, #000 55%, transparent 100%)';rv.style.webkitMaskImage=m;rv.style.maskImage=m;if(on&&(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3))raf=requestAnimationFrame(tick);else raf=null;}
+    rp.addEventListener('pointermove',function(e){var r=rp.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;if(!on){on=true;cx=tx;cy=ty;}if(!raf)raf=requestAnimationFrame(tick);});
+    rp.addEventListener('pointerleave',function(){on=false;rv.style.webkitMaskImage=rv.style.maskImage='radial-gradient(0px circle at -100px -100px,#000 0,transparent 0)';});
+  }else{
+    /* touch: tap toggles the reveal */
+    rp.addEventListener('click',function(){var open=rv.dataset.open==='1';rv.dataset.open=open?'0':'1';var m=open?'radial-gradient(0px circle at -100px -100px,#000 0,transparent 0)':'none';rv.style.webkitMaskImage=rv.style.maskImage=m;rv.style.transition='opacity .4s';});
+    rp.querySelector('.hint').textContent='Tap this area';
   }
 
   /* hero words */
   var h1=document.getElementById('h1');
-  if(!rm){h1.innerHTML=h1.textContent.split(' ').map(function(w,i){return '<span class="w"><span style="--d:'+(0.08+i*0.07)+'s">'+w+'</span></span>';}).join(' ');}
+  if(!rm){h1.innerHTML=h1.textContent.split(' ').map(function(w,i){return '<span class="w"><span style="--d:'+(0.08+i*0.08)+'s">'+w+'</span></span>';}).join(' ');}
 
   /* reveal */
   var els=document.querySelectorAll('.ri');
   if(!rm){
     els.forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*.95)el.classList.add('in');});
-    if('IntersectionObserver' in window){
-      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
-      els.forEach(function(el){io.observe(el);});
-    }
+    if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});els.forEach(function(el){io.observe(el);});}
     setTimeout(function(){els.forEach(function(el){el.classList.add('in');});},1400);
   }
 
-  /* count-up */
-  var counters=[].slice.call(document.querySelectorAll('[data-count]'));
-  function runCount(el){var end=+el.getAttribute('data-count'),t0=null;function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400);p=1-Math.pow(1-p,3);el.textContent=Math.round(end*p);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
-  function startCount(c){if(c.dataset.done)return;c.dataset.done=1;if(rm)c.textContent=c.getAttribute('data-count');else runCount(c);}
-
-  /* process timeline (desktop) */
-  var stack=document.getElementById('stack'),cards=[].slice.call(stack.querySelectorAll('.card')),tlDone=false;
-
-  /* scroll work: progress, counters, stack scale (mobile), timeline, hero parallax */
-  var prog=document.getElementById('prog'),heroCard=document.getElementById('heroCard'),heroField=heroCard.querySelector('canvas'),ticking=false;
-  function onScroll(){
-    if(ticking)return;ticking=true;
-    requestAnimationFrame(function(){
-      var y=scrollY,max=document.documentElement.scrollHeight-innerHeight;prog.style.width=(max>0?y/max*100:0)+'%';
-      counters.forEach(function(c){if(!c.dataset.done&&c.getBoundingClientRect().top<innerHeight*.9)startCount(c);});
-      if(!rm){
-        if(y<innerHeight*1.2)heroField.style.transform='translateY('+(y*.18)+'px)';
-        if(!desktop()){
-          cards.forEach(function(c,i){var next=cards[i+1];if(!next){c.style.transform='';return;}var r=c.getBoundingClientRect(),nr=next.getBoundingClientRect();var p=Math.min(1,Math.max(0,(r.bottom-nr.top)/r.height));c.style.transform='scale('+(1-p*.05)+') translateY('+(-p*8)+'px)';});
-        }else if(!tlDone&&stack.getBoundingClientRect().top<innerHeight*.7){tlDone=true;stack.style.setProperty('--tl','100%');}
-      }
-      ticking=false;
-    });
-  }
-  addEventListener('scroll',onScroll,{passive:true});onScroll();
-
   /* inertial wheel scroll on desktop (touch stays native) */
+  function go(top,instant){
+    if(hover&&!rm&&sm){sm.t=sm.c=scrollY;sm.t=Math.max(0,top);if(!sm.active){sm.active=true;requestAnimationFrame(smLoop);}}
+    else window.scrollTo({top:top,behavior:(rm||instant)?'auto':'smooth'});
+  }
+  var sm=null;
   if(hover&&!rm){
-    var sm={t:scrollY,c:scrollY,last:scrollY,active:false};
+    sm={t:scrollY,c:scrollY,last:scrollY,active:false};
     addEventListener('wheel',function(e){
-      if(e.ctrlKey||document.body.classList.contains('menu-open'))return;
+      if(e.ctrlKey)return;
       e.preventDefault();
       var d=e.deltaY*(e.deltaMode===1?16:1);
       sm.t=Math.max(0,Math.min(document.documentElement.scrollHeight-innerHeight,sm.t+d));
       if(!sm.active){sm.active=true;requestAnimationFrame(smLoop);}
     },{passive:false});
-    function smLoop(){
-      if(Math.abs(scrollY-sm.last)>1.5){sm.t=sm.c=scrollY;}
-      sm.c+=(sm.t-sm.c)*.12;
-      if(Math.abs(sm.t-sm.c)<.4){sm.c=sm.t;}
-      window.scrollTo({top:sm.c,behavior:'instant'});sm.last=scrollY;
-      if(sm.c!==sm.t)requestAnimationFrame(smLoop);else sm.active=false;
-    }
-    /* anchors: animate via the same engine */
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(!el)return;e.preventDefault();sm.t=sm.c=scrollY;sm.t=el.getBoundingClientRect().top+scrollY-70;if(!sm.active){sm.active=true;requestAnimationFrame(smLoop);}});});
-  }else{
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var el=document.getElementById(a.getAttribute('href').slice(1));if(!el)return;e.preventDefault();el.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'});});});
   }
-
-  /* services snap dots (mobile) */
-  var svcm=document.getElementById('svcm'),dots=[].slice.call(document.querySelectorAll('#svcdots i'));
-  svcm.addEventListener('scroll',function(){var w=svcm.firstElementChild.getBoundingClientRect().width+12,i=Math.round(svcm.scrollLeft/w);dots.forEach(function(d,k){d.classList.toggle('on',k===i);});},{passive:true});
-
-  document.getElementById('logo').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:rm?'auto':'smooth'});});
+  function smLoop(){
+    if(Math.abs(scrollY-sm.last)>1.5){sm.t=sm.c=scrollY;}
+    sm.c+=(sm.t-sm.c)*.12;if(Math.abs(sm.t-sm.c)<.4)sm.c=sm.t;
+    window.scrollTo({top:sm.c,behavior:'instant'});sm.last=scrollY;
+    if(sm.c!==sm.t)requestAnimationFrame(smLoop);else sm.active=false;
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1);if(!id)return;var el=document.getElementById(id);if(!el)return;e.preventDefault();go(el.getBoundingClientRect().top+scrollY-72);});});
+  document.getElementById('logo').addEventListener('click',function(e){e.preventDefault();go(0);});
 })();
 function toggleQ(btn){var q=btn.parentNode,open=q.classList.contains('open');document.querySelectorAll('.q.open').forEach(function(o){o.classList.remove('open');});if(!open)q.classList.add('open');}
+function tab(btn,which){document.querySelectorAll('.tabs button').forEach(function(b){b.classList.toggle('on',b===btn);});document.getElementById('body-one').classList.toggle('off',which!=='one');document.getElementById('body-care').classList.toggle('off',which!=='care');}
+function calc(){
+  var v=[1,2,3,4].map(function(i){return document.getElementById('q'+i).value;});
+  for(var i=1;i<4;i++){document.getElementById('r'+(i+1)).classList.toggle('off',!v[i-1]);}
+  var res=document.getElementById('result');
+  if(v.every(Boolean)){
+    var weeks={'Single-page website':'1 to 2 weeks','Company website':'2 to 4 weeks','Online store':'4 to 6 weeks','Business system or portal':'5 to 8 weeks','Automation':'1 to 3 weeks'}[v[0]];
+    if(v[3].indexOf('Urgent')===0)weeks='shorter, agreed on the call';
+    var price=(v[0]==='Single-page website')?'From 99 EUR':'Fixed quote in 1 day';
+    document.getElementById('outPrice').innerHTML=price+(price==='From 99 EUR'?' <small>· fixed after the call</small>':'');
+    document.getElementById('outText').textContent=v[0]+', '+v[1].split(',')[0].toLowerCase()+', '+v[2].split(',')[0].toLowerCase()+' design. Estimated timeline: '+weeks+'. The exact price and date come in writing within one working day.';
+    res.classList.add('ready');
+  }else res.classList.remove('ready');
+}
 function sendForm(e){
-  e.preventDefault();var f=e.target;
-  var body='Name: '+f.name.value+'\nContact: '+f.contact.value+'\nNeeds: '+f.need.value+'\nBest time to call: '+f.time.value+'\nNotes: '+f.note.value;
-  location.href='mailto:'+['matasbuika1','gmail.com'].join('@')+'?subject='+encodeURIComponent('Call request from '+f.name.value)+'&body='+encodeURIComponent(body);
+  e.preventDefault();var f=e.target;var need=(f.querySelector('input[name=need]:checked')||{}).value||'';
+  var body='Name: '+f.name.value+'\nContact: '+f.contact.value+'\nNeeds: '+need+'\nNotes: '+f.note.value;
+  location.href='mailto:'+['matasbuika1','gmail.com'].join('@')+'?subject='+encodeURIComponent('Enquiry from '+f.name.value)+'&body='+encodeURIComponent(body);
   return false;
 }
 </script>
