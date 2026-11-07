@@ -67,10 +67,13 @@ h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
 
 /* page field (one continuous background, no boxes) */
 #field{position:fixed;inset:0;z-index:0;pointer-events:none;will-change:transform}
-.nav,header,section,footer{position:relative;z-index:1}
+.nav{position:sticky;z-index:40}
+section,footer{position:relative;z-index:1}
 /* hero */
-.hero{padding:0}
-.hero-card{position:relative;min-height:calc(100svh - 64px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 20px 64px}
+.hero{padding:0;position:sticky;top:0;z-index:0;height:100svh;overflow:hidden;margin-top:-64px}
+.hero-card{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:84px 20px 48px}
+.sheet{position:relative;z-index:2;background:var(--bg);border-radius:30px 30px 0 0;box-shadow:0 -24px 70px rgba(27,27,27,.12);margin-top:-30px;padding-top:10px}
+.sheet::before{content:"";position:absolute;top:12px;left:50%;width:44px;height:4px;border-radius:4px;background:var(--line);transform:translateX(-50%)}
 .hero-in{position:relative;z-index:2;display:grid;justify-items:center;gap:22px;max-width:880px}
 .hero .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
 .hero .tags i{color:var(--acc);font-style:normal}
@@ -85,10 +88,16 @@ h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
 .hero .actions{display:flex;flex-direction:column;gap:10px;width:100%;max-width:380px;opacity:0;animation:fade .8s ease .65s forwards}
 .hero .actions .btn{width:100%}
 .hero .with{display:grid;gap:10px;justify-items:center;margin-top:14px;opacity:0;animation:fade .8s ease .8s forwards}
-.hero .with .list{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-family:var(--display);font-weight:400;font-size:17px;color:var(--ink-2)}
+.hero .with{width:100%;max-width:none}
+.marq{overflow:hidden;width:min(100%,760px);margin:0 auto;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.marq .track{display:flex;gap:34px;width:max-content;animation:marq 26s linear infinite;font-family:var(--display);font-size:18px;color:var(--ink-2);white-space:nowrap}
+.marq .track span{display:inline-flex;align-items:center;gap:34px}
+.marq .track i{width:5px;height:5px;border-radius:50%;background:var(--acc)}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marq .track{animation:none}}
 @keyframes fade{to{opacity:1}}
 @media (min-width:900px){
-  .hero-card{min-height:calc(100vh - 64px);padding:80px 60px 96px}
+  .hero-card{padding:72px 60px 72px}
   .hero h1{font-size:clamp(84px,9vw,132px);max-width:12ch}
   .hero .lead{font-size:17px}
   .hero .actions{flex-direction:row;width:auto;max-width:none}.hero .actions .btn{width:auto}
@@ -280,13 +289,13 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
         </div>
         <div class="with">
           <span class="mono">Built for</span>
-          <div class="list"><span>Barbers</span><span>Clinics</span><span>Car services</span><span>Trades</span><span>Studios</span><span>Small shops</span></div>
+          <div class="marq"><div class="track"><span>Barbers<i></i></span><span>Clinics<i></i></span><span>Car services<i></i></span><span>Trades<i></i></span><span>Studios<i></i></span><span>Small shops<i></i></span><span>Restaurants<i></i></span><span>Gyms<i></i></span><span>Barbers<i></i></span><span>Clinics<i></i></span><span>Car services<i></i></span><span>Trades<i></i></span><span>Studios<i></i></span><span>Small shops<i></i></span><span>Restaurants<i></i></span><span>Gyms<i></i></span></div></div>
         </div>
       </div>
     </div>
   </div>
 </header>
-
+<div class="sheet">
 <section id="trust">
   <div class="wrap">
     <div class="sec-head">
@@ -462,6 +471,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     <div class="bottom"><span>© 2026 Nemunas Studio</span><span>EN</span></div>
   </div>
 </footer>
+</div>
 
 <script>
 (function(){
@@ -479,7 +489,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     for(var x=gap/2;x<W;x+=gap)for(var y=gap/2;y<H;y+=gap){
       var k;
       if(d){var ex=Math.min(x,W-x)/W;k=1-Math.min(1,ex*6);}
-      else{var ex2=Math.min(x,W-x)/W,ty=y/H;k=Math.max(1-Math.min(1,ex2*14),1-ty*4);}
+      else{var ex2=Math.min(x,W-x)/W,ty=y/H;k=Math.max(1-Math.min(1,ex2*14),1-ty*5.5);}
       k=Math.max(0,Math.min(1,k));k=k*k;if(k<.03)continue;
       ctx.fillStyle='rgba(27,27,27,.22)';ctx.beginPath();ctx.arc(x,y,maxR*k+.15,0,6.283);ctx.fill();
     }
@@ -508,18 +518,19 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     else setTimeout(function(){h1.classList.add('ready');},1600);
   })();
   var lt={mx:-9999,my:-9999,t:0,active:true};
-  var cur=letters.map(function(){return {w:420,d:104};});
+  var cur=letters.map(function(){return {w:420,d:104,y:0};});
   function letterLoop(){
-    if(lt.active&&!rm){
-      var any=false,rects=null;
+    if(lt.active&&!rm&&h1.classList.contains('ready')){
+      var rects=null;
       if(hover&&lt.mx>-9000){rects=letters.map(function(l){return l.getBoundingClientRect();});}
       letters.forEach(function(l,i){
-        var tw=420,td=104;
-        if(rects){var r=rects[i],cx=r.left+r.width/2,cy=r.top+r.height/2,dx=cx-lt.mx,dy=cy-lt.my,dist=Math.sqrt(dx*dx+dy*dy),R=220;if(dist<R){var k=1-dist/R;k=k*k;tw=420+k*420;td=104+k*21;}}
-        else if(!hover){var wv=Math.sin(lt.t*2.2-i*.35);tw=420+Math.max(0,wv)*300;td=104+Math.max(0,wv)*14;}
-        var c=cur[i];c.w+=(tw-c.w)*.14;c.d+=(td-c.d)*.14;
-        if(Math.abs(c.w-tw)>.5||Math.abs(c.d-td)>.1)any=true;
+        /* breathing: slow weight / width / float wave through the line */
+        var ph=lt.t*1.3-i*.32,br=Math.sin(ph);
+        var tw=430+br*95,td=104+br*7,ty=Math.sin(lt.t*.9-i*.45)*3;
+        if(rects){var r=rects[i],cx=r.left+r.width/2,cy=r.top+r.height/2,dx=cx-lt.mx,dy=cy-lt.my,dist=Math.sqrt(dx*dx+dy*dy),R=240;if(dist<R){var k=1-dist/R;k=k*k;tw+=k*380;td+=k*20;ty-=k*10;}}
+        var c=cur[i];c.w+=(tw-c.w)*.12;c.d+=(td-c.d)*.12;c.y+=(ty-c.y)*.12;
         l.style.fontVariationSettings="'wdth' "+c.d.toFixed(1)+",'wght' "+c.w.toFixed(0);
+        l.style.transform='translateY('+c.y.toFixed(2)+'px)';
       });
       lt.t+=.016;
     }
@@ -536,7 +547,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     requestAnimationFrame(function(){
       var y=scrollY;
       if(!rm){
-        if(y<innerHeight*1.3){var p=Math.min(1,y/(innerHeight*.9));heroIn.style.transform='translateY('+(y*.28)+'px)';heroIn.style.opacity=1-p*.9;}
+        if(y<innerHeight*1.3){var p=Math.min(1,y/(innerHeight*.9));heroIn.style.transform='translateY('+(y*.22)+'px) scale('+(1-p*.1)+')';heroIn.style.opacity=1-p*.85;}
         field.style.transform='translateY('+(-(y*.06)%innerHeight)+'px)';
       }
       ticking=false;
