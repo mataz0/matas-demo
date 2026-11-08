@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nemunas Studio · Websites that bring customers</title>
+<title>Brennwick · Websites that bring customers</title>
 <meta name="description" content="Websites, online stores and web apps built by one developer in Kaunas, Lithuania. Fixed price, clear deadline, pages start from 99 EUR. Book a call.">
 <meta name="theme-color" content="#0B191B">
-<meta property="og:title" content="Nemunas Studio · Websites that bring customers">
+<meta property="og:title" content="Brennwick · Websites that bring customers">
 <meta property="og:description" content="One developer. Fixed price. Pages start from 99 EUR.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231B1B1B'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23F0501E'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23071213'/%3E%3Cpath d='M-2 17c8 0 12-7 20-7s12 7 16 7' fill='none' stroke='%2398FEB8' stroke-width='1.8'/%3E%3Cpath d='M-2 13c8 0 11 4 18 4s12-5 18-5' fill='none' stroke='%23D6FFE4' stroke-width='1.2'/%3E%3Ccircle cx='19' cy='11.3' r='2.4' fill='%23D6FFE4'/%3E%3C/svg%3E">
 <!--
   v5 · 2026-11-08 · structure and feel copied from the reference (webvibe.lt) on request, content is ours.
   SYSTEM: bg #F2F2F1, panel #E9E9E7, white #FBFBFA, ink #1B1B1B, accent #F0501E (dot + small marks only).
-  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v12: strands canvas is fixed behind the whole page and flows downward with scroll (periodic). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
+  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v13: brand Brennwick (brennwick.com free 2026-11-08), SVG strands logo, phone demo section replaces pointer-spawn cards, photos toned into the palette, phone/email visible, 1-week delivery. v12: strands canvas is fixed behind the whole page and flows downward with scroll (periodic). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
   EFFECTS: halftone columns in hero / contact (canvas, static), cursor-reveal area, steps line, inertial wheel
   scroll on desktop, reveal on scroll, accordion. No portfolio, no testimonials, no full prices, no em-dashes.
 -->
@@ -60,8 +60,9 @@ h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
 /* nav */
 .nav{position:sticky;top:0;z-index:40;background:rgba(11,25,27,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
-.brand{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
-.brand i{width:7px;height:7px;border-radius:50%;background:var(--acc);display:inline-block;box-shadow:0 0 10px var(--acc)}
+.brand{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.03em;display:flex;align-items:center;gap:9px;font-variation-settings:'wdth' 100,'wght' 600}
+.brand .mark{width:30px;height:30px;flex:none;border-radius:9px;box-shadow:0 0 0 1px rgba(152,254,184,.25),0 0 18px -4px rgba(152,254,184,.5);overflow:hidden}
+.brand b{font-weight:inherit}.brand b::after{content:".";color:var(--acc)}
 .nav-right{display:flex;align-items:center;gap:8px}
 .nav-right .pill{display:none}
 .nav-right .btn{min-height:38px;padding:0 16px}
@@ -118,6 +119,13 @@ section{padding:76px 0}
 .sec-head{display:grid;gap:12px;margin-bottom:30px}
 .sec-head .lead{max-width:50ch}
 @media (min-width:900px){.sec-head{grid-template-columns:1fr 1fr;align-items:end;margin-bottom:48px}.sec-head .lead{justify-self:end;max-width:42ch}}
+
+/* photo tone: pulls every photo into the palette */
+.pc,.tile .art,.cphoto,.row .rp{position:relative}
+.pc img,.tile .art img,.cphoto img,.row .rp img{filter:saturate(.58) contrast(1.06) brightness(.88)}
+.pc::after,.tile .art::after,.cphoto::after,.row .rp::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(152,254,184,.10),rgba(11,25,27,.42));mix-blend-mode:multiply;pointer-events:none}
+.pc::before,.tile .art::before,.cphoto::before,.row .rp::before{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(42,155,92,.16);mix-blend-mode:color;pointer-events:none;z-index:1}
+.pc figcaption{z-index:2}
 
 /* statement frames: full-screen, one fades into the next while scrolling */
 .frames{position:relative;height:320vh}
@@ -179,22 +187,7 @@ section{padding:76px 0}
 .panel .lead{margin-top:12px}
 .panel .hint{margin-top:auto;padding-top:40px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .panel canvas{position:absolute;inset:0;width:100%;height:100%}
-.spawn{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit}
-.wc{position:absolute;width:180px;border-radius:12px;background:var(--white);box-shadow:0 0 0 1px var(--line),0 24px 50px -24px rgba(0,0,0,.8);padding:8px;transform:translate(-50%,-50%) scale(.6) rotate(var(--rot,0deg));opacity:0;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .5s;will-change:transform,opacity}
-.wc.in{transform:translate(-50%,-50%) scale(1) rotate(var(--rot,0deg));opacity:1}
-.wc.out{opacity:0;transform:translate(-50%,-60%) scale(.9) rotate(var(--rot,0deg))}
-.wc .scr{aspect-ratio:16/11;border-radius:8px;background:var(--panel);position:relative;overflow:hidden}
-.wc .scr img{width:100%;height:100%;object-fit:cover;display:block}
-.wc .scr i{position:absolute;display:block;border-radius:3px;background:var(--c2)}
-.wc .scr i.a{left:8%;top:9%;width:22%;height:6%}
-.wc .scr i.b{right:8%;top:9%;width:16%;height:6%;background:var(--c3)}
-.wc .scr i.c{left:8%;top:30%;width:60%;height:12%}
-.wc .scr i.d{left:8%;top:47%;width:44%;height:8%;opacity:.6}
-.wc .scr i.e{left:8%;bottom:12%;width:28%;height:11%;background:var(--c3);border-radius:20px}
-.wc .scr i.f{right:8%;bottom:12%;width:30%;height:36%;background:var(--c4)}
-.wc b{display:block;font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:-.02em;margin:8px 4px 2px}
-.wc span{display:block;font-size:11px;color:var(--ink-3);margin:0 4px 2px}
-@media (min-width:900px){.wc{width:230px}}
+
 .panel.dark{background:#071213;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
 .panel.dark .q{font-family:var(--display);font-weight:300;font-size:clamp(28px,7vw,44px);letter-spacing:-.03em;line-height:1.05;max-width:16ch}
 .panel.dark .q b{color:var(--acc);font-weight:300}
@@ -205,6 +198,48 @@ section{padding:76px 0}
 .panel.dark .stat .n{color:var(--acc);text-shadow:0 0 24px rgba(152,254,184,.45)}
 .panel.dark .btn{margin-top:22px;justify-self:start;align-self:flex-start}
 @media (min-width:900px){.split{grid-template-columns:1.25fr 1fr;gap:14px}.panel{padding:44px 44px;min-height:520px}}
+
+/* phone demo */
+.phone-panel{overflow:visible}
+.phone-wrap{position:relative;margin-top:28px;display:grid;justify-items:center}
+.phone{width:min(100%,250px);aspect-ratio:9/18.6;border-radius:34px;background:#050c0d;padding:9px;box-shadow:0 0 0 1px rgba(152,254,184,.18),0 40px 80px -30px rgba(0,0,0,.9),0 0 60px -20px rgba(152,254,184,.25);position:relative}
+.phone::before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);width:76px;height:8px;border-radius:8px;background:#050c0d;z-index:3}
+.ph-screen{position:relative;height:100%;border-radius:26px;overflow:hidden;background:#F4F2EC;color:#14201C;font-family:var(--sans)}
+.ph-bar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:10px;font-weight:600;background:#F4F2EC;position:relative;z-index:2}
+.ph-bar .s{display:flex;gap:2px}.ph-bar .s i{width:3px;height:8px;background:#14201C;border-radius:1px}
+.ph-scroll{animation:phscroll 16s cubic-bezier(.45,0,.2,1) infinite;will-change:transform}
+@keyframes phscroll{0%,14%{transform:translateY(0)}40%,54%{transform:translateY(-38%)}80%,90%{transform:translateY(-58%)}100%{transform:translateY(0)}}
+.phone:hover .ph-scroll{animation-play-state:paused}
+.ph-nav{display:flex;justify-content:space-between;align-items:center;padding:6px 14px 10px;font-size:11px}
+.ph-nav b{font-weight:600}
+.ph-btn{padding:4px 9px;border-radius:999px;background:#14201C;color:#F4F2EC;font-size:9px}
+.ph-hero{padding:4px 14px 14px;display:grid;gap:8px}
+.ph-eyebrow{font-size:8.5px;color:#157A6E;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.ph-h1{font-family:var(--display);font-size:19px;line-height:1.05;letter-spacing:-.02em;font-weight:500}
+.ph-cta{background:#157A6E;color:#fff;border-radius:999px;padding:9px 12px;font-size:10.5px;font-weight:600;text-align:center}
+.ph-cta.ghost{background:transparent;color:#14201C;border:1px solid rgba(20,32,28,.25)}
+.ph-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 14px}
+.ph-card{background:#fff;border-radius:10px;padding:8px;display:grid;gap:3px;font-size:9px}
+.ph-card i{display:block;width:16px;height:16px;border-radius:5px;background:#CFE6DC;margin-bottom:2px}
+.ph-card b{font-weight:600}.ph-card span{color:#4A5753;font-size:8.5px}
+.ph-review{margin:12px 14px 0;background:#fff;border-radius:12px;padding:10px;font-size:9.5px;display:grid;gap:4px}
+.ph-stars{color:#157A6E;letter-spacing:1px;font-size:10px}
+.ph-review p{line-height:1.35}.ph-review span{color:#8A948F;font-size:8.5px}
+.ph-book{margin:12px 14px 0;background:#14201C;color:#F4F2EC;border-radius:14px;padding:12px;display:grid;gap:8px}
+.ph-lbl{font-size:9px;color:rgba(244,242,236,.6);text-transform:uppercase;letter-spacing:.06em}
+.ph-slots{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ph-slots span{border:1px solid rgba(244,242,236,.25);border-radius:8px;padding:6px;font-size:9px;text-align:center}
+.ph-slots span.on{background:#98FEB8;color:#14201C;border-color:#98FEB8;font-weight:600}
+.ph-book .ph-cta{background:#98FEB8;color:#14201C}
+.ph-map{margin:12px 14px 0;height:70px;border-radius:12px;background:repeating-linear-gradient(45deg,#E8ECE6 0 6px,#DCE3DC 6px 7px);display:grid;place-items:center;font-size:9px;color:#4A5753}
+.ph-foot{padding:16px 14px 40px;font-size:8.5px;color:#8A948F;text-align:center}
+.chip-f{position:absolute;background:var(--white);border-radius:14px;padding:10px 14px;display:grid;gap:2px;box-shadow:0 0 0 1px var(--line),0 24px 50px -24px rgba(0,0,0,.8);min-width:112px}
+.chip-f b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1;color:var(--acc);letter-spacing:-.02em}
+.chip-f span{font-size:10.5px;color:var(--ink-2)}
+.chip-f.c1{left:0;top:18%}.chip-f.c2{right:0;top:44%}.chip-f.c3{left:4%;bottom:12%}
+@media (max-width:899px){.chip-f{display:none}.phone{width:min(100%,230px)}}
+@media (min-width:900px){.phone-wrap{margin-top:36px}.chip-f.c1{left:2%}.chip-f.c3{left:6%}}
+@media (prefers-reduced-motion:reduce){.ph-scroll{animation:none}}
 
 /* steps */
 .steps{display:grid;gap:10px}
@@ -282,7 +317,8 @@ section{padding:76px 0}
 .contact-card > *{position:relative;z-index:2}
 .contact-card h2{max-width:10ch;font-size:clamp(44px,11vw,88px)}
 .contact-card .ways{display:grid;gap:10px;margin-top:22px}
-.contact-card .ways .big{font-family:var(--display);font-weight:300;font-size:26px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.contact-card .ways .big{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink);transition:color .3s}
+.contact-card .ways .big:hover{color:var(--acc)}
 .contact-card .ways .mono{color:var(--ink-3);font-size:10.5px}
 .cphoto{margin-top:22px;aspect-ratio:16/10;border-radius:18px;overflow:hidden;max-width:420px}
 .cphoto img{width:100%;height:100%;object-fit:cover;display:block}
@@ -327,9 +363,9 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 <canvas id="strands" aria-hidden="true"></canvas>
 <nav class="nav">
   <div class="wrap">
-    <a class="brand" href="/" id="logo"><i></i>nemunas</a>
+    <a class="brand" href="/" id="logo"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#071213"/><path d="M-2 21c9 0 11-10 20-10s11 6 16 6" fill="none" stroke="rgba(152,254,184,.35)" stroke-width="1.4"/><path d="M-2 17c8 0 12-7 20-7s12 7 16 7" fill="none" stroke="#98FEB8" stroke-width="1.6"/><path d="M-2 13c8 0 11 4 18 4s12-5 18-5" fill="none" stroke="rgba(214,255,228,.8)" stroke-width="1.1"/><circle cx="19" cy="11.3" r="2.1" fill="#D6FFE4"/><circle cx="19" cy="11.3" r="4.5" fill="rgba(152,254,184,.22)"/></svg><b>brennwick</b></a>
     <div class="nav-right">
-      <a class="pill" href="#contact"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2.5h3l1.2 3-1.6 1a8 8 0 0 0 3.9 3.9l1-1.6 3 1.2v3A1.5 1.5 0 0 1 12 14 11.5 11.5 0 0 1 2 4a1.5 1.5 0 0 1 1-1.5z"/></svg>Book a call</a>
+      <a class="pill" href="tel:+37066991481"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2.5h3l1.2 3-1.6 1a8 8 0 0 0 3.9 3.9l1-1.6 3 1.2v3A1.5 1.5 0 0 1 12 14 11.5 11.5 0 0 1 2 4a1.5 1.5 0 0 1 1-1.5z"/></svg>Book a call</a>
       <a class="btn btn-ink" href="#contact">Get a quote</a>
     </div>
   </div>
@@ -399,12 +435,28 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 <section id="proof">
   <div class="wrap">
     <div class="split">
-      <div class="panel ri" id="revealPanel">
-        <canvas class="hf" data-ink="234,242,236" data-mode="corner" aria-hidden="true"></canvas>
-        <h2 style="position:relative">See for yourself.</h2>
-        <p class="lead" style="position:relative">No technical details to learn. You get a clear proposal, a date and a site that works on every phone.</p>
-        <span class="hint" style="position:relative">Move your mouse over this area</span>
-        <div class="spawn" id="spawn"></div>
+      <div class="panel ri phone-panel">
+        <h2 style="position:relative">Built for the phone in their hand.</h2>
+        <p class="lead" style="position:relative">Every site is designed on a phone screen first: one clear offer, the call button where the thumb lands, booking in two taps. Then it is widened for the desktop.</p>
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="ph-screen">
+              <div class="ph-bar"><span></span><span class="t">9:41</span><span class="s"><i></i><i></i><i></i></span></div>
+              <div class="ph-scroll">
+                <div class="ph-nav"><b>Harbour Dental</b><span class="ph-btn">Call</span></div>
+                <div class="ph-hero"><div class="ph-eyebrow">Open today until 19:00</div><div class="ph-h1">Same-day appointments, no waiting room.</div><div class="ph-cta">Book in two taps</div><div class="ph-cta ghost">Call 020 7946 0810</div></div>
+                <div class="ph-row"><div class="ph-card"><i></i><b>Check-up</b><span>from £45</span></div><div class="ph-card"><i></i><b>Whitening</b><span>from £180</span></div><div class="ph-card"><i></i><b>Emergency</b><span>same day</span></div></div>
+                <div class="ph-review"><div class="ph-stars">★★★★★</div><p>Booked at 8, seen at 10. Finally a dentist that answers the phone.</p><span>Google review · 4.9 from 212</span></div>
+                <div class="ph-book"><div class="ph-lbl">Pick a time</div><div class="ph-slots"><span>Today 14:30</span><span class="on">Today 16:00</span><span>Tomorrow 9:15</span><span>Tomorrow 11:45</span></div><div class="ph-cta">Confirm booking</div></div>
+                <div class="ph-map"><span>Find us · 4 min from the station</span></div>
+                <div class="ph-foot">Harbour Dental · Brighton</div>
+              </div>
+            </div>
+          </div>
+          <div class="chip-f c1"><b data-count="100">0</b><span>Google speed score</span></div>
+          <div class="chip-f c2"><b>0.8 s</b><span>first screen loads</span></div>
+          <div class="chip-f c3"><b>1 tap</b><span>to call or book</span></div>
+        </div>
       </div>
       <div class="panel dark ri" style="--d:.1s" id="quotePanel">
         <canvas class="fluid" id="quoteFluid" aria-hidden="true"></canvas>
@@ -426,7 +478,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     <div class="steps ri" id="steps">
       <div class="step"><div class="top"><span class="num">1</span><span class="ln"></span><span class="mono">20 min · free</span></div><div><h3>Free call</h3><p>We work out what your business needs. Phone or video, no commitment.</p></div></div>
       <div class="step" style="--d:.15s"><div class="top"><span class="num">2</span><span class="ln"></span><span class="mono">Within 1 working day</span></div><div><h3>Proposal</h3><p>A fixed price, a deadline and a clear list of what is included.</p></div></div>
-      <div class="step" style="--d:.3s"><div class="top"><span class="num">3</span><span class="ln"></span><span class="mono">2 to 8 weeks</span></div><div><h3>Design and build</h3><p>You approve the design first. Only then does the coding start.</p></div></div>
+      <div class="step" style="--d:.3s"><div class="top"><span class="num">3</span><span class="ln"></span><span class="mono">1 week</span></div><div><h3>Design and build</h3><p>You approve the design first, then it is built and live within one week.</p></div></div>
       <div class="step" style="--d:.45s"><div class="top"><span class="num">4</span><span class="ln"></span><span class="mono">1 month included</span></div><div><h3>Launch and care</h3><p>Site goes live, analytics connected. The first month of care is included.</p></div></div>
     </div>
     <div class="center ri"><a class="btn btn-ink" href="#contact">Get a quote</a></div>
@@ -488,7 +540,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
       <div class="faq ri">
         <div class="q"><button type="button" onclick="toggleQ(this)">Is the consultation paid?<i></i></button><div class="a"><div><p>No. The first call is free and takes about 20 minutes. You leave it with a clear picture of what you need, whether we work together or not.</p></div></div></div>
         <div class="q"><button type="button" onclick="toggleQ(this)">How much does a website cost?<i></i></button><div class="a"><div><p>Pages start from 99 EUR. The final price depends on the number of pages, booking or shop features and the design level. You get the exact number after the call, and it stays fixed.</p></div></div></div>
-        <div class="q"><button type="button" onclick="toggleQ(this)">How long does it take?<i></i></button><div class="a"><div><p>A single page in about a week, a company site in two to four, an online store or a system in four to eight. The date is written into the proposal.</p></div></div></div>
+        <div class="q"><button type="button" onclick="toggleQ(this)">How long does it take?<i></i></button><div class="a"><div><p>One week from approved design to launch for websites and landing pages. Online stores and systems get their own date in the proposal, usually two to three weeks.</p></div></div></div>
         <div class="q"><button type="button" onclick="toggleQ(this)">Can I edit the content myself?<i></i></button><div class="a"><div><p>Yes. Texts, photos, prices and products can be changed without touching code. You get a short walkthrough at launch.</p></div></div></div>
         <div class="q"><button type="button" onclick="toggleQ(this)">Do you move sites off WordPress?<i></i></button><div class="a"><div><p>Yes. The content stays, the page builder goes. The result is faster, safer and easier to edit.</p></div></div></div>
         <div class="q"><button type="button" onclick="toggleQ(this)">What happens after launch?<i></i></button><div class="a"><div><p>The first month of care is included. After that you can keep the monthly care plan or simply write when something is needed.</p></div></div></div>
@@ -503,7 +555,8 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
       <div>
         <h2>Let's discuss your project.</h2>
         <div class="ways">
-          <div class="big">Book a free call <span class="pill">20 min</span></div>
+          <a class="big" href="tel:+37066991481">+370 669 91481 <span class="pill">Call · 20 min free</span></a>
+          <a class="big" href="mailto:matasbuika1@gmail.com" style="font-size:20px">matasbuika1@gmail.com</a>
           <span class="mono">First call is free · Kaunas, Lithuania · remote everywhere</span>
         </div>
         <div class="cphoto"><img src="img/cafe2.jpg" alt="Client reading a proposal on her phone" loading="lazy"></div>
@@ -532,12 +585,12 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 <footer>
   <div class="wrap">
     <div class="cols">
-      <div class="col"><a class="brand" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><i></i>nemunas</a><p class="about" style="margin-top:8px">Websites, online stores and business systems for small businesses. Built in Kaunas, Lithuania, delivered anywhere.</p></div>
+      <div class="col"><a class="brand" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#071213"/><path d="M-2 21c9 0 11-10 20-10s11 6 16 6" fill="none" stroke="rgba(152,254,184,.35)" stroke-width="1.4"/><path d="M-2 17c8 0 12-7 20-7s12 7 16 7" fill="none" stroke="#98FEB8" stroke-width="1.6"/><path d="M-2 13c8 0 11 4 18 4s12-5 18-5" fill="none" stroke="rgba(214,255,228,.8)" stroke-width="1.1"/><circle cx="19" cy="11.3" r="2.1" fill="#D6FFE4"/><circle cx="19" cy="11.3" r="4.5" fill="rgba(152,254,184,.22)"/></svg><b>brennwick</b></a><p class="about" style="margin-top:8px">Websites, online stores and business systems for small businesses. Built in Kaunas, Lithuania, delivered anywhere.</p></div>
       <div class="col"><span class="mono">Services</span><a href="#services">Websites</a><a href="#services">Online stores</a><a href="#services">Business systems</a><a href="#services">Automation</a></div>
       <div class="col"><span class="mono">Information</span><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
-      <div class="col"><span class="mono">Contact</span><a href="#contact">Book a call</a><a href="#contact">Send an enquiry</a><span>Kaunas, Lithuania</span></div>
+      <div class="col"><span class="mono">Contact</span><a href="tel:+37066991481">+370 669 91481</a><a href="mailto:matasbuika1@gmail.com">matasbuika1@gmail.com</a><span>Kaunas, Lithuania</span></div>
     </div>
-    <div class="bottom"><span>© 2026 Nemunas Studio</span><span>EN</span></div>
+    <div class="bottom"><span>© 2026 Brennwick</span><span>EN</span></div>
   </div>
 </footer>
 </div>
@@ -695,22 +748,6 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 
   makeFluid(document.getElementById('quotePanel'),document.getElementById('quoteFluid'),{mode:'corner',cols:48,ink:[234,242,236],dye:[152,254,184]});
 
-  /* "see for yourself": cards appear along the pointer path (tap on touch) */
-  (function(){
-    var host=document.getElementById('revealPanel'),layer=document.getElementById('spawn'),lastX=-1e4,lastY=-1e4,n=0;
-    var kinds=[['Business site','Live in 5 working days','barber3'],['Online store','Card payments, simple catalogue','cafe1'],['Landing page','One offer, one button','elec2'],['Web app','Built around your process','trainer1'],['Mobile first','Checked on real phones','mech3'],['Wireframe first','You approve before code','shop3']];
-    function spawn(x,y){
-      var k=kinds[n%kinds.length];n++;
-      var el=document.createElement('div');el.className='wc';el.style.left=x+'px';el.style.top=y+'px';el.style.setProperty('--rot',((Math.random()*10)-5).toFixed(1)+'deg');
-      el.innerHTML='<div class="scr"><img src="img/'+k[2]+'.jpg" alt=""></div><b>'+k[0]+'</b><span>'+k[1]+'</span>';
-      layer.appendChild(el);requestAnimationFrame(function(){el.classList.add('in');});
-      setTimeout(function(){el.classList.add('out');setTimeout(function(){el.remove();},600);},1900);
-      while(layer.children.length>7)layer.firstChild.remove();
-    }
-    if(hover&&!rm){host.addEventListener('pointermove',function(e){var r=host.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;if(Math.hypot(x-lastX,y-lastY)>130){lastX=x;lastY=y;spawn(x,y);}});}
-    else{host.addEventListener('click',function(e){var r=host.getBoundingClientRect();spawn(e.clientX-r.left,e.clientY-r.top);});host.querySelector('.hint').textContent='Tap this area';}
-  })();
-
   /* service rows: the photo follows the pointer on hover devices */
   if(hover&&!rm){document.querySelectorAll('.row').forEach(function(row){var rp=row.querySelector('.rp'),tx=0,ty=0,cx=0,cy=0,raf=null,on=false;
     function tick(){cx+=(tx-cx)*.18;cy+=(ty-cy)*.18;rp.style.left=cx+'px';rp.style.top=cy+'px';if(on&&(Math.abs(tx-cx)>.3||Math.abs(ty-cy)>.3))raf=requestAnimationFrame(tick);else raf=null;}
@@ -736,6 +773,11 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     });
   })();
 
+  /* count-up */
+  var counters=[].slice.call(document.querySelectorAll('[data-count]'));
+  function runCount(el){var end=+el.getAttribute('data-count'),t0=null;function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400);p=1-Math.pow(1-p,3);el.textContent=Math.round(end*p);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+  function startCount(c){if(c.dataset.done)return;c.dataset.done=1;if(rm)c.textContent=c.getAttribute('data-count');else runCount(c);}
+  if('IntersectionObserver' in window){var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)startCount(e.target);});},{threshold:.3});counters.forEach(function(c){cio.observe(c);});}
   /* statement frames: pick the active frame by scroll progress */
   var framesSec=document.getElementById('frames'),frames=[].slice.call(framesSec.querySelectorAll('.frame')),fdots=[].slice.call(framesSec.querySelectorAll('.dots i')),fcur=0;
   function framesTick(){
@@ -748,7 +790,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
   function onScroll(){
     if(ticking)return;ticking=true;
     requestAnimationFrame(function(){
-      var y=scrollY;framesTick();if(window.__strandsScroll)window.__strandsScroll(y);
+      var y=scrollY;framesTick();counters.forEach(function(c){if(!c.dataset.done&&c.getBoundingClientRect().top<innerHeight*.9)startCount(c);});if(window.__strandsScroll)window.__strandsScroll(y);
       if(!rm){
         var hp=Math.min(1,y/(innerHeight*.85));heroIn.style.transform='translateY('+(Math.min(y,innerHeight*1.3)*.22)+'px) scale('+(1-hp*.1)+')';heroIn.style.opacity=1-hp;heroIn.style.visibility=hp>=1?'hidden':'visible';
       }
@@ -779,7 +821,7 @@ function calc(){
   for(var i=1;i<4;i++){document.getElementById('r'+(i+1)).classList.toggle('off',!v[i-1]);}
   var res=document.getElementById('result');
   if(v.every(Boolean)){
-    var weeks={'Single-page website':'1 to 2 weeks','Company website':'2 to 4 weeks','Online store':'4 to 6 weeks','Business system or portal':'5 to 8 weeks','Automation':'1 to 3 weeks'}[v[0]];
+    var weeks={'Single-page website':'1 week','Company website':'1 week','Online store':'2 to 3 weeks','Business system or portal':'2 to 3 weeks','Automation':'1 week'}[v[0]];
     if(v[3].indexOf('Urgent')===0)weeks='shorter, agreed on the call';
     var price=(v[0]==='Single-page website')?'From 99 EUR':'Fixed quote in 1 day';
     document.getElementById('outPrice').innerHTML=price+(price==='From 99 EUR'?' <small>· fixed after the call</small>':'');
