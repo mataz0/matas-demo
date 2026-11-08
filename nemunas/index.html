@@ -13,7 +13,7 @@
 <!--
   v5 · 2026-11-08 · structure and feel copied from the reference (webvibe.lt) on request, content is ours.
   SYSTEM: bg #F2F2F1, panel #E9E9E7, white #FBFBFA, ink #1B1B1B, accent #F0501E (dot + small marks only).
-  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
+  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v12: strands canvas is fixed behind the whole page and flows downward with scroll (periodic). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
   EFFECTS: halftone columns in hero / contact (canvas, static), cursor-reveal area, steps line, inertial wheel
   scroll on desktop, reveal on scroll, accordion. No portfolio, no testimonials, no full prices, no em-dashes.
 -->
@@ -69,14 +69,16 @@ h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
 
 /* page field (one continuous background, no boxes) */
 .fluid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#strands{-webkit-mask-image:radial-gradient(55% 45% at 50% 48%,rgba(0,0,0,.45),#000 75%);mask-image:radial-gradient(55% 45% at 50% 48%,rgba(0,0,0,.45),#000 75%)}
+#strands{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .cur{position:absolute;top:0;left:0;z-index:3;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--acc);box-shadow:0 0 14px var(--acc);pointer-events:none;transform:translate(-100px,-100px);will-change:transform}
 .nav{position:sticky;z-index:40}
 section,footer{position:relative;z-index:1}
+.hero-in{position:relative}
+.hero-in::before{content:"";position:absolute;inset:-40px -60px;background:radial-gradient(60% 60% at 50% 50%,rgba(11,25,27,.55),rgba(11,25,27,0) 72%);z-index:-1;pointer-events:none}
 /* hero */
-.hero{padding:0;position:sticky;top:0;z-index:0;height:100svh;overflow:hidden;margin-top:-64px}
+.hero{padding:0;position:sticky;top:0;z-index:1;height:100svh;overflow:hidden;margin-top:-64px}
 .hero-card{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:76px 20px 40px}
-.sheet{position:relative;z-index:2;background:var(--bg);border-radius:30px 30px 0 0;box-shadow:0 -24px 80px rgba(0,0,0,.6);margin-top:-30px;padding-top:10px}
+.sheet{position:relative;z-index:2;background:rgba(11,25,27,.72);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border-radius:30px 30px 0 0;box-shadow:0 -24px 80px rgba(0,0,0,.6);margin-top:-30px;padding-top:10px}
 .sheet::before{content:"";position:absolute;top:12px;left:50%;width:44px;height:4px;border-radius:4px;background:var(--line);transform:translateX(-50%)}
 .hero-in{position:relative;z-index:2;display:grid;justify-items:center;gap:16px;max-width:880px;width:100%}
 .hero .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
@@ -322,6 +324,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 </head>
 <body>
 
+<canvas id="strands" aria-hidden="true"></canvas>
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="/" id="logo"><i></i>nemunas</a>
@@ -335,7 +338,6 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 <header class="hero">
   <div class="wrap">
     <div class="hero-card" id="heroCard">
-      <canvas class="fluid" id="strands" aria-hidden="true"></canvas>
       <div class="hero-in">
         <div class="tags"><span>One developer</span><i>·</i><span>Fixed price</span><i>·</i><span>Pages from 99 EUR</span></div>
         <h1 id="h1">Websites that bring customers.</h1>
@@ -656,27 +658,28 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
   /* ---------- light strands: fan out from the left, pour downward as you scroll ---------- */
   (function(){
     var c=document.getElementById('strands'),host=document.getElementById('heroCard');if(!c)return;
-    var ctx=c.getContext('2d'),W=1,H=1,dpr=1,N=desktop()?76:46,S=[],t=0,p=0,visible=true,raf=0,mx=.5,my=.5,mOn=false;
-    function fit(){var r=host.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(devicePixelRatio||1,1.5);c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+    var ctx=c.getContext('2d'),W=1,H=1,dpr=1,N=desktop()?76:46,S=[],t=0,p=0,visible=true,raf=0,mx=.5,my=.5,mOn=false,PER=1.7;
+    function fit(){W=Math.max(1,innerWidth);H=Math.max(1,innerHeight);dpr=Math.min(devicePixelRatio||1,1.5);c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
     function seed(){S=[];for(var i=0;i<N;i++){var k=i/(N-1);S.push({k:k,y0:(Math.random()-.5)*.12,ye:(k-.5)*1.05+(Math.random()-.5)*.08,ph:Math.random()*6.28,sp:.35+Math.random()*.5,amp:.03+Math.random()*.05,w:.6+Math.random()*1.3,a:.12+Math.random()*.5,hot:Math.random()<.18,ps:Math.random(),pv:.05+Math.random()*.08});}}
-    function pt(s,u){/* cubic bezier point for strand s at u */
-      var x0=-.08*W,y0=H*(.5+s.y0)+p*H*.1;
-      var x1=W*.32,y1=H*(.5+s.y0*2+Math.sin(t*s.sp+s.ph)*s.amp*.6)+p*H*.55;
-      var x2=W*.68,y2=H*(.5+s.ye*.9+Math.sin(t*s.sp*1.3+s.ph*2)*s.amp)+p*H*1.35+(mOn?(my-.5)*H*.18*(1-Math.abs(s.ye)):0);
-      var x3=W*1.12,y3=H*(.5+s.ye)+p*H*1.9;
+    function pt(s,u,sh){/* cubic bezier point for strand s at u; sh = vertical flow offset */
+      var x0=-.08*W,y0=H*(.5+s.y0)+sh*.15;
+      var x1=W*.32,y1=H*(.5+s.y0*2+Math.sin(t*s.sp+s.ph)*s.amp*.6)+sh*.55;
+      var x2=W*.68,y2=H*(.5+s.ye*.9+Math.sin(t*s.sp*1.3+s.ph*2)*s.amp)+sh*1.1+(mOn?(my-.5)*H*.18*(1-Math.abs(s.ye)):0);
+      var x3=W*1.12,y3=H*(.5+s.ye)+sh*1.5;
       var v=1-u;return [v*v*v*x0+3*v*v*u*x1+3*v*u*u*x2+u*u*u*x3, v*v*v*y0+3*v*v*u*y1+3*v*u*u*y2+u*u*u*y3];
     }
     function draw(){
       ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';
-      var fade=1-Math.min(1,Math.max(0,p-.45)*1.8);
-      for(var i=0;i<S.length;i++){
-        var s=S[i],a=s.a*fade;
-        ctx.beginPath();var q=pt(s,0);ctx.moveTo(q[0],q[1]);
-        for(var j=1;j<=28;j++){q=pt(s,j/28);ctx.lineTo(q[0],q[1]);}
+      var fade=1-Math.min(.5,Math.max(0,p-.5)*.9);
+      var base=((p*.85)%PER)*H;
+      for(var i=0;i<S.length;i++)for(var cp=-1;cp<=0;cp++){
+        var s=S[i],a=s.a*fade,sh=base+cp*PER*H;
+        ctx.beginPath();var q=pt(s,0,sh);ctx.moveTo(q[0],q[1]);
+        for(var j=1;j<=28;j++){q=pt(s,j/28,sh);ctx.lineTo(q[0],q[1]);}
         ctx.lineWidth=s.w*3.2;ctx.strokeStyle='rgba(152,254,184,'+(a*.09).toFixed(3)+')';ctx.stroke();
         ctx.lineWidth=s.w;ctx.strokeStyle=s.hot?'rgba(214,255,228,'+(a*.9).toFixed(3)+')':'rgba(152,254,184,'+(a*.55).toFixed(3)+')';ctx.stroke();
         /* travelling light */
-        var u=(s.ps+t*s.pv)%1,g=pt(s,u);
+        var u=(s.ps+t*s.pv)%1,g=pt(s,u,sh);
         ctx.beginPath();ctx.arc(g[0],g[1],s.hot?2.2:1.4,0,6.283);ctx.fillStyle='rgba(214,255,228,'+(a*1.6).toFixed(3)+')';ctx.fill();
         ctx.beginPath();ctx.arc(g[0],g[1],s.hot?9:6,0,6.283);ctx.fillStyle='rgba(152,254,184,'+(a*.14).toFixed(3)+')';ctx.fill();
       }
@@ -686,8 +689,8 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     fit();seed();draw();
     var rt3;addEventListener('resize',function(){clearTimeout(rt3);rt3=setTimeout(function(){fit();N=desktop()?76:46;seed();draw();},150);});
     if(hover){host.addEventListener('pointermove',function(e){var r=host.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;my=(e.clientY-r.top)/r.height;mOn=true;});host.addEventListener('pointerleave',function(){mOn=false;});}
-    window.__strandsScroll=function(y){p=Math.min(1,Math.max(0,y/(innerHeight*1.1)));};
-    if('IntersectionObserver' in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting;if(visible&&!raf)raf=requestAnimationFrame(frame);}).observe(host);}else{raf=requestAnimationFrame(frame);}
+    window.__strandsScroll=function(y){p=Math.max(0,y/innerHeight);};
+    document.addEventListener('visibilitychange',function(){visible=!document.hidden;if(visible&&!raf)raf=requestAnimationFrame(frame);});raf=requestAnimationFrame(frame);
   })();
 
   makeFluid(document.getElementById('quotePanel'),document.getElementById('quoteFluid'),{mode:'corner',cols:48,ink:[234,242,236],dye:[152,254,184]});
@@ -747,7 +750,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     requestAnimationFrame(function(){
       var y=scrollY;framesTick();if(window.__strandsScroll)window.__strandsScroll(y);
       if(!rm){
-        if(y<innerHeight*1.3){var p=Math.min(1,y/(innerHeight*.9));heroIn.style.transform='translateY('+(y*.22)+'px) scale('+(1-p*.1)+')';heroIn.style.opacity=1-p*.85;}
+        var hp=Math.min(1,y/(innerHeight*.85));heroIn.style.transform='translateY('+(Math.min(y,innerHeight*1.3)*.22)+'px) scale('+(1-hp*.1)+')';heroIn.style.opacity=1-hp;heroIn.style.visibility=hp>=1?'hidden':'visible';
       }
       ticking=false;
     });
