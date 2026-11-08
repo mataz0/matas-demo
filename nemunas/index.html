@@ -13,7 +13,7 @@
 <!--
   v5 · 2026-11-08 · structure and feel copied from the reference (webvibe.lt) on request, content is ours.
   SYSTEM: bg #F2F2F1, panel #E9E9E7, white #FBFBFA, ink #1B1B1B, accent #F0501E (dot + small marks only).
-  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v16: audited against the 20 unslop rules (no filler badges, no numbered labels, sans buttons, one shadow, radius system 20/8, tabular nums, specific headline). v15: Recent builds moved out of the hero into a snap gallery with links to the live demo sites (demos/). v14: palette sky blue #56B4F2 / cloud white #F6FAFE / vermilion #E8442F (light theme), new B monogram logo, all imagery = screenshots of 8 fictional demo sites we built (img/demo). v13: brand Brennwick (brennwick.com free 2026-11-08), SVG strands logo, phone demo section replaces pointer-spawn cards, photos toned into the palette, phone/email visible, 1-week delivery. v12: strands canvas is fixed behind the whole page and flows downward with scroll (periodic). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
+  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v17: stacked section headers, no floating stat chips, one CTA label, no EN/locale strips. v16: audited against the 20 unslop rules (no filler badges, no numbered labels, sans buttons, one shadow, radius system 20/8, tabular nums, specific headline). v15: Recent builds moved out of the hero into a snap gallery with links to the live demo sites (demos/). v14: palette sky blue #56B4F2 / cloud white #F6FAFE / vermilion #E8442F (light theme), new B monogram logo, all imagery = screenshots of 8 fictional demo sites we built (img/demo). v13: brand Brennwick (brennwick.com free 2026-11-08), SVG strands logo, phone demo section replaces pointer-spawn cards, photos toned into the palette, phone/email visible, 1-week delivery. v12: strands canvas is fixed behind the whole page and flows downward with scroll (periodic). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
   EFFECTS: halftone columns in hero / contact (canvas, static), cursor-reveal area, steps line, inertial wheel
   scroll on desktop, reveal on scroll, accordion. No portfolio, no testimonials, no full prices, no em-dashes.
 -->
@@ -123,7 +123,7 @@ section{padding:76px 0}
 @media (min-width:900px){section{padding:120px 0}}
 .sec-head{display:grid;gap:12px;margin-bottom:30px}
 .sec-head .lead{max-width:50ch}
-@media (min-width:900px){.sec-head{grid-template-columns:1fr 1fr;align-items:end;margin-bottom:48px}.sec-head .lead{justify-self:end;max-width:42ch}}
+@media (min-width:900px){.sec-head{margin-bottom:48px;max-width:64ch}}
 
 /* recent builds: horizontal snap gallery */
 #builds{padding-top:64px}
@@ -284,7 +284,7 @@ section{padding:76px 0}
 .calc > p{color:var(--ink-2);font-size:14.5px;max-width:44ch}
 .qrow{display:grid;gap:8px;transition:opacity .3s}
 .qrow.off{opacity:.38;pointer-events:none}
-.qrow .lbl{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.qrow .lbl{display:none}
 .qrow .lbl .num{width:22px;height:22px;border-radius:6px;background:var(--panel-2);color:var(--ink);display:grid;place-items:center;font-family:var(--mono);font-size:10.5px}
 .qrow .lbl .ln{flex:1;height:1px;background:var(--line)}
 .qrow .lbl .mono{font-size:10.5px;color:var(--ink-3)}
@@ -393,7 +393,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
                 <h1 id="h1">Your new website, live in one week.</h1>
         <p class="lead">Built by one developer for small businesses in the UK and Ireland. Fixed price from 99 EUR, agreed in writing before any work starts.</p>
         <div class="actions">
-          <a class="btn btn-ink" href="#contact">Get a quote within 1 working day</a>
+          <a class="btn btn-ink" href="#contact">Get a quote</a>
           <a class="tlink" href="#builds">See recent builds</a>
         </div>
       </div>
@@ -475,9 +475,6 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
               </div>
             </div>
           </div>
-          <div class="chip-f c1"><b data-count="100">0</b><span>Google speed score</span></div>
-          <div class="chip-f c2"><b>0.8 s</b><span>first screen loads</span></div>
-          <div class="chip-f c3"><b>1 tap</b><span>to call or book</span></div>
         </div>
       </div>
       <div class="panel dark ri" style="--d:.1s" id="quotePanel">
@@ -531,7 +528,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
             <div class="out">
               <div class="big" id="outPrice">From 99 EUR</div>
               <p id="outText"></p>
-              <a class="btn btn-ink" href="#contact">Get the fixed quote</a>
+              <a class="btn btn-ink" href="#contact">Get a quote</a>
             </div>
           </div>
         </div>
@@ -544,7 +541,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
             <div class="c"><b>Monitoring</b><span>Uptime and speed watched, problems fixed before you notice.</span></div>
             <div class="c"><b>Priority reply</b><span>Within one working day, usually faster.</span></div>
           </div>
-          <a class="btn btn-ink" href="#contact" style="margin-top:18px">Ask about care</a>
+          <a class="btn btn-ink" href="#contact" style="margin-top:18px">Get a quote</a>
         </div>
       </div>
     </div>
@@ -579,7 +576,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
         <div class="ways">
           <a class="big" href="tel:+37066991481">+370 669 91481 <span class="pill">Call · 20 min free</span></a>
           <a class="big" href="mailto:matasbuika1@gmail.com" style="font-size:20px">matasbuika1@gmail.com</a>
-          <span class="mono">First call is free · Kaunas, Lithuania · remote everywhere</span>
+          <span class="mono">The first call is free.</span>
         </div>
         <div class="cphoto"><img src="img/demo/ashdown-d.jpg" alt="Ashdown Barbers homepage" loading="lazy"></div>
       </div>
@@ -597,7 +594,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
         </div>
         <div class="field"><label for="f-note">A few words about the project</label><textarea id="f-note" name="note"></textarea></div>
         <label class="consent"><input type="checkbox" required><span>I agree that my details are used to reply to this enquiry.</span></label>
-        <button class="btn btn-ink" type="submit">Send enquiry</button>
+        <button class="btn btn-ink" type="submit">Get a quote</button>
         <p class="hint">Free consultation · reply within 1 working day</p>
       </form>
     </div>
@@ -612,7 +609,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
       <div class="col"><span class="mono">Information</span><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
       <div class="col"><span class="mono">Contact</span><a href="tel:+37066991481">+370 669 91481</a><a href="mailto:matasbuika1@gmail.com">matasbuika1@gmail.com</a><span>Kaunas, Lithuania</span></div>
     </div>
-    <div class="bottom"><span>© 2026 Brennwick</span><span>EN</span></div>
+    <div class="bottom"><span>© 2026 Brennwick</span></div>
   </div>
 </footer>
 </div>
@@ -871,7 +868,7 @@ function sendForm(e){
   f.dataset.busy='1';btn.disabled=true;var old=btn.textContent;btn.textContent='Sending';
   fetch('https://formsubmit.co/ajax/matasbuika1@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
   .then(function(r){return r.json();}).then(function(j){
-    if(j&&(j.success==='true'||j.success===true)){f.reset();btn.textContent='Sent';hint.textContent='Thanks. You will hear back within one working day.';hint.style.color='var(--acc)';}
+    if(j&&(j.success==='true'||j.success===true)){f.reset();btn.textContent='Sent';hint.textContent='Thanks. Your quote will be with you within one working day.';hint.style.color='var(--acc)';}
     else throw new Error(j&&j.message||'send failed');
   }).catch(function(){
     btn.disabled=false;btn.textContent=old;delete f.dataset.busy;
