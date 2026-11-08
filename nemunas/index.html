@@ -825,9 +825,19 @@ function calc(){
   }else res.classList.remove('ready');
 }
 function sendForm(e){
-  e.preventDefault();var f=e.target;var need=(f.querySelector('input[name=need]:checked')||{}).value||'';
-  var body='Name: '+f.name.value+'\nContact: '+f.contact.value+'\nNeeds: '+need+'\nNotes: '+f.note.value;
-  location.href='mailto:'+['matasbuika1','gmail.com'].join('@')+'?subject='+encodeURIComponent('Enquiry from '+f.name.value)+'&body='+encodeURIComponent(body);
+  e.preventDefault();var f=e.target,btn=f.querySelector('button[type=submit]'),hint=f.querySelector('.hint');
+  if(f.dataset.busy)return false;
+  var need=(f.querySelector('input[name=need]:checked')||{}).value||'';
+  var data={name:f.name.value,contact:f.contact.value,need:need,note:f.note.value,_subject:'Brennwick enquiry from '+f.name.value,_template:'table',_captcha:'false'};
+  f.dataset.busy='1';btn.disabled=true;var old=btn.textContent;btn.textContent='Sending';
+  fetch('https://formsubmit.co/ajax/matasbuika1@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+  .then(function(r){return r.json();}).then(function(j){
+    if(j&&(j.success==='true'||j.success===true)){f.reset();btn.textContent='Sent';hint.textContent='Thanks. You will hear back within one working day.';hint.style.color='var(--acc)';}
+    else throw new Error(j&&j.message||'send failed');
+  }).catch(function(){
+    btn.disabled=false;btn.textContent=old;delete f.dataset.busy;
+    hint.textContent='Could not send. Email matasbuika1@gmail.com or call +370 669 91481.';hint.style.color='var(--acc)';
+  });
   return false;
 }
 </script>
