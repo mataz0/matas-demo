@@ -13,7 +13,7 @@
 <!--
   v5 · 2026-11-08 · structure and feel copied from the reference (webvibe.lt) on request, content is ours.
   SYSTEM: bg #F2F2F1, panel #E9E9E7, white #FBFBFA, ink #1B1B1B, accent #F0501E (dot + small marks only).
-  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
+  v8: palette ivory/forest/teal/mint; hero + quote panel = CPU fluid dot field (reference-style), Lenis smooth scroll. v9: real photography (Pexels). v11: hero = light strands canvas (bezier fan from the left, travelling lights, pours downward with scroll), photos replaced with web/tech imagery. v10: ethiack-like palette (#0B191B / #98FEB8 / #2A9B5C) and full-screen statement frames that crossfade on scroll (opacity + scale + blur, cubic-bezier(.23,1,.32,1)).
   EFFECTS: halftone columns in hero / contact (canvas, static), cursor-reveal area, steps line, inertial wheel
   scroll on desktop, reveal on scroll, accordion. No portfolio, no testimonials, no full prices, no em-dashes.
 -->
@@ -69,6 +69,7 @@ h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
 
 /* page field (one continuous background, no boxes) */
 .fluid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#strands{-webkit-mask-image:radial-gradient(55% 45% at 50% 48%,rgba(0,0,0,.45),#000 75%);mask-image:radial-gradient(55% 45% at 50% 48%,rgba(0,0,0,.45),#000 75%)}
 .cur{position:absolute;top:0;left:0;z-index:3;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--acc);box-shadow:0 0 14px var(--acc);pointer-events:none;transform:translate(-100px,-100px);will-change:transform}
 .nav{position:sticky;z-index:40}
 section,footer{position:relative;z-index:1}
@@ -334,7 +335,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
 <header class="hero">
   <div class="wrap">
     <div class="hero-card" id="heroCard">
-      <canvas class="fluid" id="heroFluid" aria-hidden="true"></canvas><span class="cur" id="cur"></span>
+      <canvas class="fluid" id="strands" aria-hidden="true"></canvas>
       <div class="hero-in">
         <div class="tags"><span>One developer</span><i>·</i><span>Fixed price</span><i>·</i><span>Pages from 99 EUR</span></div>
         <h1 id="h1">Websites that bring customers.</h1>
@@ -344,8 +345,8 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
           <a class="btn btn-line" href="#services">See what I build</a>
         </div>
         <div class="with">
-          <span class="mono">Built for</span>
-          <div class="marq"><div class="track"><figure class="pc" style="--r:-2deg"><img src="img/barber1.jpg" alt="Barbers" loading="lazy"><figcaption>Barbers</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/dentist1.jpg" alt="Clinics" loading="lazy"><figcaption>Clinics</figcaption></figure><figure class="pc" style="--r:-1deg"><img src="img/mech2.jpg" alt="Car services" loading="lazy"><figcaption>Car services</figcaption></figure><figure class="pc" style="--r:2deg"><img src="img/elec1.jpg" alt="Trades" loading="lazy"><figcaption>Trades</figcaption></figure><figure class="pc" style="--r:-1.5deg"><img src="img/shop1.jpg" alt="Small shops" loading="lazy"><figcaption>Small shops</figcaption></figure><figure class="pc" style="--r:1deg"><img src="img/cafe1.jpg" alt="Cafés" loading="lazy"><figcaption>Cafés</figcaption></figure><figure class="pc" style="--r:-2deg"><img src="img/trainer1.jpg" alt="Gyms" loading="lazy"><figcaption>Gyms</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/photog1.jpg" alt="Studios" loading="lazy"><figcaption>Studios</figcaption></figure><figure class="pc" style="--r:-2deg"><img src="img/barber1.jpg" alt="Barbers" loading="lazy"><figcaption>Barbers</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/dentist1.jpg" alt="Clinics" loading="lazy"><figcaption>Clinics</figcaption></figure><figure class="pc" style="--r:-1deg"><img src="img/mech2.jpg" alt="Car services" loading="lazy"><figcaption>Car services</figcaption></figure><figure class="pc" style="--r:2deg"><img src="img/elec1.jpg" alt="Trades" loading="lazy"><figcaption>Trades</figcaption></figure><figure class="pc" style="--r:-1.5deg"><img src="img/shop1.jpg" alt="Small shops" loading="lazy"><figcaption>Small shops</figcaption></figure><figure class="pc" style="--r:1deg"><img src="img/cafe1.jpg" alt="Cafés" loading="lazy"><figcaption>Cafés</figcaption></figure><figure class="pc" style="--r:-2deg"><img src="img/trainer1.jpg" alt="Gyms" loading="lazy"><figcaption>Gyms</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/photog1.jpg" alt="Studios" loading="lazy"><figcaption>Studios</figcaption></figure></div></div>
+          <span class="mono">What leaves the studio</span>
+          <div class="marq"><div class="track"><figure class="pc" style="--r:-2deg"><img src="img/barber1.jpg" alt="Business sites" loading="lazy"><figcaption>Business sites</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/dentist1.jpg" alt="Online stores" loading="lazy"><figcaption>Online stores</figcaption></figure><figure class="pc" style="--r:-1deg"><img src="img/mech2.jpg" alt="Landing pages" loading="lazy"><figcaption>Landing pages</figcaption></figure><figure class="pc" style="--r:2deg"><img src="img/elec1.jpg" alt="Clean code" loading="lazy"><figcaption>Clean code</figcaption></figure><figure class="pc" style="--r:-1.5deg"><img src="img/shop1.jpg" alt="Web apps" loading="lazy"><figcaption>Web apps</figcaption></figure><figure class="pc" style="--r:1deg"><img src="img/cafe1.jpg" alt="Rebuilds" loading="lazy"><figcaption>Rebuilds</figcaption></figure><figure class="pc" style="--r:-2deg"><img src="img/trainer1.jpg" alt="Booking" loading="lazy"><figcaption>Booking</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/photog1.jpg" alt="Care after launch" loading="lazy"><figcaption>Care after launch</figcaption></figure><figure class="pc" style="--r:-2deg"><img src="img/barber1.jpg" alt="Business sites" loading="lazy"><figcaption>Business sites</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/dentist1.jpg" alt="Online stores" loading="lazy"><figcaption>Online stores</figcaption></figure><figure class="pc" style="--r:-1deg"><img src="img/mech2.jpg" alt="Landing pages" loading="lazy"><figcaption>Landing pages</figcaption></figure><figure class="pc" style="--r:2deg"><img src="img/elec1.jpg" alt="Clean code" loading="lazy"><figcaption>Clean code</figcaption></figure><figure class="pc" style="--r:-1.5deg"><img src="img/shop1.jpg" alt="Web apps" loading="lazy"><figcaption>Web apps</figcaption></figure><figure class="pc" style="--r:1deg"><img src="img/cafe1.jpg" alt="Rebuilds" loading="lazy"><figcaption>Rebuilds</figcaption></figure><figure class="pc" style="--r:-2deg"><img src="img/trainer1.jpg" alt="Booking" loading="lazy"><figcaption>Booking</figcaption></figure><figure class="pc" style="--r:1.5deg"><img src="img/photog1.jpg" alt="Care after launch" loading="lazy"><figcaption>Care after launch</figcaption></figure></div></div>
         </div>
       </div>
     </div>
@@ -368,10 +369,10 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
       <p class="lead ri">One person answers for design, code, Google and launch. No need to coordinate three contractors.</p>
     </div>
     <div class="tiles">
-      <div class="tile ri"><div class="art"><img src="img/shop2.jpg" alt="Shop owner at the door of his shop" loading="lazy"></div><div><h3>Fixed price</h3><p>The number in the proposal is the number on the invoice.</p></div></div>
-      <div class="tile ri" style="--d:.06s"><div class="art"><img src="img/dentist2.jpg" alt="Dental surgery, calm and tidy" loading="lazy"></div><div><h3>Design first</h3><p>You approve the design before a line of code is written.</p></div></div>
-      <div class="tile ri" style="--d:.12s"><div class="art"><img src="img/mech1.jpg" alt="Mechanic in his workshop" loading="lazy"></div><div><h3>Clear deadline</h3><p>A launch date in writing, and a short list of what is included.</p></div></div>
-      <div class="tile ri" style="--d:.18s"><div class="art"><img src="img/barber2.jpg" alt="Barbershop interior" loading="lazy"></div><div><h3>Care after launch</h3><p>First month included. Then a fixed monthly fee, cancel any time.</p></div></div>
+      <div class="tile ri"><div class="art"><img src="img/shop2.jpg" alt="Hands on a laptop keyboard, code on screen" loading="lazy"></div><div><h3>Fixed price</h3><p>The number in the proposal is the number on the invoice.</p></div></div>
+      <div class="tile ri" style="--d:.06s"><div class="art"><img src="img/dentist2.jpg" alt="Developer at two monitors by the window" loading="lazy"></div><div><h3>Design first</h3><p>You approve the design before a line of code is written.</p></div></div>
+      <div class="tile ri" style="--d:.12s"><div class="art"><img src="img/mech1.jpg" alt="Person working at a monitor in an office" loading="lazy"></div><div><h3>Clear deadline</h3><p>A launch date in writing, and a short list of what is included.</p></div></div>
+      <div class="tile ri" style="--d:.18s"><div class="art"><img src="img/barber2.jpg" alt="Open studio desks with laptops" loading="lazy"></div><div><h3>Care after launch</h3><p>First month included. Then a fixed monthly fee, cancel any time.</p></div></div>
     </div>
   </div>
 </section>
@@ -503,7 +504,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
           <div class="big">Book a free call <span class="pill">20 min</span></div>
           <span class="mono">First call is free · Kaunas, Lithuania · remote everywhere</span>
         </div>
-        <div class="cphoto"><img src="img/cafe2.jpg" alt="Small business owner laughing at work" loading="lazy"></div>
+        <div class="cphoto"><img src="img/cafe2.jpg" alt="Client reading a proposal on her phone" loading="lazy"></div>
       </div>
       <form class="form" id="form" onsubmit="return sendForm(event)">
         <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required autocomplete="name"></div>
@@ -652,18 +653,49 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
     if(rm){h1.classList.add('ready');}else setTimeout(function(){h1.classList.add('ready');},1600);
   })();
   var heroCard=document.getElementById('heroCard');
-  makeFluid(heroCard,document.getElementById('heroFluid'),{mode:'sides',ink:[234,242,236],dye:[152,254,184],dot:document.getElementById('cur'),onFrame:function(sample){
-    if(!h1.classList.contains('ready'))return;
-    if(rectTick++%8===0){var hr=heroCard.getBoundingClientRect();letterRects=letters.map(function(l){var r=l.getBoundingClientRect();return [(r.left+r.width/2-hr.left)/hr.width,(r.top+r.height/2-hr.top)/hr.height];});}
-    if(!letterRects)return;
-    letters.forEach(function(l,i){var q=Math.min(1,sample(letterRects[i][0],letterRects[i][1])*1.4);l.style.color=q>.04?'rgb('+Math.round(234+(152-234)*q)+','+Math.round(242+(254-242)*q)+','+Math.round(236+(184-236)*q)+')':'';if(q>.3)l.style.textShadow='0 0 '+Math.round(q*26)+'px rgba(152,254,184,'+(q*.6).toFixed(2)+')';else l.style.textShadow='';});
-  }});
+  /* ---------- light strands: fan out from the left, pour downward as you scroll ---------- */
+  (function(){
+    var c=document.getElementById('strands'),host=document.getElementById('heroCard');if(!c)return;
+    var ctx=c.getContext('2d'),W=1,H=1,dpr=1,N=desktop()?76:46,S=[],t=0,p=0,visible=true,raf=0,mx=.5,my=.5,mOn=false;
+    function fit(){var r=host.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);dpr=Math.min(devicePixelRatio||1,1.5);c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+    function seed(){S=[];for(var i=0;i<N;i++){var k=i/(N-1);S.push({k:k,y0:(Math.random()-.5)*.12,ye:(k-.5)*1.05+(Math.random()-.5)*.08,ph:Math.random()*6.28,sp:.35+Math.random()*.5,amp:.03+Math.random()*.05,w:.6+Math.random()*1.3,a:.12+Math.random()*.5,hot:Math.random()<.18,ps:Math.random(),pv:.05+Math.random()*.08});}}
+    function pt(s,u){/* cubic bezier point for strand s at u */
+      var x0=-.08*W,y0=H*(.5+s.y0)+p*H*.1;
+      var x1=W*.32,y1=H*(.5+s.y0*2+Math.sin(t*s.sp+s.ph)*s.amp*.6)+p*H*.55;
+      var x2=W*.68,y2=H*(.5+s.ye*.9+Math.sin(t*s.sp*1.3+s.ph*2)*s.amp)+p*H*1.35+(mOn?(my-.5)*H*.18*(1-Math.abs(s.ye)):0);
+      var x3=W*1.12,y3=H*(.5+s.ye)+p*H*1.9;
+      var v=1-u;return [v*v*v*x0+3*v*v*u*x1+3*v*u*u*x2+u*u*u*x3, v*v*v*y0+3*v*v*u*y1+3*v*u*u*y2+u*u*u*y3];
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';
+      var fade=1-Math.min(1,Math.max(0,p-.45)*1.8);
+      for(var i=0;i<S.length;i++){
+        var s=S[i],a=s.a*fade;
+        ctx.beginPath();var q=pt(s,0);ctx.moveTo(q[0],q[1]);
+        for(var j=1;j<=28;j++){q=pt(s,j/28);ctx.lineTo(q[0],q[1]);}
+        ctx.lineWidth=s.w*3.2;ctx.strokeStyle='rgba(152,254,184,'+(a*.09).toFixed(3)+')';ctx.stroke();
+        ctx.lineWidth=s.w;ctx.strokeStyle=s.hot?'rgba(214,255,228,'+(a*.9).toFixed(3)+')':'rgba(152,254,184,'+(a*.55).toFixed(3)+')';ctx.stroke();
+        /* travelling light */
+        var u=(s.ps+t*s.pv)%1,g=pt(s,u);
+        ctx.beginPath();ctx.arc(g[0],g[1],s.hot?2.2:1.4,0,6.283);ctx.fillStyle='rgba(214,255,228,'+(a*1.6).toFixed(3)+')';ctx.fill();
+        ctx.beginPath();ctx.arc(g[0],g[1],s.hot?9:6,0,6.283);ctx.fillStyle='rgba(152,254,184,'+(a*.14).toFixed(3)+')';ctx.fill();
+      }
+      ctx.globalCompositeOperation='source-over';
+    }
+    function frame(){raf=0;if(!visible)return;if(!rm)t+=.016;draw();if(!rm)raf=requestAnimationFrame(frame);}
+    fit();seed();draw();
+    var rt3;addEventListener('resize',function(){clearTimeout(rt3);rt3=setTimeout(function(){fit();N=desktop()?76:46;seed();draw();},150);});
+    if(hover){host.addEventListener('pointermove',function(e){var r=host.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;my=(e.clientY-r.top)/r.height;mOn=true;});host.addEventListener('pointerleave',function(){mOn=false;});}
+    window.__strandsScroll=function(y){p=Math.min(1,Math.max(0,y/(innerHeight*1.1)));};
+    if('IntersectionObserver' in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting;if(visible&&!raf)raf=requestAnimationFrame(frame);}).observe(host);}else{raf=requestAnimationFrame(frame);}
+  })();
+
   makeFluid(document.getElementById('quotePanel'),document.getElementById('quoteFluid'),{mode:'corner',cols:48,ink:[234,242,236],dye:[152,254,184]});
 
   /* "see for yourself": cards appear along the pointer path (tap on touch) */
   (function(){
     var host=document.getElementById('revealPanel'),layer=document.getElementById('spawn'),lastX=-1e4,lastY=-1e4,n=0;
-    var kinds=[['Barbershop','Booking in two taps','barber3'],['Café','Menu, hours, one tap to call','cafe1'],['Electrician','Quote request that converts','elec2'],['Gym','Trial session sign-up','trainer1'],['Car service','Call button first','mech3'],['Small shop','Card payments, simple catalogue','shop3']];
+    var kinds=[['Business site','Live in 5 working days','barber3'],['Online store','Card payments, simple catalogue','cafe1'],['Landing page','One offer, one button','elec2'],['Web app','Built around your process','trainer1'],['Mobile first','Checked on real phones','mech3'],['Wireframe first','You approve before code','shop3']];
     function spawn(x,y){
       var k=kinds[n%kinds.length];n++;
       var el=document.createElement('div');el.className='wc';el.style.left=x+'px';el.style.top=y+'px';el.style.setProperty('--rot',((Math.random()*10)-5).toFixed(1)+'deg');
@@ -713,7 +745,7 @@ footer .bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10p
   function onScroll(){
     if(ticking)return;ticking=true;
     requestAnimationFrame(function(){
-      var y=scrollY;framesTick();
+      var y=scrollY;framesTick();if(window.__strandsScroll)window.__strandsScroll(y);
       if(!rm){
         if(y<innerHeight*1.3){var p=Math.min(1,y/(innerHeight*.9));heroIn.style.transform='translateY('+(y*.22)+'px) scale('+(1-p*.1)+')';heroIn.style.opacity=1-p*.85;}
       }
